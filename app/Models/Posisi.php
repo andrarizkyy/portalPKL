@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Posisi extends Model
 {
-    protected $fillable = ['lowongan_id', 'nama', 'kuota'];
+    protected $table = 'lowongan_positions';
+
+    protected $fillable = ['lowongan_id', 'position_name', 'kuota'];
 
     public function lowongan()
     {
@@ -14,7 +16,7 @@ class Posisi extends Model
     }
     public function pendaftaranPkls()
     {
-        return $this->hasMany(PendaftaranPkl::class);
+        return $this->hasMany(PendaftaranPkl::class , 'position_id');
     }
 
     public function sisaTempat(): int

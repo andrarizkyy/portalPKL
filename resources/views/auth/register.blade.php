@@ -5,24 +5,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar — Portal PKL</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>
+        * {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(140deg, #0a0628 0%, #130d3d 40%, #1e0a4a 75%, #0f0a25 100%);
+        }
+
+        .role-card {
+            flex: 1;
+            padding: 14px;
+            border-radius: 14px;
+            cursor: pointer;
+            border: 1.5px solid #e2e8f0;
+            background: #f8fafc;
+            transition: all 0.2s ease;
+        }
+
+        .role-card:has(input:checked) {
+            background: rgba(99, 102, 241, 0.08);
+            border-color: #6366f1;
+        }
+
+        .role-card:hover {
+            background: #f1f5f9;
+        }
+    </style>
 </head>
 
-<body
-    class="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-950 to-purple-950 flex items-center justify-center p-4">
+<body class="min-h-screen flex items-center justify-center p-4">
     <div class="w-full max-w-md">
+        {{-- Logo --}}
         <div class="text-center mb-8">
-            <div
-                class="w-14 h-14 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl shadow-indigo-500/30">
-                <span class="text-white font-bold text-xl">P</span>
-            </div>
-            <h1 class="text-2xl font-bold text-white">Daftar Akun Baru</h1>
-            <p class="text-slate-400 text-sm mt-1">Buat akun untuk mulai menggunakan Portal PKL</p>
+            <a href="/" class="inline-flex items-center gap-3">
+                <div class="w-11 h-11 rounded-xl flex items-center justify-center font-black text-white text-lg shadow-lg"
+                    style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">P</div>
+                <span class="text-2xl font-bold text-white">Portal PKL</span>
+            </a>
+            <p class="text-slate-300 mt-2 text-sm">Buat akun baru</p>
         </div>
 
-        <div class="bg-white/10 backdrop-blur-xl rounded-2xl border border-white/10 p-8">
+        {{-- Card --}}
+        <div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-8">
             @if($errors->any())
-            <div class="bg-red-500/20 border border-red-500/30 text-red-200 px-4 py-3 rounded-xl text-sm mb-6">
+            <div class="mb-5 px-4 py-3 rounded-2xl text-sm text-red-700 bg-red-50 border border-red-100">
                 @foreach($errors->all() as $error)
                 <p>{{ $error }}</p>
                 @endforeach
@@ -32,73 +64,72 @@
             <form method="POST" action="{{ route('register') }}" class="space-y-5">
                 @csrf
                 <div>
-                    <label class="block text-sm font-semibold text-slate-300 mb-1.5">Nama Lengkap</label>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">Nama Lengkap</label>
                     <input type="text" name="name" value="{{ old('name') }}"
-                        class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 text-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition-all placeholder:text-slate-400"
                         placeholder="Masukkan nama lengkap" required>
                 </div>
-
                 <div>
-                    <label class="block text-sm font-semibold text-slate-300 mb-1.5">Email</label>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">Email</label>
                     <input type="email" name="email" value="{{ old('email') }}"
-                        class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                        placeholder="contoh@email.com" required>
+                        class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 text-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition-all placeholder:text-slate-400"
+                        placeholder="nama@email.com" required>
                 </div>
 
                 <div>
-                    <label class="block text-sm font-semibold text-slate-300 mb-1.5">Daftar Sebagai</label>
-                    <div class="grid grid-cols-2 gap-3">
-                        <label
-                            class="flex items-center gap-3 p-3 bg-white/5 border border-white/10 rounded-xl cursor-pointer hover:bg-white/10 transition-colors has-[:checked]:bg-indigo-500/20 has-[:checked]:border-indigo-500/50">
-                            <input type="radio" name="role" value="siswa" {{ old('role', 'siswa' )==='siswa' ? 'checked'
-                                : '' }} class="w-4 h-4 text-indigo-600">
-                            <div>
-                                <p class="text-sm font-semibold text-white">🎓 Siswa</p>
-                                <p class="text-xs text-slate-400">Cari magang</p>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Daftar Sebagai</label>
+                    <div class="flex gap-3">
+                        <label class="role-card">
+                            <input type="radio" name="role" value="siswa" {{ old('role','siswa')==='siswa' ? 'checked'
+                                : '' }} class="hidden">
+                            <div class="text-center">
+                                <div class="text-2xl mb-1">🎓</div>
+                                <p class="text-sm font-bold text-slate-700">Siswa</p>
+                                <p class="text-xs text-slate-400 mt-0.5">Cari magang</p>
                             </div>
                         </label>
-                        <label
-                            class="flex items-center gap-3 p-3 bg-white/5 border border-white/10 rounded-xl cursor-pointer hover:bg-white/10 transition-colors has-[:checked]:bg-purple-500/20 has-[:checked]:border-purple-500/50">
+                        <label class="role-card">
                             <input type="radio" name="role" value="dudi" {{ old('role')==='dudi' ? 'checked' : '' }}
-                                class="w-4 h-4 text-purple-600">
-                            <div>
-                                <p class="text-sm font-semibold text-white">🏢 DUDI</p>
-                                <p class="text-xs text-slate-400">Buka lowongan</p>
+                                class="hidden">
+                            <div class="text-center">
+                                <div class="text-2xl mb-1">🏢</div>
+                                <p class="text-sm font-bold text-slate-700">DUDI</p>
+                                <p class="text-xs text-slate-400 mt-0.5">Buka lowongan</p>
                             </div>
                         </label>
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-sm font-semibold text-slate-300 mb-1.5">Password</label>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">Password</label>
                     <input type="password" name="password"
-                        class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 text-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition-all placeholder:text-slate-400"
                         placeholder="Minimal 6 karakter" required>
                 </div>
-
                 <div>
-                    <label class="block text-sm font-semibold text-slate-300 mb-1.5">Konfirmasi Password</label>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">Konfirmasi Password</label>
                     <input type="password" name="password_confirmation"
-                        class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 text-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition-all placeholder:text-slate-400"
                         placeholder="Ulangi password" required>
                 </div>
 
                 <button type="submit"
-                    class="w-full py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-xl hover:from-indigo-500 hover:to-purple-500 transition-all shadow-lg shadow-indigo-500/30">
+                    class="w-full py-3 rounded-xl font-bold text-white text-sm transition-all hover:opacity-90 hover:-translate-y-0.5 shadow-md"
+                    style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">
                     Daftar Sekarang
                 </button>
             </form>
 
-            <div class="relative my-6">
+            <div class="relative my-5">
                 <div class="absolute inset-0 flex items-center">
-                    <div class="w-full border-t border-white/10"></div>
+                    <div class="w-full border-t border-slate-100"></div>
                 </div>
-                <div class="relative flex justify-center text-sm"><span
-                        class="px-4 bg-transparent text-slate-400">atau</span></div>
+                <div class="relative flex justify-center text-xs text-slate-400"><span class="px-3 bg-white">atau</span>
+                </div>
             </div>
 
             <a href="{{ route('google.login') }}"
-                class="w-full flex items-center justify-center gap-3 py-3 bg-white rounded-xl text-gray-700 font-semibold hover:bg-gray-100 transition-colors">
+                class="w-full flex items-center justify-center gap-3 py-3 rounded-xl border border-slate-200 font-semibold text-slate-600 text-sm hover:bg-slate-50 transition-colors">
                 <svg class="w-5 h-5" viewBox="0 0 24 24">
                     <path fill="#4285F4"
                         d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" />
@@ -111,12 +142,15 @@
                 </svg>
                 Daftar dengan Google
             </a>
-
-            <p class="text-center text-sm text-slate-400 mt-6">
-                Sudah punya akun?
-                <a href="{{ route('login') }}" class="text-indigo-400 hover:text-indigo-300 font-semibold">Masuk</a>
-            </p>
         </div>
+
+        <p class="text-center text-sm text-slate-300 mt-6">
+            Sudah punya akun?
+            <a href="{{ route('login') }}" class="font-semibold text-indigo-400 hover:text-indigo-300">Masuk di sini</a>
+        </p>
+        <p class="text-center mt-3">
+            <a href="/" class="text-xs text-slate-400 hover:text-slate-500">← Kembali ke Beranda</a>
+        </p>
     </div>
 </body>
 

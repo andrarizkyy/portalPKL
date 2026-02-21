@@ -1,66 +1,84 @@
 @extends('layouts.app')
 @section('sidebar') @include('siswa._sidebar') @endsection
-@section('page-title', 'Dashboard Siswa')
-@section('page-subtitle', 'Selamat datang, ' . auth()->user()->name)
+@section('page-title', 'Dashboard')
+@section('page-subtitle', 'Halo, ' . auth()->user()->name . '! 👋')
 
 @section('content')
-@if(!$user->profile_completed)
-<div class="bg-amber-50 border border-amber-200 rounded-2xl p-6 mb-6">
-    <div class="flex items-start gap-4">
-        <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center shrink-0">
-            <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
-            </svg>
+@if(!$user->is_profile_completed)
+{{-- Profile incomplete banner --}}
+<div class="rounded-3xl overflow-hidden mb-8"
+    style="background: linear-gradient(135deg, #92400e, #b45309); box-shadow: 0 8px 30px rgba(180,83,9,0.3);">
+    <div class="px-8 py-7 flex items-center gap-6">
+        <div class="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 text-3xl"
+            style="background: rgba(255,255,255,0.15);">⚠️</div>
+        <div class="flex-1">
+            <h3 class="text-xl font-bold text-white mb-1">Profil Belum Lengkap</h3>
+            <p class="text-amber-200 text-sm">Lengkapi profil Anda untuk mulai melihat dan melamar lowongan PKL yang
+                tersedia.</p>
         </div>
-        <div>
-            <h3 class="text-lg font-bold text-amber-800 mb-1">Lengkapi Profil Anda</h3>
-            <p class="text-sm text-amber-700 mb-3">Anda perlu melengkapi profil sebelum dapat melihat dan melamar
-                lowongan PKL.</p>
-            <a href="{{ route('siswa.profil') }}"
-                class="inline-flex items-center gap-2 px-4 py-2 bg-amber-600 text-white rounded-lg text-sm font-semibold hover:bg-amber-700 transition-colors">
-                Lengkapi Profil →
-            </a>
-        </div>
+        <a href="{{ route('siswa.profil') }}"
+            class="shrink-0 px-6 py-3 rounded-2xl font-bold text-amber-800 text-sm transition-all hover:bg-amber-50 shadow-lg"
+            style="background: #fff;">
+            Lengkapi Sekarang →
+        </a>
     </div>
 </div>
 @else
+{{-- Stats --}}
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-    <div class="stat-card">
-        <div
-            class="w-11 h-11 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center mb-3 shadow-lg shadow-blue-500/20">
-            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div class="stat-card relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-24 h-24 rounded-full -translate-y-6 translate-x-6 opacity-10"
+            style="background: linear-gradient(135deg, #3b82f6, #06b6d4);"></div>
+        <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-4 shadow-lg"
+            style="background: linear-gradient(135deg, #3b82f6, #06b6d4); box-shadow: 0 4px 15px rgba(59,130,246,0.35);">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
             </svg>
         </div>
-        <p class="text-2xl font-bold text-slate-800">{{ $lowonganCount }}</p>
-        <p class="text-sm text-slate-500">Lowongan Tersedia</p>
+        <p class="text-3xl font-black text-slate-800 mb-1">{{ $lowonganCount }}</p>
+        <p class="text-sm text-slate-500 font-medium">Lowongan Tersedia</p>
     </div>
-    <div class="stat-card">
-        <div
-            class="w-11 h-11 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mb-3 shadow-lg shadow-purple-500/20">
-            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div class="stat-card relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-24 h-24 rounded-full -translate-y-6 translate-x-6 opacity-10"
+            style="background: linear-gradient(135deg, #8b5cf6, #ec4899);"></div>
+        <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-4"
+            style="background: linear-gradient(135deg, #8b5cf6, #ec4899); box-shadow: 0 4px 15px rgba(139,92,246,0.35);">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
         </div>
-        <p class="text-2xl font-bold text-slate-800">{{ $lamaranCount }}</p>
-        <p class="text-sm text-slate-500">Total Lamaran</p>
+        <p class="text-3xl font-black text-slate-800 mb-1">{{ $lamaranCount }}</p>
+        <p class="text-sm text-slate-500 font-medium">Total Lamaran</p>
     </div>
-    <div class="stat-card">
-        <div
-            class="w-11 h-11 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-xl flex items-center justify-center mb-3 shadow-lg shadow-emerald-500/20">
-            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div class="stat-card relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-24 h-24 rounded-full -translate-y-6 translate-x-6 opacity-10"
+            style="background: linear-gradient(135deg, #10b981, #0d9488);"></div>
+        <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-4"
+            style="background: linear-gradient(135deg, #10b981, #0d9488); box-shadow: 0 4px 15px rgba(16,185,129,0.35);">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
         </div>
-        <p class="text-2xl font-bold text-slate-800">{{ $approvedCount }}</p>
-        <p class="text-sm text-slate-500">Diterima</p>
+        <p class="text-3xl font-black text-slate-800 mb-1">{{ $approvedCount }}</p>
+        <p class="text-sm text-slate-500 font-medium">Lamaran Diterima</p>
     </div>
 </div>
 
-<a href="{{ route('siswa.lowongan.index') }}" class="btn-primary">Lihat Lowongan PKL →</a>
+{{-- Quick action --}}
+<div class="card p-6 flex items-center gap-6">
+    <div class="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl shrink-0"
+        style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">🚀</div>
+    <div class="flex-1">
+        <h3 class="font-bold text-slate-800 text-lg mb-1">Siap Melamar?</h3>
+        <p class="text-slate-500 text-sm">Jelajahi ratusan lowongan PKL dari perusahaan terverifikasi dan temukan yang
+            sesuai dengan bidang Anda.</p>
+    </div>
+    <a href="{{ route('siswa.lowongan.index') }}" class="btn-primary shrink-0">
+        Lihat Lowongan →
+    </a>
+</div>
 @endif
 @endsection

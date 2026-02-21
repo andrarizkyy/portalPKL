@@ -7,15 +7,15 @@
         @csrf @method('PUT')
         <div>
             <label class="block text-sm font-semibold text-slate-700 mb-1.5">Nama Sekolah *</label>
-            <input type="text" name="nama" value="{{ old('nama', $sekolah->nama) }}" class="input-field" required>
+            <input type="text" name="name" value="{{ old('name', $sekolah->name) }}" class="input-field" required>
         </div>
         <div>
             <label class="block text-sm font-semibold text-slate-700 mb-1.5">Alamat</label>
-            <textarea name="alamat" rows="3" class="input-field">{{ old('alamat', $sekolah->alamat) }}</textarea>
+            <textarea name="address" rows="3" class="input-field">{{ old('address', $sekolah->address) }}</textarea>
         </div>
         <div>
             <label class="block text-sm font-semibold text-slate-700 mb-1.5">Telepon</label>
-            <input type="text" name="telepon" value="{{ old('telepon', $sekolah->telepon) }}" class="input-field">
+            <input type="text" name="phone" value="{{ old('phone', $sekolah->phone) }}" class="input-field">
         </div>
         <div class="flex gap-3 pt-2">
             <button type="submit" class="btn-primary">Update</button>

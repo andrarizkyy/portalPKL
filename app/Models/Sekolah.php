@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sekolah extends Model
 {
-    protected $fillable = ['nama', 'alamat', 'telepon'];
+    protected $table = 'sekolah';
+
+    protected $fillable = ['name', 'address', 'phone', 'email', 'logo', 'website_url'];
 
     public function jurusans()
     {

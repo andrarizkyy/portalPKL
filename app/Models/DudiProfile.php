@@ -6,7 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class DudiProfile extends Model
 {
-    protected $fillable = ['user_id', 'industry_id', 'nama_perusahaan', 'website', 'telepon', 'alamat', 'status'];
+    protected $table = 'dudi';
+
+    protected $fillable = ['user_id', 'industry_id', 'company_name', 'logo', 'website', 'phone', 'address', 'description', 'is_verified'];
+
+    protected function casts(): array
+    {
+        return [
+            'is_verified' => 'boolean',
+        ];
+    }
 
     public function user()
     {
@@ -18,6 +27,6 @@ class DudiProfile extends Model
     }
     public function lowongans()
     {
-        return $this->hasMany(Lowongan::class);
+        return $this->hasMany(Lowongan::class , 'dudi_id');
     }
 }

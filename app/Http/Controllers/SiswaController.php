@@ -15,8 +15,9 @@ class SiswaController extends Controller
     public function dashboard()
     {
         $user = Auth::user();
-        $lamaranCount = PendaftaranPkl::where('user_id', $user->id)->count();
-        $approvedCount = PendaftaranPkl::where('user_id', $user->id)->where('status', 'approved')->count();
+        $siswa = $user->siswaProfile;
+        $lamaranCount = $siswa ?PendaftaranPkl::where('siswa_id', $siswa->id)->count() : 0;
+        $approvedCount = $siswa ?PendaftaranPkl::where('siswa_id', $siswa->id)->where('status', 'approved')->count() : 0;
         $lowonganCount = Lowongan::where('is_published', true)->count();
 
         return view('siswa.dashboard', compact('user', 'lamaranCount', 'approvedCount', 'lowonganCount'));
@@ -35,11 +36,11 @@ class SiswaController extends Controller
     public function profilUpdate(Request $request)
     {
         $request->validate([
-            'sekolah_id' => 'required|exists:sekolahs,id',
-            'jurusan_id' => 'required|exists:jurusans,id',
+            'sekolah_id' => 'required|exists:sekolah,id',
+            'jurusan_id' => 'required|exists:jurusan,id',
             'nis' => 'required|string|max:50',
             'phone' => 'required|string|max:20',
-            'gender' => 'required|in:L,P',
+            'gender' => 'required|in:male,female',
             'address' => 'required|string',
         ]);
 
@@ -50,7 +51,7 @@ class SiswaController extends Controller
             $request->only('sekolah_id', 'jurusan_id', 'nis', 'phone', 'gender', 'address')
         );
 
-        $user->update(['profile_completed' => true]);
+        $user->update(['is_profile_completed' => true]);
 
         return redirect()->route('siswa.dashboard')->with('success', 'Profil berhasil disimpan.');
     }
@@ -69,7 +70,8 @@ class SiswaController extends Controller
     {
         $lowongan->load(['dudiProfile.user', 'dudiProfile.industry', 'posisis.pendaftaranPkls']);
         $user = Auth::user();
-        $appliedPosisiIds = PendaftaranPkl::where('user_id', $user->id)->pluck('posisi_id')->toArray();
+        $siswa = $user->siswaProfile;
+        $appliedPosisiIds = $siswa ?PendaftaranPkl::where('siswa_id', $siswa->id)->pluck('position_id')->toArray() : [];
 
         return view('siswa.lowongan.show', compact('lowongan', 'appliedPosisiIds'));
     }
@@ -91,17 +93,20 @@ class SiswaController extends Controller
         $profile = $user->siswaProfile;
 
         // Check if already applied to this position
-        $existing = PendaftaranPkl::where('user_id', $user->id)->where('posisi_id', $posisi->id)->first();
+        $existing = PendaftaranPkl::where('siswa_id', $profile->id)->where('position_id', $posisi->id)->first();
         if ($existing) {
             return back()->withErrors(['cv' => 'Anda sudah melamar posisi ini.']);
         }
 
         $data = [
-            'user_id' => $user->id,
-            'posisi_id' => $posisi->id,
+            'siswa_id' => $profile->id,
+            'position_id' => $posisi->id,
             'sekolah_id' => $profile->sekolah_id,
             'jurusan_id' => $profile->jurusan_id,
             'status' => 'pending',
+            'apply_date' => now()->toDateString(),
+            'start_date' => $posisi->lowongan->start_date->toDateString(),
+            'end_date' => $posisi->lowongan->end_date->toDateString(),
         ];
 
         $data['cv'] = $request->file('cv')->store('cv', 'public');
@@ -115,10 +120,14 @@ class SiswaController extends Controller
 
     public function lamaranIndex()
     {
-        $lamarans = PendaftaranPkl::with(['posisi.lowongan.dudiProfile', 'sekolah', 'jurusan'])
-            ->where('user_id', Auth::id())
+        $user = Auth::user();
+        $siswa = $user->siswaProfile;
+        $lamarans = $siswa
+            ?PendaftaranPkl::with(['posisi.lowongan.dudiProfile', 'sekolah', 'jurusan'])
+            ->where('siswa_id', $siswa->id)
             ->latest()
-            ->get();
+            ->get()
+            : collect();
 
         return view('siswa.lamaran.index', compact('lamarans'));
     }

@@ -13,7 +13,7 @@
     </svg>
     Profil Perusahaan
 </a>
-@if(auth()->user()->profile_completed)
+@if(auth()->user()->is_profile_completed)
 <a href="{{ route('dudi.lowongan.index') }}"
     class="sidebar-link {{ request()->routeIs('dudi.lowongan.*') ? 'active' : '' }}">
     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

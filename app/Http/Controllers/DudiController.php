@@ -22,8 +22,8 @@ class DudiController extends Controller
         if ($profile) {
             $stats['lowongans'] = $profile->lowongans()->count();
             $posisiIds = Posisi::whereIn('lowongan_id', $profile->lowongans()->pluck('id'))->pluck('id');
-            $stats['lamaranPending'] = PendaftaranPkl::whereIn('posisi_id', $posisiIds)->where('status', 'pending')->count();
-            $stats['lamaranApproved'] = PendaftaranPkl::whereIn('posisi_id', $posisiIds)->where('status', 'approved')->count();
+            $stats['lamaranPending'] = PendaftaranPkl::whereIn('position_id', $posisiIds)->where('status', 'pending')->count();
+            $stats['lamaranApproved'] = PendaftaranPkl::whereIn('position_id', $posisiIds)->where('status', 'approved')->count();
         }
 
         return view('dudi.dashboard', compact('user', 'profile', 'stats'));
@@ -41,20 +41,20 @@ class DudiController extends Controller
     {
         $request->validate([
             'industry_id' => 'required|exists:industries,id',
-            'nama_perusahaan' => 'required|string|max:255',
-            'website' => 'nullable|url|max:255',
-            'telepon' => 'required|string|max:20',
-            'alamat' => 'required|string',
+            'company_name' => 'required|string|max:150',
+            'website' => 'nullable|url|max:150',
+            'phone' => 'required|string|max:20',
+            'address' => 'required|string',
         ]);
 
         $user = Auth::user();
 
         DudiProfile::updateOrCreate(
         ['user_id' => $user->id],
-            array_merge($request->only('industry_id', 'nama_perusahaan', 'website', 'telepon', 'alamat'), ['status' => 'pending'])
+            array_merge($request->only('industry_id', 'company_name', 'website', 'phone', 'address'), ['is_verified' => false])
         );
 
-        $user->update(['profile_completed' => true]);
+        $user->update(['is_profile_completed' => true]);
 
         return redirect()->route('dudi.dashboard')->with('success', 'Profil perusahaan berhasil disimpan. Menunggu verifikasi admin.');
     }
@@ -75,23 +75,23 @@ class DudiController extends Controller
     public function lowonganStore(Request $request)
     {
         $request->validate([
-            'judul' => 'required|string|max:255',
-            'gambar' => 'nullable|image|max:2048',
-            'deskripsi' => 'required|string',
-            'tanggal_mulai' => 'required|date',
-            'tanggal_selesai' => 'required|date|after:tanggal_mulai',
+            'title' => 'required|string|max:150',
+            'image' => 'nullable|image|max:2048',
+            'description' => 'required|string',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after:start_date',
             'posisis' => 'required|array|min:1',
-            'posisis.*.nama' => 'required|string|max:255',
+            'posisis.*.position_name' => 'required|string|max:100',
             'posisis.*.kuota' => 'required|integer|min:1',
         ]);
 
         $profile = Auth::user()->dudiProfile;
-        $data = $request->only('judul', 'deskripsi', 'tanggal_mulai', 'tanggal_selesai');
-        $data['dudi_profile_id'] = $profile->id;
+        $data = $request->only('title', 'description', 'start_date', 'end_date');
+        $data['dudi_id'] = $profile->id;
         $data['is_published'] = $request->boolean('is_published');
 
-        if ($request->hasFile('gambar')) {
-            $data['gambar'] = $request->file('gambar')->store('lowongan', 'public');
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('lowongan', 'public');
         }
 
         $lowongan = Lowongan::create($data);
@@ -122,21 +122,21 @@ class DudiController extends Controller
         $this->authorizeLowongan($lowongan);
 
         $request->validate([
-            'judul' => 'required|string|max:255',
-            'gambar' => 'nullable|image|max:2048',
-            'deskripsi' => 'required|string',
-            'tanggal_mulai' => 'required|date',
-            'tanggal_selesai' => 'required|date|after:tanggal_mulai',
+            'title' => 'required|string|max:150',
+            'image' => 'nullable|image|max:2048',
+            'description' => 'required|string',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after:start_date',
             'posisis' => 'required|array|min:1',
-            'posisis.*.nama' => 'required|string|max:255',
+            'posisis.*.position_name' => 'required|string|max:100',
             'posisis.*.kuota' => 'required|integer|min:1',
         ]);
 
-        $data = $request->only('judul', 'deskripsi', 'tanggal_mulai', 'tanggal_selesai');
+        $data = $request->only('title', 'description', 'start_date', 'end_date');
         $data['is_published'] = $request->boolean('is_published');
 
-        if ($request->hasFile('gambar')) {
-            $data['gambar'] = $request->file('gambar')->store('lowongan', 'public');
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('lowongan', 'public');
         }
 
         $lowongan->update($data);
@@ -162,8 +162,8 @@ class DudiController extends Controller
     {
         $profile = Auth::user()->dudiProfile;
         $posisiIds = Posisi::whereIn('lowongan_id', $profile->lowongans()->pluck('id'))->pluck('id');
-        $lamarans = PendaftaranPkl::with(['user', 'posisi.lowongan', 'sekolah', 'jurusan'])
-            ->whereIn('posisi_id', $posisiIds)
+        $lamarans = PendaftaranPkl::with(['siswa.user', 'posisi.lowongan', 'sekolah', 'jurusan'])
+            ->whereIn('position_id', $posisiIds)
             ->latest()
             ->get();
 
@@ -172,7 +172,7 @@ class DudiController extends Controller
 
     public function lamaranShow(PendaftaranPkl $lamaran)
     {
-        $lamaran->load(['user', 'posisi.lowongan', 'sekolah', 'jurusan']);
+        $lamaran->load(['siswa.user', 'posisi.lowongan', 'sekolah', 'jurusan']);
         return view('dudi.lamaran.show', compact('lamaran'));
     }
 
@@ -196,7 +196,7 @@ class DudiController extends Controller
     private function authorizeLowongan(Lowongan $lowongan)
     {
         $profile = Auth::user()->dudiProfile;
-        if (!$profile || $lowongan->dudi_profile_id !== $profile->id) {
+        if (!$profile || $lowongan->dudi_id !== $profile->id) {
             abort(403);
         }
     }

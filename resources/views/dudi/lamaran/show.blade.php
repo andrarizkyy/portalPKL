@@ -6,16 +6,17 @@
 <div class="max-w-3xl">
     <div class="card p-6 mb-6">
         <div class="flex items-start gap-4 mb-6">
-            @if($lamaran->user->avatar)
-            <img src="{{ $lamaran->user->avatar }}" class="w-14 h-14 rounded-full ring-2 ring-indigo-100" alt="">
+            @if($lamaran->siswa && $lamaran->siswa->user && $lamaran->siswa->user->profile_photo)
+            <img src="{{ $lamaran->siswa->user->profile_photo }}" class="w-14 h-14 rounded-full ring-2 ring-indigo-100"
+                alt="">
             @else
             <div
                 class="w-14 h-14 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-xl font-bold text-white">
-                {{ substr($lamaran->user->name, 0, 1) }}</div>
+                {{ $lamaran->siswa && $lamaran->siswa->user ? substr($lamaran->siswa->user->name, 0, 1) : '?' }}</div>
             @endif
             <div>
-                <h2 class="text-xl font-bold text-slate-800">{{ $lamaran->user->name }}</h2>
-                <p class="text-sm text-slate-500">{{ $lamaran->user->email }}</p>
+                <h2 class="text-xl font-bold text-slate-800">{{ $lamaran->siswa->user->name ?? '-' }}</h2>
+                <p class="text-sm text-slate-500">{{ $lamaran->siswa->user->email ?? '-' }}</p>
                 <span class="badge badge-{{ $lamaran->status }} mt-2">{{ ucfirst($lamaran->status) }}</span>
             </div>
         </div>
@@ -23,19 +24,19 @@
         <div class="grid grid-cols-2 gap-6 mb-6">
             <div>
                 <label class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Posisi</label>
-                <p class="text-sm text-slate-800 mt-1">{{ $lamaran->posisi->nama }}</p>
+                <p class="text-sm text-slate-800 mt-1">{{ $lamaran->posisi->position_name }}</p>
             </div>
             <div>
                 <label class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Lowongan</label>
-                <p class="text-sm text-slate-800 mt-1">{{ $lamaran->posisi->lowongan->judul }}</p>
+                <p class="text-sm text-slate-800 mt-1">{{ $lamaran->posisi->lowongan->title }}</p>
             </div>
             <div>
                 <label class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Sekolah</label>
-                <p class="text-sm text-slate-800 mt-1">{{ $lamaran->sekolah->nama }}</p>
+                <p class="text-sm text-slate-800 mt-1">{{ $lamaran->sekolah->name }}</p>
             </div>
             <div>
                 <label class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Jurusan</label>
-                <p class="text-sm text-slate-800 mt-1">{{ $lamaran->jurusan->nama }}</p>
+                <p class="text-sm text-slate-800 mt-1">{{ $lamaran->jurusan->name }}</p>
             </div>
             <div>
                 <label class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Tanggal Melamar</label>
@@ -64,6 +65,7 @@
                 <a href="{{ asset('storage/' . $lamaran->cover_letter) }}" target="_blank"
                     class="ml-auto text-sm text-indigo-600 font-medium hover:underline">Unduh</a>
             </div>
+            @endif
         </div>
     </div>
 

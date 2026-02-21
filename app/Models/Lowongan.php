@@ -6,23 +6,26 @@ use Illuminate\Database\Eloquent\Model;
 
 class Lowongan extends Model
 {
-    protected $fillable = ['dudi_profile_id', 'judul', 'gambar', 'deskripsi', 'tanggal_mulai', 'tanggal_selesai', 'is_published'];
+    protected $table = 'lowongan_pkl';
+
+    protected $fillable = ['dudi_id', 'title', 'image', 'description', 'start_date', 'end_date', 'is_active', 'is_published'];
 
     protected function casts(): array
     {
         return [
-            'tanggal_mulai' => 'date',
-            'tanggal_selesai' => 'date',
+            'start_date' => 'date',
+            'end_date' => 'date',
             'is_published' => 'boolean',
+            'is_active' => 'boolean',
         ];
     }
 
     public function dudiProfile()
     {
-        return $this->belongsTo(DudiProfile::class);
+        return $this->belongsTo(DudiProfile::class , 'dudi_id');
     }
     public function posisis()
     {
-        return $this->hasMany(Posisi::class);
+        return $this->hasMany(Posisi::class , 'lowongan_id');
     }
 }

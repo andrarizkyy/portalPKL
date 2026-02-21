@@ -45,7 +45,7 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:100',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
             'role' => 'required|in:siswa,dudi',
@@ -56,7 +56,8 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role,
-            'profile_completed' => false,
+            'google_id' => null,
+            'is_profile_completed' => false,
         ]);
 
         Auth::login($user, true);
@@ -90,7 +91,7 @@ class AuthController extends Controller
         if ($existingUser) {
             $existingUser->update([
                 'google_id' => $googleUser->getId(),
-                'avatar' => $googleUser->getAvatar(),
+                'profile_photo' => $googleUser->getAvatar(),
             ]);
             Auth::login($existingUser, true);
             return $this->redirectByRole($existingUser);
@@ -130,9 +131,9 @@ class AuthController extends Controller
             'name' => $googleData['name'],
             'email' => $googleData['email'],
             'google_id' => $googleData['id'],
-            'avatar' => $googleData['avatar'],
+            'profile_photo' => $googleData['avatar'],
             'role' => $request->role,
-            'profile_completed' => false,
+            'is_profile_completed' => false,
         ]);
 
         session()->forget('google_user');

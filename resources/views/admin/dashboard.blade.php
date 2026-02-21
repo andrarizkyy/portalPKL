@@ -1,116 +1,81 @@
 @extends('layouts.app')
-
-@section('sidebar')
-<a href="{{ route('admin.dashboard') }}"
-    class="sidebar-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-    </svg>
-    Dashboard
-</a>
-<a href="{{ route('admin.sekolah.index') }}"
-    class="sidebar-link {{ request()->routeIs('admin.sekolah.*') ? 'active' : '' }}">
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-    </svg>
-    Sekolah
-</a>
-<a href="{{ route('admin.jurusan.index') }}"
-    class="sidebar-link {{ request()->routeIs('admin.jurusan.*') ? 'active' : '' }}">
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-    </svg>
-    Jurusan
-</a>
-<a href="{{ route('admin.industry.index') }}"
-    class="sidebar-link {{ request()->routeIs('admin.industry.*') ? 'active' : '' }}">
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-    </svg>
-    Industry
-</a>
-<a href="{{ route('admin.dudi.index') }}" class="sidebar-link {{ request()->routeIs('admin.dudi.*') ? 'active' : '' }}">
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-    </svg>
-    Verifikasi DUDI
-</a>
-@endsection
-
 @section('page-title', 'Dashboard Admin')
-@section('page-subtitle', 'Selamat datang, ' . auth()->user()->name)
+@section('page-subtitle', 'Statistik & Ringkasan Platform')
+@section('sidebar') @include('admin._sidebar') @endsection
 
 @section('content')
-<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-8">
+{{-- Stats grid --}}
+<div
+    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px;">
     <div class="stat-card">
-        <div class="flex items-center justify-between mb-3">
-            <div
-                class="w-11 h-11 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20">
-                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                </svg>
-            </div>
-        </div>
-        <p class="text-2xl font-bold text-slate-800">{{ $stats['sekolahs'] }}</p>
-        <p class="text-sm text-slate-500">Sekolah</p>
+        <div style="font-size: 2rem; margin-bottom: 4px;">🏫</div>
+        <p
+            style="font-size: 0.75rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em;">
+            Sekolah</p>
+        <p style="font-size: 1.75rem; font-weight: 800; color: #1e293b; margin-top: 2px;">{{ $stats['sekolahs'] }}</p>
     </div>
     <div class="stat-card">
-        <div class="flex items-center justify-between mb-3">
-            <div
-                class="w-11 h-11 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/20">
-                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                </svg>
-            </div>
-        </div>
-        <p class="text-2xl font-bold text-slate-800">{{ $stats['jurusans'] }}</p>
-        <p class="text-sm text-slate-500">Jurusan</p>
+        <div style="font-size: 2rem; margin-bottom: 4px;">📚</div>
+        <p
+            style="font-size: 0.75rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em;">
+            Jurusan</p>
+        <p style="font-size: 1.75rem; font-weight: 800; color: #1e293b; margin-top: 2px;">{{ $stats['jurusans'] }}</p>
     </div>
     <div class="stat-card">
-        <div class="flex items-center justify-between mb-3">
-            <div
-                class="w-11 h-11 bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg shadow-amber-500/20">
-                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-            </div>
-        </div>
-        <p class="text-2xl font-bold text-slate-800">{{ $stats['industries'] }}</p>
-        <p class="text-sm text-slate-500">Industry</p>
+        <div style="font-size: 2rem; margin-bottom: 4px;">🏭</div>
+        <p
+            style="font-size: 0.75rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em;">
+            Industri</p>
+        <p style="font-size: 1.75rem; font-weight: 800; color: #1e293b; margin-top: 2px;">{{ $stats['industries'] }}</p>
     </div>
     <div class="stat-card">
-        <div class="flex items-center justify-between mb-3">
-            <div
-                class="w-11 h-11 bg-gradient-to-br from-yellow-500 to-amber-500 rounded-xl flex items-center justify-center shadow-lg shadow-yellow-500/20">
-                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-            </div>
-        </div>
-        <p class="text-2xl font-bold text-slate-800">{{ $stats['dudi_pending'] }}</p>
-        <p class="text-sm text-slate-500">DUDI Pending</p>
+        <div style="font-size: 2rem; margin-bottom: 4px;">⏳</div>
+        <p
+            style="font-size: 0.75rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em;">
+            DUDI Pending</p>
+        <p style="font-size: 1.75rem; font-weight: 800; color: #f59e0b; margin-top: 2px;">{{ $stats['dudi_pending'] }}
+        </p>
     </div>
     <div class="stat-card">
-        <div class="flex items-center justify-between mb-3">
-            <div
-                class="w-11 h-11 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-500/20">
-                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-            </div>
+        <div style="font-size: 2rem; margin-bottom: 4px;">✅</div>
+        <p
+            style="font-size: 0.75rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em;">
+            DUDI Verified</p>
+        <p style="font-size: 1.75rem; font-weight: 800; color: #10b981; margin-top: 2px;">{{ $stats['dudi_verified'] }}
+        </p>
+    </div>
+</div>
+
+@if($stats['dudi_pending'] > 0)
+<div class="card"
+    style="padding: 16px 20px; margin-bottom: 24px; background: linear-gradient(135deg, #fef3c7, #fde68a); border-color: #fcd34d;">
+    <div style="display: flex; align-items: center; gap: 12px;">
+        <span style="font-size: 1.5rem;">⚠️</span>
+        <div style="flex: 1;">
+            <p style="font-weight: 700; color: #92400e; font-size: 0.875rem;">{{ $stats['dudi_pending'] }} DUDI menunggu
+                verifikasi</p>
+            <p style="font-size: 0.8rem; color: #a16207;">Segera tinjau dan verifikasi akun perusahaan yang mendaftar.
+            </p>
         </div>
-        <p class="text-2xl font-bold text-slate-800">{{ $stats['dudi_verified'] }}</p>
-        <p class="text-sm text-slate-500">DUDI Terverifikasi</p>
+        <a href="{{ route('admin.dudi.index', ['status' => 'pending']) }}" class="btn-primary"
+            style="font-size: 0.8rem; padding: 8px 16px;">Tinjau →</a>
+    </div>
+</div>
+@endif
+
+{{-- Quick links --}}
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px;">
+    <div class="card" style="padding: 24px;">
+        <h3 style="font-weight: 700; color: #1e293b; margin-bottom: 4px;">📚 Kelola Jurusan</h3>
+        <p style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 16px;">Kelola data jurusan per sekolah.</p>
+        <a href="{{ route('admin.jurusan.index') }}" class="btn-outline"
+            style="font-size: 0.8rem; padding: 8px 16px;">Lihat Data →</a>
+    </div>
+    <div class="card" style="padding: 24px;">
+        <h3 style="font-weight: 700; color: #1e293b; margin-bottom: 4px;">🛡️ Verifikasi DUDI</h3>
+        <p style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 16px;">Verifikasi akun perusahaan baru.</p>
+        <a href="{{ route('admin.dudi.index') }}" class="btn-outline"
+            style="font-size: 0.8rem; padding: 8px 16px;">Lihat Data →</a>
     </div>
 </div>
 @endsection

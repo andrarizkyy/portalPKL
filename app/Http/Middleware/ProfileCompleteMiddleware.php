@@ -19,7 +19,7 @@ class ProfileCompleteMiddleware
             return $next($request);
         }
 
-        if (!$user->profile_completed) {
+        if (!$user->is_profile_completed) {
             if ($user->isSiswa()) {
                 return redirect()->route('siswa.profil');
             }

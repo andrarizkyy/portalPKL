@@ -11,7 +11,7 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $fillable = [
-        'name', 'email', 'password', 'role', 'google_id', 'avatar', 'profile_completed',
+        'name', 'email', 'password', 'role', 'google_id', 'profile_photo', 'is_profile_completed',
     ];
 
     protected $hidden = [
@@ -23,7 +23,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'profile_completed' => 'boolean',
+            'is_profile_completed' => 'boolean',
         ];
     }
 

@@ -19,7 +19,7 @@
             @forelse($industries as $i => $ind)
             <tr class="border-b border-slate-50 hover:bg-slate-50/50 transition-colors">
                 <td class="px-6 py-4 text-sm text-slate-500">{{ $i + 1 }}</td>
-                <td class="px-6 py-4 text-sm font-semibold text-slate-800">{{ $ind->nama }}</td>
+                <td class="px-6 py-4 text-sm font-semibold text-slate-800">{{ $ind->name }}</td>
                 <td class="px-6 py-4 text-right space-x-2">
                     <a href="{{ route('admin.industry.edit', $ind) }}"
                         class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">Edit</a>

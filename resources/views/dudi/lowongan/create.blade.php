@@ -8,25 +8,24 @@
         @csrf
         <div>
             <label class="block text-sm font-semibold text-slate-700 mb-1.5">Judul Lowongan *</label>
-            <input type="text" name="judul" value="{{ old('judul') }}" class="input-field" required>
+            <input type="text" name="title" value="{{ old('title') }}" class="input-field" required>
         </div>
         <div>
             <label class="block text-sm font-semibold text-slate-700 mb-1.5">Gambar Cover</label>
-            <input type="file" name="gambar" class="input-field" accept="image/*">
+            <input type="file" name="image" class="input-field" accept="image/*">
         </div>
         <div>
             <label class="block text-sm font-semibold text-slate-700 mb-1.5">Deskripsi *</label>
-            <textarea name="deskripsi" rows="5" class="input-field" required>{{ old('deskripsi') }}</textarea>
+            <textarea name="description" rows="5" class="input-field" required>{{ old('description') }}</textarea>
         </div>
         <div class="grid grid-cols-2 gap-4">
             <div>
                 <label class="block text-sm font-semibold text-slate-700 mb-1.5">Tanggal Mulai *</label>
-                <input type="date" name="tanggal_mulai" value="{{ old('tanggal_mulai') }}" class="input-field" required>
+                <input type="date" name="start_date" value="{{ old('start_date') }}" class="input-field" required>
             </div>
             <div>
                 <label class="block text-sm font-semibold text-slate-700 mb-1.5">Tanggal Selesai *</label>
-                <input type="date" name="tanggal_selesai" value="{{ old('tanggal_selesai') }}" class="input-field"
-                    required>
+                <input type="date" name="end_date" value="{{ old('end_date') }}" class="input-field" required>
             </div>
         </div>
 
@@ -35,8 +34,8 @@
             <label class="block text-sm font-semibold text-slate-700 mb-3">Posisi *</label>
             <div id="posisi-container" class="space-y-3">
                 <div class="flex gap-3 posisi-row">
-                    <input type="text" name="posisis[0][nama]" placeholder="Nama Posisi" class="input-field flex-1"
-                        required>
+                    <input type="text" name="posisis[0][position_name]" placeholder="Nama Posisi"
+                        class="input-field flex-1" required>
                     <input type="number" name="posisis[0][kuota]" placeholder="Kuota" class="input-field w-24" min="1"
                         value="1" required>
                     <button type="button" onclick="this.closest('.posisi-row').remove()"
@@ -69,7 +68,7 @@
     function addPosisi() {
         const container = document.getElementById('posisi-container');
         const html = `<div class="flex gap-3 posisi-row">
-        <input type="text" name="posisis[${posisiIndex}][nama]" placeholder="Nama Posisi" class="input-field flex-1" required>
+        <input type="text" name="posisis[${posisiIndex}][position_name]" placeholder="Nama Posisi" class="input-field flex-1" required>
         <input type="number" name="posisis[${posisiIndex}][kuota]" placeholder="Kuota" class="input-field w-24" min="1" value="1" required>
         <button type="button" onclick="this.closest('.posisi-row').remove()" class="text-red-500 hover:text-red-700 px-2">✕</button>
     </div>`;

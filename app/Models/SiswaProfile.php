@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class SiswaProfile extends Model
 {
-    protected $fillable = ['user_id', 'sekolah_id', 'jurusan_id', 'nis', 'phone', 'gender', 'address'];
+    protected $table = 'siswa';
+
+    protected $fillable = ['user_id', 'sekolah_id', 'jurusan_id', 'nis', 'phone', 'gender', 'address', 'kelas'];
 
     public function user()
     {

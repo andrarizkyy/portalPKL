@@ -16,8 +16,8 @@ class AdminController extends Controller
             'sekolahs' => Sekolah::count(),
             'jurusans' => Jurusan::count(),
             'industries' => Industry::count(),
-            'dudi_pending' => DudiProfile::where('status', 'pending')->count(),
-            'dudi_verified' => DudiProfile::where('status', 'verified')->count(),
+            'dudi_pending' => DudiProfile::where('is_verified', false)->count(),
+            'dudi_verified' => DudiProfile::where('is_verified', true)->count(),
         ];
         return view('admin.dashboard', compact('stats'));
     }
@@ -36,8 +36,8 @@ class AdminController extends Controller
 
     public function sekolahStore(Request $request)
     {
-        $request->validate(['nama' => 'required|string|max:255', 'alamat' => 'nullable|string', 'telepon' => 'nullable|string|max:20']);
-        Sekolah::create($request->only('nama', 'alamat', 'telepon'));
+        $request->validate(['name' => 'required|string|max:150', 'address' => 'nullable|string', 'phone' => 'nullable|string|max:20', 'email' => 'nullable|email|max:100']);
+        Sekolah::create($request->only('name', 'address', 'phone', 'email'));
         return redirect()->route('admin.sekolah.index')->with('success', 'Sekolah berhasil ditambahkan.');
     }
 
@@ -48,8 +48,8 @@ class AdminController extends Controller
 
     public function sekolahUpdate(Request $request, Sekolah $sekolah)
     {
-        $request->validate(['nama' => 'required|string|max:255', 'alamat' => 'nullable|string', 'telepon' => 'nullable|string|max:20']);
-        $sekolah->update($request->only('nama', 'alamat', 'telepon'));
+        $request->validate(['name' => 'required|string|max:150', 'address' => 'nullable|string', 'phone' => 'nullable|string|max:20', 'email' => 'nullable|email|max:100']);
+        $sekolah->update($request->only('name', 'address', 'phone', 'email'));
         return redirect()->route('admin.sekolah.index')->with('success', 'Sekolah berhasil diupdate.');
     }
 
@@ -75,8 +75,8 @@ class AdminController extends Controller
 
     public function jurusanStore(Request $request)
     {
-        $request->validate(['sekolah_id' => 'required|exists:sekolahs,id', 'nama' => 'required|string|max:255']);
-        Jurusan::create($request->only('sekolah_id', 'nama'));
+        $request->validate(['sekolah_id' => 'required|exists:sekolah,id', 'name' => 'required|string|max:150']);
+        Jurusan::create($request->only('sekolah_id', 'name'));
         return redirect()->route('admin.jurusan.index')->with('success', 'Jurusan berhasil ditambahkan.');
     }
 
@@ -88,8 +88,8 @@ class AdminController extends Controller
 
     public function jurusanUpdate(Request $request, Jurusan $jurusan)
     {
-        $request->validate(['sekolah_id' => 'required|exists:sekolahs,id', 'nama' => 'required|string|max:255']);
-        $jurusan->update($request->only('sekolah_id', 'nama'));
+        $request->validate(['sekolah_id' => 'required|exists:sekolah,id', 'name' => 'required|string|max:150']);
+        $jurusan->update($request->only('sekolah_id', 'name'));
         return redirect()->route('admin.jurusan.index')->with('success', 'Jurusan berhasil diupdate.');
     }
 
@@ -113,8 +113,8 @@ class AdminController extends Controller
 
     public function industryStore(Request $request)
     {
-        $request->validate(['nama' => 'required|string|max:255']);
-        Industry::create($request->only('nama'));
+        $request->validate(['name' => 'required|string|max:100']);
+        Industry::create($request->only('name'));
         return redirect()->route('admin.industry.index')->with('success', 'Industry berhasil ditambahkan.');
     }
 
@@ -125,8 +125,8 @@ class AdminController extends Controller
 
     public function industryUpdate(Request $request, Industry $industry)
     {
-        $request->validate(['nama' => 'required|string|max:255']);
-        $industry->update($request->only('nama'));
+        $request->validate(['name' => 'required|string|max:100']);
+        $industry->update($request->only('name'));
         return redirect()->route('admin.industry.index')->with('success', 'Industry berhasil diupdate.');
     }
 
@@ -140,8 +140,13 @@ class AdminController extends Controller
     public function dudiIndex(Request $request)
     {
         $query = DudiProfile::with(['user', 'industry']);
-        if ($request->status) {
-            $query->where('status', $request->status);
+        if ($request->has('status')) {
+            if ($request->status === 'verified') {
+                $query->where('is_verified', true);
+            }
+            elseif ($request->status === 'pending') {
+                $query->where('is_verified', false);
+            }
         }
         $dudis = $query->latest()->get();
         return view('admin.dudi.index', compact('dudis'));
@@ -155,9 +160,9 @@ class AdminController extends Controller
 
     public function dudiUpdateStatus(Request $request, DudiProfile $dudi)
     {
-        $request->validate(['status' => 'required|in:verified,rejected']);
-        $dudi->update(['status' => $request->status]);
-        $msg = $request->status === 'verified' ? 'DUDI berhasil diverifikasi.' : 'DUDI ditolak.';
+        $request->validate(['is_verified' => 'required|boolean']);
+        $dudi->update(['is_verified' => $request->boolean('is_verified')]);
+        $msg = $request->boolean('is_verified') ? 'DUDI berhasil diverifikasi.' : 'DUDI ditolak.';
         return redirect()->route('admin.dudi.index')->with('success', $msg);
     }
 }

@@ -16,7 +16,8 @@ class AdminSeeder extends Seeder
             'name' => 'Administrator',
             'password' => Hash::make('password'),
             'role' => 'admin',
-            'profile_completed' => true,
+            'google_id' => null,
+            'is_profile_completed' => true,
         ]
         );
     }

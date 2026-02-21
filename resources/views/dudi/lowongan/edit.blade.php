@@ -9,31 +9,30 @@
         @csrf @method('PUT')
         <div>
             <label class="block text-sm font-semibold text-slate-700 mb-1.5">Judul Lowongan *</label>
-            <input type="text" name="judul" value="{{ old('judul', $lowongan->judul) }}" class="input-field" required>
+            <input type="text" name="title" value="{{ old('title', $lowongan->title) }}" class="input-field" required>
         </div>
         <div>
             <label class="block text-sm font-semibold text-slate-700 mb-1.5">Gambar Cover</label>
-            @if($lowongan->gambar)
-            <img src="{{ asset('storage/' . $lowongan->gambar) }}" class="w-48 h-32 object-cover rounded-lg mb-2">
+            @if($lowongan->image)
+            <img src="{{ asset('storage/' . $lowongan->image) }}" class="w-48 h-32 object-cover rounded-lg mb-2">
             @endif
-            <input type="file" name="gambar" class="input-field" accept="image/*">
+            <input type="file" name="image" class="input-field" accept="image/*">
         </div>
         <div>
             <label class="block text-sm font-semibold text-slate-700 mb-1.5">Deskripsi *</label>
-            <textarea name="deskripsi" rows="5" class="input-field"
-                required>{{ old('deskripsi', $lowongan->deskripsi) }}</textarea>
+            <textarea name="description" rows="5" class="input-field"
+                required>{{ old('description', $lowongan->description) }}</textarea>
         </div>
         <div class="grid grid-cols-2 gap-4">
             <div>
                 <label class="block text-sm font-semibold text-slate-700 mb-1.5">Tanggal Mulai *</label>
-                <input type="date" name="tanggal_mulai"
-                    value="{{ old('tanggal_mulai', $lowongan->tanggal_mulai->format('Y-m-d')) }}" class="input-field"
+                <input type="date" name="start_date"
+                    value="{{ old('start_date', $lowongan->start_date->format('Y-m-d')) }}" class="input-field"
                     required>
             </div>
             <div>
                 <label class="block text-sm font-semibold text-slate-700 mb-1.5">Tanggal Selesai *</label>
-                <input type="date" name="tanggal_selesai"
-                    value="{{ old('tanggal_selesai', $lowongan->tanggal_selesai->format('Y-m-d')) }}"
+                <input type="date" name="end_date" value="{{ old('end_date', $lowongan->end_date->format('Y-m-d')) }}"
                     class="input-field" required>
             </div>
         </div>
@@ -43,8 +42,8 @@
             <div id="posisi-container" class="space-y-3">
                 @foreach($lowongan->posisis as $i => $p)
                 <div class="flex gap-3 posisi-row">
-                    <input type="text" name="posisis[{{ $i }}][nama]" value="{{ $p->nama }}" class="input-field flex-1"
-                        required>
+                    <input type="text" name="posisis[{{ $i }}][position_name]" value="{{ $p->position_name }}"
+                        class="input-field flex-1" required>
                     <input type="number" name="posisis[{{ $i }}][kuota]" value="{{ $p->kuota }}"
                         class="input-field w-24" min="1" required>
                     <button type="button" onclick="this.closest('.posisi-row').remove()"
@@ -78,7 +77,7 @@
     function addPosisi() {
         const container = document.getElementById('posisi-container');
         container.insertAdjacentHTML('beforeend', `<div class="flex gap-3 posisi-row">
-        <input type="text" name="posisis[${posisiIndex}][nama]" placeholder="Nama Posisi" class="input-field flex-1" required>
+        <input type="text" name="posisis[${posisiIndex}][position_name]" placeholder="Nama Posisi" class="input-field flex-1" required>
         <input type="number" name="posisis[${posisiIndex}][kuota]" placeholder="Kuota" class="input-field w-24" min="1" value="1" required>
         <button type="button" onclick="this.closest('.posisi-row').remove()" class="text-red-500 hover:text-red-700 px-2">✕</button>
     </div>`);
