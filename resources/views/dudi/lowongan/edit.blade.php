@@ -39,15 +39,25 @@
 
         <div>
             <label class="block text-sm font-semibold text-slate-700 mb-3">Posisi *</label>
-            <div id="posisi-container" class="space-y-3">
+            <div id="posisi-container" class="space-y-4">
                 @foreach($lowongan->posisis as $i => $p)
-                <div class="flex gap-3 posisi-row">
-                    <input type="text" name="posisis[{{ $i }}][position_name]" value="{{ $p->position_name }}"
-                        class="input-field flex-1" required>
-                    <input type="number" name="posisis[{{ $i }}][kuota]" value="{{ $p->kuota }}"
-                        class="input-field w-24" min="1" required>
-                    <button type="button" onclick="this.closest('.posisi-row').remove()"
-                        class="text-red-500 hover:text-red-700 px-2">✕</button>
+                <div class="posisi-row border border-slate-200 rounded-xl p-4">
+                    <div class="flex items-center justify-between mb-3">
+                        <label class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Posisi {{ $i + 1
+                            }}</label>
+                        <button type="button" onclick="this.closest('.posisi-row').remove()"
+                            class="text-red-400 hover:text-red-600 text-sm font-medium">Hapus</button>
+                    </div>
+                    <div class="mb-3">
+                        <label class="block text-xs font-medium text-slate-500 mb-1">Nama Posisi / Jabatan</label>
+                        <input type="text" name="posisis[{{ $i }}][position_name]" value="{{ $p->position_name }}"
+                            class="input-field" required>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-500 mb-1">Kuota</label>
+                        <input type="number" name="posisis[{{ $i }}][kuota]" value="{{ $p->kuota }}" class="input-field"
+                            style="width: 8rem;" min="1" required>
+                    </div>
                 </div>
                 @endforeach
             </div>
@@ -75,13 +85,22 @@
 <script>
     let posisiIndex = {{ count($lowongan -> posisis) }};
     function addPosisi() {
-        const container = document.getElementById('posisi-container');
-        container.insertAdjacentHTML('beforeend', `<div class="flex gap-3 posisi-row">
-        <input type="text" name="posisis[${posisiIndex}][position_name]" placeholder="Nama Posisi" class="input-field flex-1" required>
-        <input type="number" name="posisis[${posisiIndex}][kuota]" placeholder="Kuota" class="input-field w-24" min="1" value="1" required>
-        <button type="button" onclick="this.closest('.posisi-row').remove()" class="text-red-500 hover:text-red-700 px-2">✕</button>
-    </div>`);
         posisiIndex++;
+        const container = document.getElementById('posisi-container');
+        container.insertAdjacentHTML('beforeend', `<div class="posisi-row border border-slate-200 rounded-xl p-4">
+            <div class="flex items-center justify-between mb-3">
+                <label class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Posisi ${posisiIndex}</label>
+                <button type="button" onclick="this.closest('.posisi-row').remove()" class="text-red-400 hover:text-red-600 text-sm font-medium">Hapus</button>
+            </div>
+            <div class="mb-3">
+                <label class="block text-xs font-medium text-slate-500 mb-1">Nama Posisi / Jabatan</label>
+                <input type="text" name="posisis[${posisiIndex - 1}][position_name]" placeholder="Contoh: Web Developer" class="input-field" required>
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-slate-500 mb-1">Kuota</label>
+                <input type="number" name="posisis[${posisiIndex - 1}][kuota]" placeholder="Kuota" class="input-field" style="width: 8rem;" min="1" value="1" required>
+            </div>
+        </div>`);
     }
 </script>
 @endsection

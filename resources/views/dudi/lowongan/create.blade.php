@@ -32,14 +32,23 @@
         {{-- Dynamic Positions --}}
         <div>
             <label class="block text-sm font-semibold text-slate-700 mb-3">Posisi *</label>
-            <div id="posisi-container" class="space-y-3">
-                <div class="flex gap-3 posisi-row">
-                    <input type="text" name="posisis[0][position_name]" placeholder="Nama Posisi"
-                        class="input-field flex-1" required>
-                    <input type="number" name="posisis[0][kuota]" placeholder="Kuota" class="input-field w-24" min="1"
-                        value="1" required>
-                    <button type="button" onclick="this.closest('.posisi-row').remove()"
-                        class="text-red-500 hover:text-red-700 px-2">✕</button>
+            <div id="posisi-container" class="space-y-4">
+                <div class="posisi-row border border-slate-200 rounded-xl p-4">
+                    <div class="flex items-center justify-between mb-3">
+                        <label class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Posisi 1</label>
+                        <button type="button" onclick="this.closest('.posisi-row').remove()"
+                            class="text-red-400 hover:text-red-600 text-sm font-medium">Hapus</button>
+                    </div>
+                    <div class="mb-3">
+                        <label class="block text-xs font-medium text-slate-500 mb-1">Nama Posisi / Jabatan</label>
+                        <input type="text" name="posisis[0][position_name]" placeholder="Contoh: Web Developer"
+                            class="input-field" required>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-500 mb-1">Kuota</label>
+                        <input type="number" name="posisis[0][kuota]" placeholder="Kuota" class="input-field"
+                            style="width: 8rem;" min="1" value="1" required>
+                    </div>
                 </div>
             </div>
             <button type="button" onclick="addPosisi()"
@@ -66,14 +75,23 @@
 <script>
     let posisiIndex = 1;
     function addPosisi() {
-        const container = document.getElementById('posisi-container');
-        const html = `<div class="flex gap-3 posisi-row">
-        <input type="text" name="posisis[${posisiIndex}][position_name]" placeholder="Nama Posisi" class="input-field flex-1" required>
-        <input type="number" name="posisis[${posisiIndex}][kuota]" placeholder="Kuota" class="input-field w-24" min="1" value="1" required>
-        <button type="button" onclick="this.closest('.posisi-row').remove()" class="text-red-500 hover:text-red-700 px-2">✕</button>
-    </div>`;
-        container.insertAdjacentHTML('beforeend', html);
         posisiIndex++;
+        const container = document.getElementById('posisi-container');
+        const html = `<div class="posisi-row border border-slate-200 rounded-xl p-4">
+            <div class="flex items-center justify-between mb-3">
+                <label class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Posisi ${posisiIndex}</label>
+                <button type="button" onclick="this.closest('.posisi-row').remove()" class="text-red-400 hover:text-red-600 text-sm font-medium">Hapus</button>
+            </div>
+            <div class="mb-3">
+                <label class="block text-xs font-medium text-slate-500 mb-1">Nama Posisi / Jabatan</label>
+                <input type="text" name="posisis[${posisiIndex - 1}][position_name]" placeholder="Contoh: Web Developer" class="input-field" required>
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-slate-500 mb-1">Kuota</label>
+                <input type="number" name="posisis[${posisiIndex - 1}][kuota]" placeholder="Kuota" class="input-field" style="width: 8rem;" min="1" value="1" required>
+            </div>
+        </div>`;
+        container.insertAdjacentHTML('beforeend', html);
     }
 </script>
 @endsection
