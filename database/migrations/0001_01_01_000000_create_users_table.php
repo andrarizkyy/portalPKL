@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->enum('role', ['admin', 'siswa', 'dudi'])->default('siswa');
             $table->string('google_id')->nullable()->unique();
             $table->string('avatar')->nullable();
-            $table->boolean('profile_completed')->default(false);
+            $table->boolean('is_profile_completed')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });
