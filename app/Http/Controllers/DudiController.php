@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DudiProfile;
 use App\Models\Industry;
+use App\Models\Jurusan;
 use App\Models\Lowongan;
 use App\Models\Posisi;
 use App\Models\PendaftaranPkl;
@@ -22,8 +23,8 @@ class DudiController extends Controller
         if ($profile) {
             $stats['lowongans'] = $profile->lowongans()->count();
             $posisiIds = Posisi::whereIn('lowongan_id', $profile->lowongans()->pluck('id'))->pluck('id');
-            $stats['lamaranPending'] = PendaftaranPkl::whereIn('position_id', $posisiIds)->where('status', 'pending')->count();
-            $stats['lamaranApproved'] = PendaftaranPkl::whereIn('position_id', $posisiIds)->where('status', 'approved')->count();
+            $stats['lamaranPending'] = PendaftaranPkl::whereIn('posisi_id', $posisiIds)->where('status', 'pending')->count();
+            $stats['lamaranApproved'] = PendaftaranPkl::whereIn('posisi_id', $posisiIds)->where('status', 'approved')->count();
         }
 
         return view('dudi.dashboard', compact('user', 'profile', 'stats'));
@@ -41,17 +42,17 @@ class DudiController extends Controller
     {
         $request->validate([
             'industry_id' => 'required|exists:industries,id',
-            'company_name' => 'required|string|max:150',
+            'nama_perusahaan' => 'required|string|max:150',
             'website' => 'nullable|url|max:150',
-            'phone' => 'required|string|max:20',
-            'address' => 'required|string',
+            'telepon' => 'required|string|max:20',
+            'alamat' => 'required|string',
         ]);
 
         $user = Auth::user();
 
         DudiProfile::updateOrCreate(
         ['user_id' => $user->id],
-            array_merge($request->only('industry_id', 'company_name', 'website', 'phone', 'address'), ['is_verified' => false])
+            array_merge($request->only('industry_id', 'nama_perusahaan', 'website', 'telepon', 'alamat'), ['status' => 'pending'])
         );
 
         $user->update(['is_profile_completed' => true]);
@@ -63,35 +64,38 @@ class DudiController extends Controller
     public function lowonganIndex()
     {
         $profile = Auth::user()->dudiProfile;
-        $lowongans = $profile ? $profile->lowongans()->with('posisis')->latest()->get() : collect();
+        $lowongans = $profile ? $profile->lowongans()->with('posisis', 'jurusans')->latest()->get() : collect();
         return view('dudi.lowongan.index', compact('lowongans', 'profile'));
     }
 
     public function lowonganCreate()
     {
-        return view('dudi.lowongan.create');
+        $jurusans = Jurusan::with('sekolah')->get();
+        return view('dudi.lowongan.create', compact('jurusans'));
     }
 
     public function lowonganStore(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:150',
-            'image' => 'nullable|image|max:2048',
-            'description' => 'required|string',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after:start_date',
+            'judul' => 'required|string|max:150',
+            'gambar' => 'nullable|image|max:2048',
+            'deskripsi' => 'required|string',
+            'tanggal_mulai' => 'required|date',
+            'tanggal_selesai' => 'required|date|after:tanggal_mulai',
             'posisis' => 'required|array|min:1',
-            'posisis.*.position_name' => 'required|string|max:100',
+            'posisis.*.nama' => 'required|string|max:100',
             'posisis.*.kuota' => 'required|integer|min:1',
+            'jurusan_ids' => 'nullable|array',
+            'jurusan_ids.*' => 'exists:jurusans,id',
         ]);
 
         $profile = Auth::user()->dudiProfile;
-        $data = $request->only('title', 'description', 'start_date', 'end_date');
-        $data['dudi_id'] = $profile->id;
+        $data = $request->only('judul', 'deskripsi', 'tanggal_mulai', 'tanggal_selesai');
+        $data['dudi_profile_id'] = $profile->id;
         $data['is_published'] = $request->boolean('is_published');
 
-        if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('lowongan', 'public');
+        if ($request->hasFile('gambar')) {
+            $data['gambar'] = $request->file('gambar')->store('lowongan', 'public');
         }
 
         $lowongan = Lowongan::create($data);
@@ -100,21 +104,27 @@ class DudiController extends Controller
             $lowongan->posisis()->create($pos);
         }
 
+        // Sync jurusan
+        if ($request->has('jurusan_ids')) {
+            $lowongan->jurusans()->sync($request->jurusan_ids);
+        }
+
         return redirect()->route('dudi.lowongan.index')->with('success', 'Lowongan berhasil dibuat.');
     }
 
     public function lowonganShow(Lowongan $lowongan)
     {
         $this->authorizeLowongan($lowongan);
-        $lowongan->load('posisis.pendaftaranPkls');
+        $lowongan->load('posisis.pendaftaranPkls', 'jurusans');
         return view('dudi.lowongan.show', compact('lowongan'));
     }
 
     public function lowonganEdit(Lowongan $lowongan)
     {
         $this->authorizeLowongan($lowongan);
-        $lowongan->load('posisis');
-        return view('dudi.lowongan.edit', compact('lowongan'));
+        $lowongan->load('posisis', 'jurusans');
+        $jurusans = Jurusan::with('sekolah')->get();
+        return view('dudi.lowongan.edit', compact('lowongan', 'jurusans'));
     }
 
     public function lowonganUpdate(Request $request, Lowongan $lowongan)
@@ -122,21 +132,23 @@ class DudiController extends Controller
         $this->authorizeLowongan($lowongan);
 
         $request->validate([
-            'title' => 'required|string|max:150',
-            'image' => 'nullable|image|max:2048',
-            'description' => 'required|string',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after:start_date',
+            'judul' => 'required|string|max:150',
+            'gambar' => 'nullable|image|max:2048',
+            'deskripsi' => 'required|string',
+            'tanggal_mulai' => 'required|date',
+            'tanggal_selesai' => 'required|date|after:tanggal_mulai',
             'posisis' => 'required|array|min:1',
-            'posisis.*.position_name' => 'required|string|max:100',
+            'posisis.*.nama' => 'required|string|max:100',
             'posisis.*.kuota' => 'required|integer|min:1',
+            'jurusan_ids' => 'nullable|array',
+            'jurusan_ids.*' => 'exists:jurusans,id',
         ]);
 
-        $data = $request->only('title', 'description', 'start_date', 'end_date');
+        $data = $request->only('judul', 'deskripsi', 'tanggal_mulai', 'tanggal_selesai');
         $data['is_published'] = $request->boolean('is_published');
 
-        if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('lowongan', 'public');
+        if ($request->hasFile('gambar')) {
+            $data['gambar'] = $request->file('gambar')->store('lowongan', 'public');
         }
 
         $lowongan->update($data);
@@ -146,6 +158,9 @@ class DudiController extends Controller
         foreach ($request->posisis as $pos) {
             $lowongan->posisis()->create($pos);
         }
+
+        // Sync jurusan
+        $lowongan->jurusans()->sync($request->jurusan_ids ?? []);
 
         return redirect()->route('dudi.lowongan.index')->with('success', 'Lowongan berhasil diupdate.');
     }
@@ -162,8 +177,8 @@ class DudiController extends Controller
     {
         $profile = Auth::user()->dudiProfile;
         $posisiIds = Posisi::whereIn('lowongan_id', $profile->lowongans()->pluck('id'))->pluck('id');
-        $lamarans = PendaftaranPkl::with(['siswa.user', 'posisi.lowongan', 'sekolah', 'jurusan'])
-            ->whereIn('position_id', $posisiIds)
+        $lamarans = PendaftaranPkl::with(['user', 'posisi.lowongan', 'sekolah', 'jurusan'])
+            ->whereIn('posisi_id', $posisiIds)
             ->latest()
             ->get();
 
@@ -172,7 +187,7 @@ class DudiController extends Controller
 
     public function lamaranShow(PendaftaranPkl $lamaran)
     {
-        $lamaran->load(['siswa.user', 'posisi.lowongan', 'sekolah', 'jurusan']);
+        $lamaran->load(['user', 'posisi.lowongan', 'sekolah', 'jurusan']);
         return view('dudi.lamaran.show', compact('lamaran'));
     }
 
@@ -181,14 +196,6 @@ class DudiController extends Controller
         $request->validate(['status' => 'required|in:approved,rejected']);
         $lamaran->update(['status' => $request->status]);
 
-        // If approved, check if position quota is full
-        if ($request->status === 'approved') {
-            $posisi = $lamaran->posisi;
-            if ($posisi->sisaTempat() <= 0) {
-            // Auto-close: no more quota
-            }
-        }
-
         $msg = $request->status === 'approved' ? 'Lamaran disetujui.' : 'Lamaran ditolak.';
         return back()->with('success', $msg);
     }
@@ -196,7 +203,7 @@ class DudiController extends Controller
     private function authorizeLowongan(Lowongan $lowongan)
     {
         $profile = Auth::user()->dudiProfile;
-        if (!$profile || $lowongan->dudi_id !== $profile->id) {
+        if (!$profile || $lowongan->dudi_profile_id !== $profile->id) {
             abort(403);
         }
     }

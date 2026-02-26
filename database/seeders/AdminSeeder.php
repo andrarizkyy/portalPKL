@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\User;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
 class AdminSeeder extends Seeder
@@ -13,10 +13,9 @@ class AdminSeeder extends Seeder
         User::updateOrCreate(
         ['email' => 'admin@portal.com'],
         [
-            'name' => 'Administrator',
+            'name' => 'Admin Portal',
             'password' => Hash::make('password'),
             'role' => 'admin',
-            'google_id' => null,
             'is_profile_completed' => true,
         ]
         );

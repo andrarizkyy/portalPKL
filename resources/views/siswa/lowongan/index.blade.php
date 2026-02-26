@@ -16,11 +16,11 @@
     <div class="card group overflow-hidden hover:-translate-y-1 transition-all duration-300"
         style="box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);">
         {{-- Cover image / gradient --}}
-        @if($l->image)
+        @if($l->gambar)
         <div class="relative h-44 overflow-hidden">
-            <img src="{{ asset('storage/' . $l->image) }}"
+            <img src="{{ asset('storage/' . $l->gambar) }}"
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                alt="{{ $l->title }}">
+                alt="{{ $l->judul }}">
             <div class="absolute inset-0"
                 style="background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 60%);"></div>
         </div>
@@ -37,10 +37,10 @@
         <div class="p-5">
             {{-- Badges --}}
             <div class="flex flex-wrap items-center gap-2 mb-3">
-                @if($l->dudiProfile->industry->name ?? false)
+                @if($l->dudiProfile->industry->nama ?? false)
                 <span class="text-xs px-2.5 py-1 rounded-lg font-semibold"
                     style="background: rgba(99,102,241,0.1); color: #6366f1;">
-                    {{ $l->dudiProfile->industry->name }}
+                    {{ $l->dudiProfile->industry->nama }}
                 </span>
                 @endif
                 <span class="text-xs px-2.5 py-1 rounded-lg font-semibold text-slate-500 bg-slate-100">
@@ -51,10 +51,10 @@
             {{-- Title and company --}}
             <h3
                 class="text-base font-bold text-slate-800 mb-1 group-hover:text-indigo-600 transition-colors line-clamp-2">
-                {{ $l->title }}</h3>
-            <p class="text-sm text-slate-500 mb-1 font-medium">{{ $l->dudiProfile->company_name ?? '-' }}</p>
+                {{ $l->judul }}</h3>
+            <p class="text-sm text-slate-500 mb-1 font-medium">{{ $l->dudiProfile->nama_perusahaan ?? '-' }}</p>
             <p class="text-xs text-slate-400 mb-4">
-                📅 {{ $l->start_date->format('d M Y') }} — {{ $l->end_date->format('d M Y') }}
+                📅 {{ $l->tanggal_mulai->format('d M Y') }} — {{ $l->tanggal_selesai->format('d M Y') }}
             </p>
 
             <a href="{{ route('siswa.lowongan.show', $l) }}"

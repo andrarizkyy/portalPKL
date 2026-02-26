@@ -9,14 +9,14 @@
             <label class="block text-sm font-semibold text-slate-700 mb-1.5">Sekolah *</label>
             <select name="sekolah_id" class="input-field" required>
                 @foreach($sekolahs as $s)
-                <option value="{{ $s->id }}" {{ $jurusan->sekolah_id == $s->id ? 'selected' : '' }}>{{ $s->name }}
+                <option value="{{ $s->id }}" {{ $jurusan->sekolah_id == $s->id ? 'selected' : '' }}>{{ $s->nama }}
                 </option>
                 @endforeach
             </select>
         </div>
         <div>
             <label class="block text-sm font-semibold text-slate-700 mb-1.5">Nama Jurusan *</label>
-            <input type="text" name="name" value="{{ old('name', $jurusan->name) }}" class="input-field" required>
+            <input type="text" name="nama" value="{{ old('nama', $jurusan->nama) }}" class="input-field" required>
         </div>
         <div class="flex gap-3 pt-2">
             <button type="submit" class="btn-primary">Update</button>

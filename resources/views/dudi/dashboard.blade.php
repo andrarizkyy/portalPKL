@@ -23,7 +23,7 @@
     </div>
 </div>
 
-@elseif($profile && !$profile->is_verified)
+@elseif($profile && $profile->status !== 'verified')
 <div class="rounded-3xl overflow-hidden mb-8"
     style="background: linear-gradient(135deg, #1e40af, #1d4ed8); box-shadow: 0 8px 30px rgba(29,78,216,0.35);">
     <div class="px-8 py-7 flex items-center gap-6">

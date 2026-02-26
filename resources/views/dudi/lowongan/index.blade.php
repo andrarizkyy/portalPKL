@@ -4,7 +4,7 @@
 @section('page-subtitle', 'Kelola semua posisi magang yang Anda buka')
 
 @section('header-actions')
-@if($profile && $profile->is_verified)
+@if($profile && $profile->status === 'verified')
 <a href="{{ route('dudi.lowongan.create') }}" class="btn-primary">
     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -15,7 +15,7 @@
 @endsection
 
 @section('content')
-@if(!$profile || !$profile->is_verified)
+@if(!$profile || $profile->status !== 'verified')
 <div class="card p-8 text-center">
     <div class="text-5xl mb-4">🔒</div>
     <h3 class="font-bold text-slate-700 text-lg mb-2">Akun Belum Terverifikasi</h3>
@@ -40,20 +40,20 @@
             {{-- Info --}}
             <div class="flex-1 min-w-0">
                 <div class="flex items-center gap-3 mb-1 flex-wrap">
-                    <h3 class="text-base font-bold text-slate-800">{{ $l->title }}</h3>
+                    <h3 class="text-base font-bold text-slate-800">{{ $l->judul }}</h3>
                     @if($l->is_published)
                     <span class="badge badge-approved">● Dipublikasikan</span>
                     @else
                     <span class="badge badge-cancelled">○ Draft</span>
                     @endif
                 </div>
-                <p class="text-sm text-slate-500 mb-2">📅 {{ $l->start_date->format('d M Y') }} — {{
-                    $l->end_date->format('d M Y') }}</p>
+                <p class="text-sm text-slate-500 mb-2">📅 {{ $l->tanggal_mulai->format('d M Y') }} — {{
+                    $l->tanggal_selesai->format('d M Y') }}</p>
                 <div class="flex flex-wrap gap-2">
                     @foreach($l->posisis as $p)
                     <span class="text-xs px-2.5 py-1 rounded-lg font-medium"
                         style="background: rgba(99,102,241,0.08); color: #6366f1;">
-                        {{ $p->position_name }} ({{ $p->kuota }})
+                        {{ $p->nama }} ({{ $p->kuota }})
                     </span>
                     @endforeach
                 </div>

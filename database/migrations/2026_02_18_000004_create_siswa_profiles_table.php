@@ -8,10 +8,13 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('siswa_profiles', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('sekolah_id')->constrained('sekolahs')->cascadeOnDelete();
-            $table->foreignId('jurusan_id')->constrained('jurusans')->cascadeOnDelete();
+            $table->uuid('id')->primary();
+            $table->uuid('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->uuid('sekolah_id');
+            $table->foreign('sekolah_id')->references('id')->on('sekolahs')->cascadeOnDelete();
+            $table->uuid('jurusan_id');
+            $table->foreign('jurusan_id')->references('id')->on('jurusans')->cascadeOnDelete();
             $table->string('nis');
             $table->string('phone');
             $table->enum('gender', ['L', 'P']);

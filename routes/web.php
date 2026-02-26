@@ -17,14 +17,21 @@ Route::get('/login', [AuthController::class , 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class , 'login']);
 Route::get('/register', [AuthController::class , 'showRegister'])->name('register');
 Route::post('/register', [AuthController::class , 'register']);
-Route::get('/admin/auth/google', [AuthController::class , 'redirectToGoogle'])->name('google.login');
-Route::get('/admin/auth/google/callback', [AuthController::class , 'handleGoogleCallback']);
 Route::post('/logout', [AuthController::class , 'logout'])->name('logout');
 
+// Google OAuth
+Route::get('/auth/google', [AuthController::class , 'redirectToGoogle'])->name('google.login');
+Route::get('/auth/google/callback', [AuthController::class , 'handleGoogleCallback']);
+
+// Role selection (after Google OAuth for new users)
 Route::middleware('auth')->group(function () {
     Route::get('/select-role', [AuthController::class , 'showRoleSelection'])->name('select.role');
     Route::post('/select-role', [AuthController::class , 'storeRole']);
 });
+
+// Admin login (email/password only)
+Route::get('/admin/login', [AuthController::class , 'showAdminLogin'])->name('admin.login');
+Route::post('/admin/login', [AuthController::class , 'adminLogin']);
 
 // ──── API (jurusan by sekolah) ────
 Route::get('/api/jurusan/{sekolah}', function ($sekolahId) {
@@ -65,6 +72,9 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->grou
     Route::get('/dudi', [AdminController::class , 'dudiIndex'])->name('dudi.index');
     Route::get('/dudi/{dudi}', [AdminController::class , 'dudiShow'])->name('dudi.show');
     Route::put('/dudi/{dudi}/status', [AdminController::class , 'dudiUpdateStatus'])->name('dudi.updateStatus');
+
+    // Siswa Data
+    Route::get('/siswa', [AdminController::class , 'siswaIndex'])->name('siswa.index');
 });
 
 // ══════════════════════════════════════

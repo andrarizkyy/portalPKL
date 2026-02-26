@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('sidebar') @include('siswa._sidebar') @endsection
 @section('page-title', 'Lamar Posisi')
-@section('page-subtitle', $posisi->position_name . ' — ' . $lowongan->title)
+@section('page-subtitle', $posisi->nama . ' — ' . $lowongan->judul)
 
 @section('content')
 <div class="card max-w-2xl">
@@ -9,11 +9,11 @@
         class="p-6 space-y-5">
         @csrf
         <div class="bg-indigo-50 rounded-xl p-4 mb-2 border border-indigo-100">
-            <p class="text-sm text-indigo-800"><strong>Posisi:</strong> {{ $posisi->position_name }}</p>
-            <p class="text-sm text-indigo-800"><strong>Perusahaan:</strong> {{ $lowongan->dudiProfile->company_name
+            <p class="text-sm text-indigo-800"><strong>Posisi:</strong> {{ $posisi->nama }}</p>
+            <p class="text-sm text-indigo-800"><strong>Perusahaan:</strong> {{ $lowongan->dudiProfile->nama_perusahaan
                 }}</p>
-            <p class="text-sm text-indigo-800"><strong>Sekolah:</strong> {{ $user->siswaProfile->sekolah->name }}</p>
-            <p class="text-sm text-indigo-800"><strong>Jurusan:</strong> {{ $user->siswaProfile->jurusan->name }}</p>
+            <p class="text-sm text-indigo-800"><strong>Sekolah:</strong> {{ $user->siswaProfile->sekolah->nama }}</p>
+            <p class="text-sm text-indigo-800"><strong>Jurusan:</strong> {{ $user->siswaProfile->jurusan->nama }}</p>
         </div>
 
         <div>

@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 
 class SiswaProfile extends Model
 {
-    protected $table = 'siswa';
+    use HasUuids;
 
-    protected $fillable = ['user_id', 'sekolah_id', 'jurusan_id', 'nis', 'phone', 'gender', 'address', 'kelas'];
+    protected $table = 'siswa_profiles';
+
+    protected $fillable = ['user_id', 'sekolah_id', 'jurusan_id', 'nis', 'phone', 'gender', 'address'];
 
     public function user()
     {

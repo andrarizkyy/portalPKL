@@ -45,11 +45,11 @@
                     </div>
                 </td>
                 <td class="px-6 py-4">
-                    <span class="text-sm font-medium text-slate-700">{{ $l->posisi->position_name ?? '-' }}</span>
+                    <span class="text-sm font-medium text-slate-700">{{ $l->posisi->nama ?? '-' }}</span>
                 </td>
                 <td class="px-6 py-4">
-                    <p class="text-sm text-slate-600 font-medium">{{ $l->sekolah->name ?? '-' }}</p>
-                    <p class="text-xs text-slate-400">{{ $l->jurusan->name ?? '-' }}</p>
+                    <p class="text-sm text-slate-600 font-medium">{{ $l->sekolah->nama ?? '-' }}</p>
+                    <p class="text-xs text-slate-400">{{ $l->jurusan->nama ?? '-' }}</p>
                 </td>
                 <td class="px-6 py-4 text-sm text-slate-400">{{ $l->created_at->format('d M Y') }}</td>
                 <td class="px-6 py-4">

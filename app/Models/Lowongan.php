@@ -2,30 +2,36 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 
 class Lowongan extends Model
 {
-    protected $table = 'lowongan_pkl';
+    use HasUuids;
 
-    protected $fillable = ['dudi_id', 'title', 'image', 'description', 'start_date', 'end_date', 'is_active', 'is_published'];
+    protected $table = 'lowongans';
+
+    protected $fillable = ['dudi_profile_id', 'judul', 'gambar', 'deskripsi', 'tanggal_mulai', 'tanggal_selesai', 'is_published'];
 
     protected function casts(): array
     {
         return [
-            'start_date' => 'date',
-            'end_date' => 'date',
+            'tanggal_mulai' => 'date',
+            'tanggal_selesai' => 'date',
             'is_published' => 'boolean',
-            'is_active' => 'boolean',
         ];
     }
 
     public function dudiProfile()
     {
-        return $this->belongsTo(DudiProfile::class , 'dudi_id');
+        return $this->belongsTo(DudiProfile::class , 'dudi_profile_id');
     }
     public function posisis()
     {
         return $this->hasMany(Posisi::class , 'lowongan_id');
+    }
+    public function jurusans()
+    {
+        return $this->belongsToMany(Jurusan::class , 'lowongan_jurusan');
     }
 }

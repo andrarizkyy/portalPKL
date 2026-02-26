@@ -8,8 +8,9 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('jurusans', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('sekolah_id')->constrained('sekolahs')->cascadeOnDelete();
+            $table->uuid('id')->primary();
+            $table->uuid('sekolah_id');
+            $table->foreign('sekolah_id')->references('id')->on('sekolahs')->cascadeOnDelete();
             $table->string('nama');
             $table->timestamps();
         });

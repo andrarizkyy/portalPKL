@@ -8,9 +8,11 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('dudi_profiles', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('industry_id')->constrained('industries')->cascadeOnDelete();
+            $table->uuid('id')->primary();
+            $table->uuid('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->uuid('industry_id');
+            $table->foreign('industry_id')->references('id')->on('industries')->cascadeOnDelete();
             $table->string('nama_perusahaan');
             $table->string('website')->nullable();
             $table->string('telepon');

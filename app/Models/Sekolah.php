@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 
 class Sekolah extends Model
 {
-    protected $table = 'sekolah';
+    use HasUuids;
 
-    protected $fillable = ['name', 'address', 'phone', 'email', 'logo', 'website_url'];
+    protected $table = 'sekolahs';
+
+    protected $fillable = ['nama', 'alamat', 'telepon'];
 
     public function jurusans()
     {

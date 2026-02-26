@@ -8,8 +8,9 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('lowongans', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('dudi_profile_id')->constrained('dudi_profiles')->cascadeOnDelete();
+            $table->uuid('id')->primary();
+            $table->uuid('dudi_profile_id');
+            $table->foreign('dudi_profile_id')->references('id')->on('dudi_profiles')->cascadeOnDelete();
             $table->string('judul');
             $table->string('gambar')->nullable();
             $table->text('deskripsi');

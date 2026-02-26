@@ -8,7 +8,7 @@
         @csrf
         <div>
             <label class="block text-sm font-semibold text-slate-700 mb-1.5">Judul Lowongan *</label>
-            <input type="text" name="title" value="{{ old('title') }}" class="input-field" required>
+            <input type="text" name="judul" value="{{ old('judul') }}" class="input-field" required>
         </div>
         <div>
             <label class="block text-sm font-semibold text-slate-700 mb-1.5">Gambar Cover</label>
@@ -16,16 +16,17 @@
         </div>
         <div>
             <label class="block text-sm font-semibold text-slate-700 mb-1.5">Deskripsi *</label>
-            <textarea name="description" rows="5" class="input-field" required>{{ old('description') }}</textarea>
+            <textarea name="deskripsi" rows="5" class="input-field" required>{{ old('deskripsi') }}</textarea>
         </div>
         <div class="grid grid-cols-2 gap-4">
             <div>
                 <label class="block text-sm font-semibold text-slate-700 mb-1.5">Tanggal Mulai *</label>
-                <input type="date" name="start_date" value="{{ old('start_date') }}" class="input-field" required>
+                <input type="date" name="tanggal_mulai" value="{{ old('tanggal_mulai') }}" class="input-field" required>
             </div>
             <div>
                 <label class="block text-sm font-semibold text-slate-700 mb-1.5">Tanggal Selesai *</label>
-                <input type="date" name="end_date" value="{{ old('end_date') }}" class="input-field" required>
+                <input type="date" name="tanggal_selesai" value="{{ old('tanggal_selesai') }}" class="input-field"
+                    required>
             </div>
         </div>
 
@@ -41,7 +42,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="block text-xs font-medium text-slate-500 mb-1">Nama Posisi / Jabatan</label>
-                        <input type="text" name="posisis[0][position_name]" placeholder="Contoh: Web Developer"
+                        <input type="text" name="posisis[0][nama]" placeholder="Contoh: Web Developer"
                             class="input-field" required>
                     </div>
                     <div>
@@ -84,7 +85,7 @@
             </div>
             <div class="mb-3">
                 <label class="block text-xs font-medium text-slate-500 mb-1">Nama Posisi / Jabatan</label>
-                <input type="text" name="posisis[${posisiIndex - 1}][position_name]" placeholder="Contoh: Web Developer" class="input-field" required>
+                <input type="text" name="posisis[${posisiIndex - 1}][nama]" placeholder="Contoh: Web Developer" class="input-field" required>
             </div>
             <div>
                 <label class="block text-xs font-medium text-slate-500 mb-1">Kuota</label>

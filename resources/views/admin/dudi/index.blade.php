@@ -55,11 +55,11 @@
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-white shrink-0 text-sm"
                             style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">
-                            {{ strtoupper(substr($d->company_name, 0, 1)) }}
+                            {{ strtoupper(substr($d->nama_perusahaan, 0, 1)) }}
                         </div>
                         <div>
-                            <p class="font-semibold text-slate-800 text-sm">{{ $d->company_name }}</p>
-                            <p class="text-xs text-slate-400">{{ $d->phone }}</p>
+                            <p class="font-semibold text-slate-800 text-sm">{{ $d->nama_perusahaan }}</p>
+                            <p class="text-xs text-slate-400">{{ $d->telepon }}</p>
                         </div>
                     </div>
                 </td>
@@ -70,13 +70,13 @@
                 <td class="px-6 py-4">
                     <span class="text-xs px-2.5 py-1 rounded-lg font-medium"
                         style="background: rgba(99,102,241,0.08); color: #6366f1;">
-                        {{ $d->industry->name ?? '-' }}
+                        {{ $d->industry->nama ?? '-' }}
                     </span>
                 </td>
                 <td class="px-6 py-4">
-                    @if($d->is_verified)
+                    @if($d->status === 'verified')
                     <span class="badge badge-approved">✅ Verified</span>
-                    @elseif($d->is_verified === false && !is_null($d->is_verified))
+                    @elseif($d->status === 'rejected')
                     <span class="badge badge-rejected">❌ Ditolak</span>
                     @else
                     <span class="badge badge-pending">⏳ Pending</span>

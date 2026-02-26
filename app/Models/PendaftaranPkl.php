@@ -2,39 +2,31 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 
 class PendaftaranPkl extends Model
 {
-    protected $table = 'pendaftaran_pkl';
+    use HasUuids;
+
+    protected $table = 'pendaftaran_pkls';
 
     protected $fillable = [
-        'siswa_id', 'position_id', 'sekolah_id', 'jurusan_id',
-        'cv', 'cover_letter', 'portfolio_url', 'sertifikat',
-        'start_date', 'end_date', 'status', 'apply_date', 'notes',
+        'user_id', 'posisi_id', 'sekolah_id', 'jurusan_id',
+        'cv', 'cover_letter', 'status',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'start_date' => 'date',
-            'end_date' => 'date',
-            'apply_date' => 'date',
-        ];
-    }
-
-    public function siswa()
-    {
-        return $this->belongsTo(SiswaProfile::class , 'siswa_id');
-    }
     public function user()
     {
-        // Convenience: get User via siswa relationship
-        return $this->hasOneThrough(User::class , SiswaProfile::class , 'id', 'id', 'siswa_id', 'user_id');
+        return $this->belongsTo(User::class);
+    }
+    public function siswaProfile()
+    {
+        return $this->hasOneThrough(SiswaProfile::class , User::class , 'id', 'user_id', 'user_id', 'id');
     }
     public function posisi()
     {
-        return $this->belongsTo(Posisi::class , 'position_id');
+        return $this->belongsTo(Posisi::class , 'posisi_id');
     }
     public function sekolah()
     {

@@ -32,10 +32,10 @@
                 <tr class="table-row group">
                     <td class="px-6 py-4">
                         <p class="font-semibold text-slate-800 text-sm">{{ $l->posisi->lowongan->title ?? '-' }}</p>
-                        <p class="text-xs text-slate-400 mt-0.5">{{ $l->posisi->position_name ?? '-' }}</p>
+                        <p class="text-xs text-slate-400 mt-0.5">{{ $l->posisi->nama ?? '-' }}</p>
                     </td>
                     <td class="px-6 py-4 text-sm text-slate-600 font-medium">{{
-                        $l->posisi->lowongan->dudiProfile->company_name ?? '-' }}</td>
+                        $l->posisi->lowongan->dudiProfile->nama_perusahaan ?? '-' }}</td>
                     <td class="px-6 py-4 text-sm text-slate-400">{{ $l->created_at->format('d M Y') }}</td>
                     <td class="px-6 py-4">
                         @php

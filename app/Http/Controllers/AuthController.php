@@ -10,6 +10,7 @@ use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
+    // ──── Login Page ────
     public function showLogin()
     {
         if (Auth::check()) {
@@ -33,7 +34,7 @@ class AuthController extends Controller
         return back()->withErrors(['email' => 'Email atau password salah.'])->onlyInput('email');
     }
 
-    // ──── Manual Register for Siswa / DUDI ────
+    // ──── Register Page (with role selection) ────
     public function showRegister()
     {
         if (Auth::check()) {
@@ -56,7 +57,6 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role,
-            'google_id' => null,
             'is_profile_completed' => false,
         ]);
 
@@ -64,7 +64,36 @@ class AuthController extends Controller
         return $this->redirectByRole($user);
     }
 
-    // ──── Google OAuth ────
+    // ──── Admin Login (separate) ────
+    public function showAdminLogin()
+    {
+        if (Auth::check() && Auth::user()->isAdmin()) {
+            return redirect()->route('admin.dashboard');
+        }
+        return view('auth.admin-login');
+    }
+
+    public function adminLogin(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        if (Auth::attempt($credentials, $request->boolean('remember'))) {
+            $request->session()->regenerate();
+            $user = Auth::user();
+            if ($user->isAdmin()) {
+                return redirect()->route('admin.dashboard');
+            }
+            Auth::logout();
+            return back()->withErrors(['email' => 'Akun ini bukan admin.']);
+        }
+
+        return back()->withErrors(['email' => 'Email atau password salah.'])->onlyInput('email');
+    }
+
+    // ──── Google OAuth (optional) ────
     public function redirectToGoogle()
     {
         return Socialite::driver('google')->redirect();
@@ -79,19 +108,19 @@ class AuthController extends Controller
             return redirect('/login')->withErrors(['google' => 'Login Google gagal: ' . $e->getMessage()]);
         }
 
+        // Existing user with google_id
         $user = User::where('google_id', $googleUser->getId())->first();
-
         if ($user) {
             Auth::login($user, true);
             return $this->redirectByRole($user);
         }
 
-        // Check if email already exists (registered manually)
+        // Email already exists (link google)
         $existingUser = User::where('email', $googleUser->getEmail())->first();
         if ($existingUser) {
             $existingUser->update([
                 'google_id' => $googleUser->getId(),
-                'profile_photo' => $googleUser->getAvatar(),
+                'avatar' => $googleUser->getAvatar(),
             ]);
             Auth::login($existingUser, true);
             return $this->redirectByRole($existingUser);
@@ -110,6 +139,7 @@ class AuthController extends Controller
         return redirect()->route('select.role');
     }
 
+    // ──── Role Selection (after Google OAuth for new users) ────
     public function showRoleSelection()
     {
         if (!session('google_user')) {
@@ -131,17 +161,17 @@ class AuthController extends Controller
             'name' => $googleData['name'],
             'email' => $googleData['email'],
             'google_id' => $googleData['id'],
-            'profile_photo' => $googleData['avatar'],
+            'avatar' => $googleData['avatar'],
             'role' => $request->role,
             'is_profile_completed' => false,
         ]);
 
         session()->forget('google_user');
         Auth::login($user, true);
-
         return $this->redirectByRole($user);
     }
 
+    // ──── Logout ────
     public function logout(Request $request)
     {
         Auth::logout();
@@ -150,8 +180,17 @@ class AuthController extends Controller
         return redirect('/');
     }
 
+    // ──── Redirect Helper ────
     private function redirectByRole($user)
     {
+        if (!$user->is_profile_completed && !$user->isAdmin()) {
+            return match ($user->role) {
+                    'siswa' => redirect()->route('siswa.profil'),
+                    'dudi' => redirect()->route('dudi.profil'),
+                    default => redirect('/'),
+                };
+        }
+
         return match ($user->role) {
                 'admin' => redirect()->route('admin.dashboard'),
                 'siswa' => redirect()->route('siswa.dashboard'),

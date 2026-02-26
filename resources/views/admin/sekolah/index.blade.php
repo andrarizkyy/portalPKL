@@ -24,9 +24,9 @@
             @forelse($sekolahs as $i => $s)
             <tr class="border-b border-slate-50 hover:bg-slate-50/50 transition-colors">
                 <td class="px-6 py-4 text-sm text-slate-500">{{ $i + 1 }}</td>
-                <td class="px-6 py-4 text-sm font-semibold text-slate-800">{{ $s->name }}</td>
-                <td class="px-6 py-4 text-sm text-slate-500">{{ Str::limit($s->address, 40) }}</td>
-                <td class="px-6 py-4 text-sm text-slate-500">{{ $s->phone ?? '-' }}</td>
+                <td class="px-6 py-4 text-sm font-semibold text-slate-800">{{ $s->nama }}</td>
+                <td class="px-6 py-4 text-sm text-slate-500">{{ Str::limit($s->alamat, 40) }}</td>
+                <td class="px-6 py-4 text-sm text-slate-500">{{ $s->telepon ?? '-' }}</td>
                 <td class="px-6 py-4"><span class="badge bg-indigo-100 text-indigo-800">{{ $s->jurusans_count }}
                         jurusan</span></td>
                 <td class="px-6 py-4 text-right space-x-2">

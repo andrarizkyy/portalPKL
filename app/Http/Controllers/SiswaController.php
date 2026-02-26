@@ -16,11 +16,37 @@ class SiswaController extends Controller
     {
         $user = Auth::user();
         $siswa = $user->siswaProfile;
-        $lamaranCount = $siswa ?PendaftaranPkl::where('siswa_id', $siswa->id)->count() : 0;
-        $approvedCount = $siswa ?PendaftaranPkl::where('siswa_id', $siswa->id)->where('status', 'approved')->count() : 0;
+
+        $lamaranCount = $siswa ?PendaftaranPkl::where('user_id', $user->id)->count() : 0;
+        $approvedCount = $siswa ?PendaftaranPkl::where('user_id', $user->id)->where('status', 'approved')->count() : 0;
         $lowonganCount = Lowongan::where('is_published', true)->count();
 
-        return view('siswa.dashboard', compact('user', 'lamaranCount', 'approvedCount', 'lowonganCount'));
+        // Prioritize lowongans matching siswa's jurusan
+        $lowongansRekomendasi = collect();
+        $lowongansLainnya = collect();
+
+        if ($siswa) {
+            $jurusanId = $siswa->jurusan_id;
+            $lowongansRekomendasi = Lowongan::with(['dudiProfile.user', 'dudiProfile.industry', 'posisis', 'jurusans'])
+                ->where('is_published', true)
+                ->whereHas('jurusans', function ($q) use ($jurusanId) {
+                $q->where('jurusans.id', $jurusanId);
+            })
+                ->latest()
+                ->take(6)
+                ->get();
+
+            $lowongansLainnya = Lowongan::with(['dudiProfile.user', 'dudiProfile.industry', 'posisis', 'jurusans'])
+                ->where('is_published', true)
+                ->whereDoesntHave('jurusans', function ($q) use ($jurusanId) {
+                $q->where('jurusans.id', $jurusanId);
+            })
+                ->latest()
+                ->take(6)
+                ->get();
+        }
+
+        return view('siswa.dashboard', compact('user', 'lamaranCount', 'approvedCount', 'lowonganCount', 'lowongansRekomendasi', 'lowongansLainnya'));
     }
 
     public function profil()
@@ -36,11 +62,11 @@ class SiswaController extends Controller
     public function profilUpdate(Request $request)
     {
         $request->validate([
-            'sekolah_id' => 'required|exists:sekolah,id',
-            'jurusan_id' => 'required|exists:jurusan,id',
+            'sekolah_id' => 'required|exists:sekolahs,id',
+            'jurusan_id' => 'required|exists:jurusans,id',
             'nis' => 'required|string|max:50',
             'phone' => 'required|string|max:20',
-            'gender' => 'required|in:male,female',
+            'gender' => 'required|in:L,P',
             'address' => 'required|string',
         ]);
 
@@ -58,20 +84,53 @@ class SiswaController extends Controller
 
     public function lowonganIndex()
     {
-        $lowongans = Lowongan::with(['dudiProfile.user', 'dudiProfile.industry', 'posisis'])
-            ->where('is_published', true)
-            ->latest()
-            ->get();
+        $user = Auth::user();
+        $siswa = $user->siswaProfile;
+
+        if ($siswa) {
+            $jurusanId = $siswa->jurusan_id;
+
+            // Jurusan-matched first, then others
+            $matched = Lowongan::with(['dudiProfile.user', 'dudiProfile.industry', 'posisis', 'jurusans'])
+                ->where('is_published', true)
+                ->whereHas('jurusans', function ($q) use ($jurusanId) {
+                $q->where('jurusans.id', $jurusanId);
+            })
+                ->latest()
+                ->get();
+
+            $others = Lowongan::with(['dudiProfile.user', 'dudiProfile.industry', 'posisis', 'jurusans'])
+                ->where('is_published', true)
+                ->whereDoesntHave('jurusans', function ($q) use ($jurusanId) {
+                $q->where('jurusans.id', $jurusanId);
+            })
+                ->latest()
+                ->get();
+
+            // Also include lowongans with no jurusan filter (available to all)
+            $noJurusan = Lowongan::with(['dudiProfile.user', 'dudiProfile.industry', 'posisis', 'jurusans'])
+                ->where('is_published', true)
+                ->whereDoesntHave('jurusans')
+                ->latest()
+                ->get();
+
+            $lowongans = $matched->merge($noJurusan)->merge($others);
+        }
+        else {
+            $lowongans = Lowongan::with(['dudiProfile.user', 'dudiProfile.industry', 'posisis', 'jurusans'])
+                ->where('is_published', true)
+                ->latest()
+                ->get();
+        }
 
         return view('siswa.lowongan.index', compact('lowongans'));
     }
 
     public function lowonganShow(Lowongan $lowongan)
     {
-        $lowongan->load(['dudiProfile.user', 'dudiProfile.industry', 'posisis.pendaftaranPkls']);
+        $lowongan->load(['dudiProfile.user', 'dudiProfile.industry', 'posisis.pendaftaranPkls', 'jurusans']);
         $user = Auth::user();
-        $siswa = $user->siswaProfile;
-        $appliedPosisiIds = $siswa ?PendaftaranPkl::where('siswa_id', $siswa->id)->pluck('position_id')->toArray() : [];
+        $appliedPosisiIds = PendaftaranPkl::where('user_id', $user->id)->pluck('posisi_id')->toArray();
 
         return view('siswa.lowongan.show', compact('lowongan', 'appliedPosisiIds'));
     }
@@ -92,26 +151,28 @@ class SiswaController extends Controller
         $user = Auth::user();
         $profile = $user->siswaProfile;
 
-        // Check if already applied to this position
-        $existing = PendaftaranPkl::where('siswa_id', $profile->id)->where('position_id', $posisi->id)->first();
+        if (!$profile) {
+            return back()->withErrors(['cv' => 'Lengkapi profil terlebih dahulu.']);
+        }
+
+        // Check if already applied
+        $existing = PendaftaranPkl::where('user_id', $user->id)->where('posisi_id', $posisi->id)->first();
         if ($existing) {
             return back()->withErrors(['cv' => 'Anda sudah melamar posisi ini.']);
         }
 
         $data = [
-            'siswa_id' => $profile->id,
-            'position_id' => $posisi->id,
+            'user_id' => $user->id,
+            'posisi_id' => $posisi->id,
             'sekolah_id' => $profile->sekolah_id,
             'jurusan_id' => $profile->jurusan_id,
             'status' => 'pending',
-            'apply_date' => now()->toDateString(),
-            'start_date' => $posisi->lowongan->start_date->toDateString(),
-            'end_date' => $posisi->lowongan->end_date->toDateString(),
         ];
 
         $data['cv'] = $request->file('cv')->store('cv', 'public');
-        if ($request->hasFile('cover_letter'))
+        if ($request->hasFile('cover_letter')) {
             $data['cover_letter'] = $request->file('cover_letter')->store('cover-letter', 'public');
+        }
 
         PendaftaranPkl::create($data);
 
@@ -121,13 +182,10 @@ class SiswaController extends Controller
     public function lamaranIndex()
     {
         $user = Auth::user();
-        $siswa = $user->siswaProfile;
-        $lamarans = $siswa
-            ?PendaftaranPkl::with(['posisi.lowongan.dudiProfile', 'sekolah', 'jurusan'])
-            ->where('siswa_id', $siswa->id)
+        $lamarans = PendaftaranPkl::with(['posisi.lowongan.dudiProfile', 'sekolah', 'jurusan'])
+            ->where('user_id', $user->id)
             ->latest()
-            ->get()
-            : collect();
+            ->get();
 
         return view('siswa.lamaran.index', compact('lamarans'));
     }

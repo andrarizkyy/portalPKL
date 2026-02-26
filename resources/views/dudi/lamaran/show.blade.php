@@ -24,7 +24,7 @@
         <div class="grid grid-cols-2 gap-6 mb-6">
             <div>
                 <label class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Posisi</label>
-                <p class="text-sm text-slate-800 mt-1">{{ $lamaran->posisi->position_name }}</p>
+                <p class="text-sm text-slate-800 mt-1">{{ $lamaran->posisi->nama }}</p>
             </div>
             <div>
                 <label class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Lowongan</label>
@@ -32,11 +32,11 @@
             </div>
             <div>
                 <label class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Sekolah</label>
-                <p class="text-sm text-slate-800 mt-1">{{ $lamaran->sekolah->name }}</p>
+                <p class="text-sm text-slate-800 mt-1">{{ $lamaran->sekolah->nama }}</p>
             </div>
             <div>
                 <label class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Jurusan</label>
-                <p class="text-sm text-slate-800 mt-1">{{ $lamaran->jurusan->name }}</p>
+                <p class="text-sm text-slate-800 mt-1">{{ $lamaran->jurusan->nama }}</p>
             </div>
             <div>
                 <label class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Tanggal Melamar</label>

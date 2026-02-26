@@ -7,18 +7,17 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('posisis', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+        Schema::create('lowongan_jurusan', function (Blueprint $table) {
             $table->uuid('lowongan_id');
+            $table->uuid('jurusan_id');
             $table->foreign('lowongan_id')->references('id')->on('lowongans')->cascadeOnDelete();
-            $table->string('nama');
-            $table->integer('kuota')->default(1);
-            $table->timestamps();
+            $table->foreign('jurusan_id')->references('id')->on('jurusans')->cascadeOnDelete();
+            $table->primary(['lowongan_id', 'jurusan_id']);
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('posisis');
+        Schema::dropIfExists('lowongan_jurusan');
     }
 };

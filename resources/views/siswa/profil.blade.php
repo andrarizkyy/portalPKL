@@ -13,7 +13,7 @@
                 <option value="">-- Pilih Sekolah --</option>
                 @foreach($sekolahs as $s)
                 <option value="{{ $s->id }}" {{ old('sekolah_id', $profile?->sekolah_id) == $s->id ? 'selected' : ''
-                    }}>{{ $s->name }}</option>
+                    }}>{{ $s->nama }}</option>
                 @endforeach
             </select>
         </div>
@@ -23,7 +23,7 @@
                 <option value="">-- Pilih Jurusan --</option>
                 @foreach($jurusans as $j)
                 <option value="{{ $j->id }}" {{ old('jurusan_id', $profile?->jurusan_id) == $j->id ? 'selected' : ''
-                    }}>{{ $j->name }}</option>
+                    }}>{{ $j->nama }}</option>
                 @endforeach
             </select>
         </div>
@@ -39,9 +39,9 @@
             <label class="block text-sm font-semibold text-slate-700 mb-1.5">Jenis Kelamin *</label>
             <select name="gender" class="input-field" required>
                 <option value="">-- Pilih --</option>
-                <option value="male" {{ old('gender', $profile?->gender) === 'male' ? 'selected' : '' }}>Laki-laki
+                <option value="L" {{ old('gender', $profile?->gender) === 'L' ? 'selected' : '' }}>Laki-laki
                 </option>
-                <option value="female" {{ old('gender', $profile?->gender) === 'female' ? 'selected' : '' }}>Perempuan
+                <option value="P" {{ old('gender', $profile?->gender) === 'P' ? 'selected' : '' }}>Perempuan
                 </option>
             </select>
         </div>
@@ -66,7 +66,7 @@
             .then(data => {
                 jurusanSelect.innerHTML = '<option value="">-- Pilih Jurusan --</option>';
                 data.forEach(j => {
-                    jurusanSelect.innerHTML += `<option value="${j.id}">${j.name}</option>`;
+                    jurusanSelect.innerHTML += `<option value="${j.id}">${j.nama}</option>`;
                 });
             });
     });

@@ -17,25 +17,6 @@
         body {
             background: linear-gradient(140deg, #0a0628 0%, #130d3d 40%, #1e0a4a 75%, #0f0a25 100%);
         }
-
-        .role-card {
-            flex: 1;
-            padding: 14px;
-            border-radius: 14px;
-            cursor: pointer;
-            border: 1.5px solid #e2e8f0;
-            background: #f8fafc;
-            transition: all 0.2s ease;
-        }
-
-        .role-card:has(input:checked) {
-            background: rgba(99, 102, 241, 0.08);
-            border-color: #6366f1;
-        }
-
-        .role-card:hover {
-            background: #f1f5f9;
-        }
     </style>
 </head>
 
@@ -67,44 +48,40 @@
                     <label class="block text-sm font-semibold text-slate-700 mb-1.5">Nama Lengkap</label>
                     <input type="text" name="name" value="{{ old('name') }}"
                         class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 text-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition-all placeholder:text-slate-400"
-                        placeholder="Masukkan nama lengkap" required>
+                        placeholder="Nama lengkap Anda" required>
                 </div>
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-1.5">Email</label>
                     <input type="email" name="email" value="{{ old('email') }}"
                         class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 text-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition-all placeholder:text-slate-400"
-                        placeholder="nama@email.com" required>
+                        placeholder="email@contoh.com" required>
                 </div>
-
                 <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-2">Daftar Sebagai</label>
-                    <div class="flex gap-3">
-                        <label class="role-card">
-                            <input type="radio" name="role" value="siswa" {{ old('role','siswa')==='siswa' ? 'checked'
-                                : '' }} class="hidden">
-                            <div class="text-center">
-                                <div class="text-2xl mb-1">🎓</div>
-                                <p class="text-sm font-bold text-slate-700">Siswa</p>
-                                <p class="text-xs text-slate-400 mt-0.5">Cari magang</p>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">Daftar sebagai</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="relative cursor-pointer">
+                            <input type="radio" name="role" value="siswa" {{ old('role', 'siswa' )==='siswa' ? 'checked'
+                                : '' }} class="peer sr-only">
+                            <div
+                                class="flex items-center justify-center gap-2 py-3 rounded-xl border-2 border-slate-200 text-sm font-semibold text-slate-500 peer-checked:border-blue-500 peer-checked:bg-blue-50 peer-checked:text-blue-700 transition-all">
+                                📚 Siswa
                             </div>
                         </label>
-                        <label class="role-card">
+                        <label class="relative cursor-pointer">
                             <input type="radio" name="role" value="dudi" {{ old('role')==='dudi' ? 'checked' : '' }}
-                                class="hidden">
-                            <div class="text-center">
-                                <div class="text-2xl mb-1">🏢</div>
-                                <p class="text-sm font-bold text-slate-700">DUDI</p>
-                                <p class="text-xs text-slate-400 mt-0.5">Buka lowongan</p>
+                                class="peer sr-only">
+                            <div
+                                class="flex items-center justify-center gap-2 py-3 rounded-xl border-2 border-slate-200 text-sm font-semibold text-slate-500 peer-checked:border-purple-500 peer-checked:bg-purple-50 peer-checked:text-purple-700 transition-all">
+                                🏢 DUDI
                             </div>
                         </label>
                     </div>
                 </div>
-
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-1.5">Password</label>
                     <input type="password" name="password"
                         class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 text-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition-all placeholder:text-slate-400"
-                        placeholder="Minimal 6 karakter" required>
+                        placeholder="Min. 6 karakter" required>
                 </div>
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-1.5">Konfirmasi Password</label>
@@ -116,11 +93,11 @@
                 <button type="submit"
                     class="w-full py-3 rounded-xl font-bold text-white text-sm transition-all hover:opacity-90 hover:-translate-y-0.5 shadow-md"
                     style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">
-                    Daftar Sekarang
+                    Daftar
                 </button>
             </form>
 
-            <div class="relative my-5">
+            <div class="relative my-6">
                 <div class="absolute inset-0 flex items-center">
                     <div class="w-full border-t border-slate-100"></div>
                 </div>
@@ -128,8 +105,9 @@
                 </div>
             </div>
 
+            {{-- Google Register --}}
             <a href="{{ route('google.login') }}"
-                class="w-full flex items-center justify-center gap-3 py-3 rounded-xl border border-slate-200 font-semibold text-slate-600 text-sm hover:bg-slate-50 transition-colors">
+                class="w-full flex items-center justify-center gap-3 py-3 rounded-xl border-2 border-slate-100 font-semibold text-slate-600 text-sm hover:bg-slate-50 hover:border-slate-200 transition-all">
                 <svg class="w-5 h-5" viewBox="0 0 24 24">
                     <path fill="#4285F4"
                         d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" />
@@ -142,13 +120,14 @@
                 </svg>
                 Daftar dengan Google
             </a>
+
+            <p class="text-center mt-6 text-sm text-slate-500">
+                Sudah punya akun? <a href="{{ route('login') }}"
+                    class="font-semibold text-indigo-600 hover:text-indigo-700">Masuk</a>
+            </p>
         </div>
 
-        <p class="text-center text-sm text-slate-300 mt-6">
-            Sudah punya akun?
-            <a href="{{ route('login') }}" class="font-semibold text-indigo-400 hover:text-indigo-300">Masuk di sini</a>
-        </p>
-        <p class="text-center mt-3">
+        <p class="text-center mt-5">
             <a href="/" class="text-xs text-slate-400 hover:text-slate-500">← Kembali ke Beranda</a>
         </p>
     </div>

@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 
 class Posisi extends Model
 {
-    protected $table = 'lowongan_positions';
+    use HasUuids;
 
-    protected $fillable = ['lowongan_id', 'position_name', 'kuota'];
+    protected $table = 'posisis';
+
+    protected $fillable = ['lowongan_id', 'nama', 'kuota'];
 
     public function lowongan()
     {
@@ -16,7 +19,7 @@ class Posisi extends Model
     }
     public function pendaftaranPkls()
     {
-        return $this->hasMany(PendaftaranPkl::class , 'position_id');
+        return $this->hasMany(PendaftaranPkl::class , 'posisi_id');
     }
 
     public function sisaTempat(): int
