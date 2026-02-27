@@ -18,15 +18,12 @@ Route::get('/register', [AuthController::class , 'showRegister'])->name('registe
 Route::post('/login', [AuthController::class , 'login']);
 Route::post('/logout', [AuthController::class , 'logout'])->name('logout');
 
-// Google OAuth with Role
-Route::get('/auth/google/{role}', [AuthController::class , 'redirectToGoogle'])
+// Google OAuth with Role (Registration) or without Role (Login)
+Route::get('/auth/google/redirect/{role?}', [AuthController::class , 'redirectToGoogle'])
     ->where('role', 'siswa|dudi')
-    ->name('google.login');
+    ->name('google.redirect');
 Route::get('/auth/google/callback', [AuthController::class , 'handleGoogleCallback']);
 
-// Admin login (email/password only)
-Route::get('/admin/login', [AuthController::class , 'showAdminLogin'])->name('admin.login');
-Route::post('/admin/login', [AuthController::class , 'adminLogin']);
 
 // ──── API (jurusan by sekolah) ────
 Route::get('/api/jurusan/{sekolah}', function ($sekolahId) {

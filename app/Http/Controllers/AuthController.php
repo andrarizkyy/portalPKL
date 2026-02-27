@@ -42,39 +42,15 @@ class AuthController extends Controller
         return back()->withErrors(['email' => 'Email atau password salah.'])->onlyInput('email');
     }
 
-    // ──── Admin Login (separate) ────
-    public function showAdminLogin()
-    {
-        if (Auth::check() && Auth::user()->isAdmin()) {
-            return redirect()->route('admin.dashboard');
-        }
-        return view('auth.admin-login');
-    }
-
-    public function adminLogin(Request $request)
-    {
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-
-        if (Auth::attempt($credentials, $request->boolean('remember'))) {
-            $request->session()->regenerate();
-            $user = Auth::user();
-            if ($user->isAdmin()) {
-                return redirect()->route('admin.dashboard');
-            }
-            Auth::logout();
-            return back()->withErrors(['email' => 'Akun ini bukan admin.']);
-        }
-
-        return back()->withErrors(['email' => 'Email atau password salah.'])->onlyInput('email');
-    }
-
     // ──── Google OAuth (Google Only for Siswa/Dudi) ────
-    public function redirectToGoogle($role)
+    public function redirectToGoogle($role = null)
     {
-        session(['google_login_role' => $role]);
+        if ($role) {
+            session(['google_auth_intent' => 'register', 'google_login_role' => $role]);
+        }
+        else {
+            session(['google_auth_intent' => 'login']);
+        }
         return Socialite::driver('google')->redirect();
     }
 
@@ -86,6 +62,8 @@ class AuthController extends Controller
         catch (\Exception $e) {
             return redirect('/login')->withErrors(['google' => 'Login Google gagal: ' . $e->getMessage()]);
         }
+
+        $intent = session('google_auth_intent', 'login');
 
         // Existing user with google_id
         $user = User::where('google_id', $googleUser->getId())->first();
@@ -105,10 +83,15 @@ class AuthController extends Controller
             return $this->redirectByRole($existingUser);
         }
 
-        // New user — get role from session and create user automatically
+        // Handle case where user doesn't exist
+        if ($intent === 'login') {
+            return redirect('/login')->withErrors(['google' => 'Akun belum terdaftar. Silakan daftar terlebih dahulu.']);
+        }
+
+        // New user registration flow
         $role = session('google_login_role');
         if (!$role) {
-            return redirect('/login')->withErrors(['google' => 'Role tidak ditemukan. Silakan masuk kembali.']);
+            return redirect('/login')->withErrors(['google' => 'Role pendaftaran tidak ditemukan. Silakan coba lagi.']);
         }
 
         $user = User::create([
@@ -120,7 +103,7 @@ class AuthController extends Controller
             'is_profile_completed' => false,
         ]);
 
-        session()->forget('google_login_role');
+        session()->forget(['google_auth_intent', 'google_login_role']);
         Auth::login($user, true);
         return $this->redirectByRole($user);
     }

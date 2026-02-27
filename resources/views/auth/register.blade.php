@@ -55,7 +55,7 @@
 
             {{-- Google Register Buttons --}}
             <div class="space-y-4">
-                <a href="{{ route('google.login', 'siswa') }}"
+                <a href="{{ route('google.redirect', 'siswa') }}"
                     class="w-full flex items-center justify-center gap-3 py-4 rounded-xl border-2 border-slate-100 font-semibold text-slate-600 text-sm hover:bg-slate-50 hover:border-slate-200 transition-all">
                     <svg class="w-5 h-5" viewBox="0 0 24 24">
                         <path fill="#4285F4"
@@ -70,7 +70,7 @@
                     Daftar Sebagai Siswa
                 </a>
 
-                <a href="{{ route('google.login', 'dudi') }}"
+                <a href="{{ route('google.redirect', 'dudi') }}"
                     class="w-full flex items-center justify-center gap-3 py-4 rounded-xl border-2 border-slate-100 font-semibold text-slate-600 text-sm hover:bg-slate-50 hover:border-slate-200 transition-all">
                     <svg class="w-5 h-5" viewBox="0 0 24 24">
                         <path fill="#4285F4"
