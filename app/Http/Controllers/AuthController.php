@@ -34,36 +34,6 @@ class AuthController extends Controller
         return back()->withErrors(['email' => 'Email atau password salah.'])->onlyInput('email');
     }
 
-    // ──── Register Page (with role selection) ────
-    public function showRegister()
-    {
-        if (Auth::check()) {
-            return $this->redirectByRole(Auth::user());
-        }
-        return view('auth.register');
-    }
-
-    public function register(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:100',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6|confirmed',
-            'role' => 'required|in:siswa,dudi',
-        ]);
-
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => $request->role,
-            'is_profile_completed' => false,
-        ]);
-
-        Auth::login($user, true);
-        return $this->redirectByRole($user);
-    }
-
     // ──── Admin Login (separate) ────
     public function showAdminLogin()
     {
@@ -93,9 +63,10 @@ class AuthController extends Controller
         return back()->withErrors(['email' => 'Email atau password salah.'])->onlyInput('email');
     }
 
-    // ──── Google OAuth (optional) ────
-    public function redirectToGoogle()
+    // ──── Google OAuth (Google Only for Siswa/Dudi) ────
+    public function redirectToGoogle($role)
     {
+        session(['google_login_role' => $role]);
         return Socialite::driver('google')->redirect();
     }
 
@@ -126,47 +97,22 @@ class AuthController extends Controller
             return $this->redirectByRole($existingUser);
         }
 
-        // New user — store Google data in session, redirect to role selection
-        session([
-            'google_user' => [
-                'id' => $googleUser->getId(),
-                'name' => $googleUser->getName(),
-                'email' => $googleUser->getEmail(),
-                'avatar' => $googleUser->getAvatar(),
-            ]
-        ]);
-
-        return redirect()->route('select.role');
-    }
-
-    // ──── Role Selection (after Google OAuth for new users) ────
-    public function showRoleSelection()
-    {
-        if (!session('google_user')) {
-            return redirect('/login');
-        }
-        return view('auth.select-role');
-    }
-
-    public function storeRole(Request $request)
-    {
-        $request->validate(['role' => 'required|in:siswa,dudi']);
-
-        $googleData = session('google_user');
-        if (!$googleData) {
-            return redirect('/login');
+        // New user — get role from session and create user automatically
+        $role = session('google_login_role');
+        if (!$role) {
+            return redirect('/login')->withErrors(['google' => 'Role tidak ditemukan. Silakan masuk kembali.']);
         }
 
         $user = User::create([
-            'name' => $googleData['name'],
-            'email' => $googleData['email'],
-            'google_id' => $googleData['id'],
-            'avatar' => $googleData['avatar'],
-            'role' => $request->role,
+            'name' => $googleUser->getName(),
+            'email' => $googleUser->getEmail(),
+            'google_id' => $googleUser->getId(),
+            'avatar' => $googleUser->getAvatar(),
+            'role' => $role,
             'is_profile_completed' => false,
         ]);
 
-        session()->forget('google_user');
+        session()->forget('google_login_role');
         Auth::login($user, true);
         return $this->redirectByRole($user);
     }

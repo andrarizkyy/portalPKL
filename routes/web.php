@@ -12,22 +12,16 @@ Route::get('/', function () {
     return view('landing');
 })->name('landing');
 
-// ──── AUTH ────
+// ──── AUTH (Google Only for Siswa/Dudi) ────
 Route::get('/login', [AuthController::class , 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class , 'login']);
-Route::get('/register', [AuthController::class , 'showRegister'])->name('register');
-Route::post('/register', [AuthController::class , 'register']);
 Route::post('/logout', [AuthController::class , 'logout'])->name('logout');
 
-// Google OAuth
-Route::get('/auth/google', [AuthController::class , 'redirectToGoogle'])->name('google.login');
+// Google OAuth with Role
+Route::get('/auth/google/{role}', [AuthController::class , 'redirectToGoogle'])
+    ->where('role', 'siswa|dudi')
+    ->name('google.login');
 Route::get('/auth/google/callback', [AuthController::class , 'handleGoogleCallback']);
-
-// Role selection (after Google OAuth for new users)
-Route::middleware('auth')->group(function () {
-    Route::get('/select-role', [AuthController::class , 'showRoleSelection'])->name('select.role');
-    Route::post('/select-role', [AuthController::class , 'storeRole']);
-});
 
 // Admin login (email/password only)
 Route::get('/admin/login', [AuthController::class , 'showAdminLogin'])->name('admin.login');
