@@ -2,7 +2,8 @@
 @section('sidebar') @include('admin._sidebar') @endsection
 @section('page-title', 'Tambah Sekolah')
 @section('content')
-<div class="card max-w-2xl">
+<div class="card max-w-2xl"
+    style="background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 100%); border-color: #c7d2fe;">
     <form method="POST" action="{{ route('admin.sekolah.store') }}" class="p-6 space-y-5">
         @csrf
         <div>

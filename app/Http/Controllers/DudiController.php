@@ -41,6 +41,7 @@ class DudiController extends Controller
     public function profilUpdate(Request $request)
     {
         $request->validate([
+            'name' => 'required|string|max:100',
             'industry_id' => 'required|exists:industries,id',
             'nama_perusahaan' => 'required|string|max:150',
             'website' => 'nullable|url|max:150',
@@ -55,7 +56,7 @@ class DudiController extends Controller
             array_merge($request->only('industry_id', 'nama_perusahaan', 'website', 'telepon', 'alamat'), ['status' => 'pending'])
         );
 
-        $user->update(['is_profile_completed' => true]);
+        $user->update(['name' => $request->name, 'is_profile_completed' => true]);
 
         return redirect()->route('dudi.dashboard')->with('success', 'Profil perusahaan berhasil disimpan. Menunggu verifikasi admin.');
     }

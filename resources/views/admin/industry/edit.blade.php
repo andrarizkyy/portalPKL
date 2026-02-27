@@ -2,7 +2,8 @@
 @section('sidebar') @include('admin._sidebar') @endsection
 @section('page-title', 'Edit Industry')
 @section('content')
-<div class="card max-w-2xl">
+<div class="card max-w-2xl"
+    style="background: linear-gradient(135deg, #faf5ff 0%, #f8fafc 100%); border-color: #e9d5ff;">
     <form method="POST" action="{{ route('admin.industry.update', $industry) }}" class="p-6 space-y-5">
         @csrf @method('PUT')
         <div>

@@ -2,7 +2,8 @@
 @section('sidebar') @include('admin._sidebar') @endsection
 @section('page-title', 'Edit Jurusan')
 @section('content')
-<div class="card max-w-2xl">
+<div class="card max-w-2xl"
+    style="background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%); border-color: #bfdbfe;">
     <form method="POST" action="{{ route('admin.jurusan.update', $jurusan) }}" class="p-6 space-y-5">
         @csrf @method('PUT')
         <div>

@@ -127,17 +127,17 @@
 
         /* ── Cards ── */
         .card {
-            background: #fff;
+            background: linear-gradient(135deg, #fafaff 0%, #f8fafc 100%);
             border-radius: 18px;
-            border: 1px solid #f1f5f9;
+            border: 1px solid #e8ecf4;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.03);
         }
 
         .stat-card {
-            background: #fff;
+            background: linear-gradient(135deg, #fafaff 0%, #f8fafc 100%);
             border-radius: 18px;
             padding: 24px;
-            border: 1px solid #f1f5f9;
+            border: 1px solid #e8ecf4;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.03);
             transition: all 0.3s ease;
         }
@@ -145,6 +145,7 @@
         .stat-card:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            background: linear-gradient(135deg, #f5f3ff 0%, #f0f4ff 100%);
         }
 
         /* ── Form ── */
@@ -213,13 +214,13 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            color: #94a3b8;
+            color: #475569;
         }
 
         .table-row td {
             padding: 14px 16px;
             font-size: 0.875rem;
-            color: #475569;
+            color: #334155;
             border-top: 1px solid #f1f5f9;
         }
 
@@ -283,17 +284,106 @@
             color: rgba(255, 255, 255, 0.25);
             padding: 14px 14px 4px;
         }
+
+        /* ── Sidebar toggle system ── */
+        .app-sidebar {
+            width: 256px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            z-index: 30;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .app-sidebar.collapsed {
+            transform: translateX(-100%);
+        }
+
+        .app-main {
+            margin-left: 256px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .app-main.expanded {
+            margin-left: 0;
+        }
+
+        /* Overlay for mobile */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 25;
+            backdrop-filter: blur(4px);
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+        }
+
+        /* Toggle button */
+        .toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            background: #fff;
+            color: #64748b;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .toggle-btn:hover {
+            background: #f1f5f9;
+            color: #334155;
+            border-color: #cbd5e1;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 767px) {
+            .app-sidebar {
+                transform: translateX(-100%);
+            }
+
+            .app-sidebar.mobile-open {
+                transform: translateX(0);
+            }
+
+            .app-main {
+                margin-left: 0 !important;
+            }
+
+            .stat-card {
+                padding: 16px;
+            }
+        }
     </style>
 </head>
 
 <body class="bg-slate-50 min-h-screen">
     <div class="flex min-h-screen">
+        {{-- Mobile overlay --}}
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
         {{-- Sidebar --}}
-        <aside class="w-64 fixed h-full z-30 flex flex-col"
+        <aside id="sidebar" class="app-sidebar"
             style="background: linear-gradient(180deg, #0f172a 0%, #1a1040 50%, #0f172a 100%);">
 
             {{-- Logo --}}
-            <div class="px-5 py-5 border-b border-white/[0.06]">
+            <div class="px-5 py-5 border-b border-white/[0.06] flex items-center justify-between">
                 <a href="/" class="flex items-center gap-3">
                     <div class="w-9 h-9 rounded-xl flex items-center justify-center font-black text-white text-base shadow-lg"
                         style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">P</div>
@@ -303,6 +393,14 @@
                             auth()->user()->role ?? '' }}</p>
                     </div>
                 </a>
+                {{-- Close sidebar button (inside sidebar) --}}
+                <button onclick="toggleSidebar()"
+                    class="w-7 h-7 rounded-lg flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
+                    </svg>
+                </button>
             </div>
 
             {{-- Nav --}}
@@ -343,15 +441,25 @@
         </aside>
 
         {{-- Main --}}
-        <main class="flex-1 ml-64 min-h-screen flex flex-col">
+        <main id="mainContent" class="app-main">
             {{-- Topbar --}}
-            <header class="sticky top-0 z-20 px-8 py-4 flex items-center justify-between"
-                style="background: rgba(248,250,252,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid #f1f5f9;">
-                <div>
-                    <h1 class="text-lg font-bold text-slate-800 leading-none">@yield('page-title', 'Dashboard')</h1>
-                    @hasSection('page-subtitle')
-                    <p class="text-sm text-slate-400 mt-0.5">@yield('page-subtitle')</p>
-                    @endif
+            <header class="sticky top-0 z-20 px-6 py-4 flex items-center justify-between"
+                style="background: rgba(248,250,252,0.92); backdrop-filter: blur(12px); border-bottom: 1.5px solid #cbd5e1; box-shadow: 0 1px 3px rgba(0,0,0,0.06);">
+                <div class="flex items-center gap-3">
+                    {{-- Toggle sidebar --}}
+                    <button class="toggle-btn" onclick="toggleSidebar()" id="toggleBtn" title="Toggle sidebar">
+                        <svg id="toggleIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                    <div>
+                        <h1 class="text-lg font-bold text-slate-800 leading-none">@yield('page-title', 'Dashboard')
+                        </h1>
+                        @hasSection('page-subtitle')
+                        <p class="text-sm text-slate-500 mt-0.5">@yield('page-subtitle')</p>
+                        @endif
+                    </div>
                 </div>
                 <div class="flex items-center gap-3">
                     @yield('header-actions')
@@ -359,7 +467,7 @@
             </header>
 
             {{-- Alerts --}}
-            <div class="px-8 pt-5">
+            <div class="px-6 pt-5">
                 @if(session('success'))
                 <div class="fade-in flex items-center gap-3 px-4 py-3.5 rounded-2xl mb-4 text-sm font-medium"
                     style="background: #ecfdf5; border: 1px solid #a7f3d0; color: #065f46;">
@@ -391,11 +499,68 @@
             </div>
 
             {{-- Content --}}
-            <div class="px-8 pb-8 pt-4 fade-in flex-1">
+            <div class="px-6 pb-6 pt-4 fade-in flex-1">
                 @yield('content')
             </div>
         </main>
     </div>
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
+        const overlay = document.getElementById('sidebarOverlay');
+        const toggleIcon = document.getElementById('toggleIcon');
+        const isMobile = () => window.innerWidth < 768;
+
+        // Load saved state for desktop
+        const savedState = localStorage.getItem('sidebarCollapsed');
+        if (savedState === 'true' && !isMobile()) {
+            sidebar.classList.add('collapsed');
+            mainContent.classList.add('expanded');
+            updateIcon(true);
+        }
+
+        function toggleSidebar() {
+            if (isMobile()) {
+                // Mobile: slide in/out with overlay
+                sidebar.classList.toggle('mobile-open');
+                overlay.classList.toggle('active');
+            } else {
+                // Desktop: collapse/expand with margin shift
+                const isCollapsed = sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+                localStorage.setItem('sidebarCollapsed', isCollapsed);
+                updateIcon(isCollapsed);
+            }
+        }
+
+        function updateIcon(collapsed) {
+            if (collapsed) {
+                toggleIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"/>';
+            } else {
+                toggleIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>';
+            }
+        }
+
+        // Handle resize
+        window.addEventListener('resize', function () {
+            if (!isMobile()) {
+                sidebar.classList.remove('mobile-open');
+                overlay.classList.remove('active');
+                // Restore desktop state
+                const saved = localStorage.getItem('sidebarCollapsed');
+                if (saved === 'true') {
+                    sidebar.classList.add('collapsed');
+                    mainContent.classList.add('expanded');
+                } else {
+                    sidebar.classList.remove('collapsed');
+                    mainContent.classList.remove('expanded');
+                }
+            } else {
+                sidebar.classList.remove('collapsed');
+                mainContent.classList.remove('expanded');
+            }
+        });
+    </script>
     @yield('scripts')
 </body>
 

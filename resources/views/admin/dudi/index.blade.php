@@ -14,37 +14,54 @@
     <a href="{{ route('admin.dudi.index', ['status' => 'pending']) }}"
         class="px-4 py-2 rounded-xl text-sm font-semibold transition-all {{ request('status') === 'pending' ? 'text-white shadow-md' : 'bg-white text-slate-500 border border-slate-200 hover:bg-slate-50' }}"
         @if(request('status')==='pending' ) style="background: linear-gradient(135deg, #f59e0b, #f97316);" @endif>
-        ⏳ Pending
+        <svg style="width:0.875rem;height:0.875rem;display:inline;vertical-align:middle;margin-right:2px" fill="none"
+            stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg> Pending
     </a>
     <a href="{{ route('admin.dudi.index', ['status' => 'verified']) }}"
         class="px-4 py-2 rounded-xl text-sm font-semibold transition-all {{ request('status') === 'verified' ? 'text-white shadow-md' : 'bg-white text-slate-500 border border-slate-200 hover:bg-slate-50' }}"
         @if(request('status')==='verified' ) style="background: linear-gradient(135deg, #10b981, #0d9488);" @endif>
-        ✅ Terverifikasi
+        <svg style="width:0.875rem;height:0.875rem;display:inline;vertical-align:middle;margin-right:2px" fill="none"
+            stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg> Terverifikasi
     </a>
     <a href="{{ route('admin.dudi.index', ['status' => 'rejected']) }}"
         class="px-4 py-2 rounded-xl text-sm font-semibold transition-all {{ request('status') === 'rejected' ? 'text-white shadow-md' : 'bg-white text-slate-500 border border-slate-200 hover:bg-slate-50' }}"
         @if(request('status')==='rejected' ) style="background: linear-gradient(135deg, #ef4444, #ec4899);" @endif>
-        ❌ Ditolak
+        <svg style="width:0.875rem;height:0.875rem;display:inline;vertical-align:middle;margin-right:2px" fill="none"
+            stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg> Ditolak
     </a>
 </div>
 
-<div class="card overflow-hidden">
+<div class="card overflow-hidden"
+    style="background: linear-gradient(135deg, #faf5ff 0%, #f8fafc 100%); border-color: #e9d5ff;">
     @if($dudis->isEmpty())
     <div class="p-16 text-center">
-        <div class="text-6xl mb-4">🏢</div>
+        <div class="text-6xl mb-4"><svg style="width:3rem;height:3rem;color:#94a3b8" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg></div>
         <h3 class="text-xl font-bold text-slate-700 mb-2">Belum Ada Data DUDI</h3>
-        <p class="text-slate-400">Tidak ada perusahaan yang sesuai dengan filter saat ini.</p>
+        <p class="text-slate-600">Tidak ada perusahaan yang sesuai dengan filter saat ini.</p>
     </div>
     @else
     <table class="w-full">
         <thead class="table-header">
             <tr>
-                <th class="text-left px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Perusahaan
+                <th class="text-left px-6 py-4 text-xs font-bold text-slate-600 uppercase tracking-wider">Perusahaan
                 </th>
-                <th class="text-left px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Pemilik Akun
+                <th class="text-left px-6 py-4 text-xs font-bold text-slate-600 uppercase tracking-wider">Pemilik Akun
                 </th>
-                <th class="text-left px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Industri</th>
-                <th class="text-left px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Status</th>
+                <th class="text-left px-6 py-4 text-xs font-bold text-slate-600 uppercase tracking-wider">Industri</th>
+                <th class="text-left px-6 py-4 text-xs font-bold text-slate-600 uppercase tracking-wider">Status</th>
                 <th class="px-6 py-4"></th>
             </tr>
         </thead>
@@ -59,13 +76,13 @@
                         </div>
                         <div>
                             <p class="font-semibold text-slate-800 text-sm">{{ $d->nama_perusahaan }}</p>
-                            <p class="text-xs text-slate-400">{{ $d->telepon }}</p>
+                            <p class="text-xs text-slate-600">{{ $d->telepon }}</p>
                         </div>
                     </div>
                 </td>
                 <td class="px-6 py-4">
                     <p class="text-sm font-medium text-slate-700">{{ $d->user->name }}</p>
-                    <p class="text-xs text-slate-400">{{ $d->user->email }}</p>
+                    <p class="text-xs text-slate-600">{{ $d->user->email }}</p>
                 </td>
                 <td class="px-6 py-4">
                     <span class="text-xs px-2.5 py-1 rounded-lg font-medium"
@@ -75,11 +92,26 @@
                 </td>
                 <td class="px-6 py-4">
                     @if($d->status === 'verified')
-                    <span class="badge badge-approved">✅ Verified</span>
+                    <span class="badge badge-approved"><svg
+                            style="width:0.75rem;height:0.75rem;display:inline;vertical-align:middle;margin-right:2px"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg> Verified</span>
                     @elseif($d->status === 'rejected')
-                    <span class="badge badge-rejected">❌ Ditolak</span>
+                    <span class="badge badge-rejected"><svg
+                            style="width:0.75rem;height:0.75rem;display:inline;vertical-align:middle;margin-right:2px"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg> Ditolak</span>
                     @else
-                    <span class="badge badge-pending">⏳ Pending</span>
+                    <span class="badge badge-pending"><svg
+                            style="width:0.75rem;height:0.75rem;display:inline;vertical-align:middle;margin-right:2px"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg> Pending</span>
                     @endif
                 </td>
                 <td class="px-6 py-4 text-right">

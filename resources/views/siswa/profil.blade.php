@@ -4,9 +4,14 @@
 @section('page-subtitle', $profile ? 'Edit profil Anda' : 'Lengkapi profil untuk mulai melamar PKL')
 
 @section('content')
-<div class="card max-w-2xl">
+<div class="card max-w-2xl"
+    style="background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%); border-color: #bfdbfe;">
     <form method="POST" action="{{ route('siswa.profil.update') }}" class="p-6 space-y-5">
         @csrf
+        <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1.5">Nama Lengkap *</label>
+            <input type="text" name="name" value="{{ old('name', auth()->user()->name) }}" class="input-field" required>
+        </div>
         <div>
             <label class="block text-sm font-semibold text-slate-700 mb-1.5">Sekolah *</label>
             <select name="sekolah_id" id="sekolah_id" class="input-field" required>

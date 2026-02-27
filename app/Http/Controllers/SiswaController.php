@@ -77,7 +77,7 @@ class SiswaController extends Controller
             $request->only('sekolah_id', 'jurusan_id', 'nis', 'phone', 'gender', 'address')
         );
 
-        $user->update(['is_profile_completed' => true]);
+        $user->update(['name' => $request->name, 'is_profile_completed' => true]);
 
         return redirect()->route('siswa.dashboard')->with('success', 'Profil berhasil disimpan.');
     }

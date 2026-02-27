@@ -5,7 +5,7 @@
 <a href="{{ route('admin.industry.create') }}" class="btn-primary">+ Tambah Industry</a>
 @endsection
 @section('content')
-<div class="card">
+<div class="card" style="background: linear-gradient(135deg, #faf5ff 0%, #f8fafc 100%); border-color: #e9d5ff;">
     <table class="w-full">
         <thead>
             <tr class="border-b border-slate-100">
@@ -32,7 +32,7 @@
             </tr>
             @empty
             <tr>
-                <td colspan="3" class="px-6 py-12 text-center text-slate-400">Belum ada data industry.</td>
+                <td colspan="3" class="px-6 py-12 text-center text-slate-600">Belum ada data industry.</td>
             </tr>
             @endforelse
         </tbody>

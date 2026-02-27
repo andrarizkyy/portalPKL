@@ -3,7 +3,8 @@
 @section('page-title', 'Edit Lowongan')
 
 @section('content')
-<div class="card max-w-3xl">
+<div class="card max-w-3xl"
+    style="background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 100%); border-color: #c7d2fe;">
     <form method="POST" action="{{ route('dudi.lowongan.update', $lowongan) }}" enctype="multipart/form-data"
         class="p-6 space-y-5">
         @csrf @method('PUT')

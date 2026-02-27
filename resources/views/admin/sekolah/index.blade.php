@@ -5,7 +5,7 @@
 <a href="{{ route('admin.sekolah.create') }}" class="btn-primary">+ Tambah Sekolah</a>
 @endsection
 @section('content')
-<div class="card">
+<div class="card" style="background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 100%); border-color: #c7d2fe;">
     <table class="w-full">
         <thead>
             <tr class="border-b border-slate-100">
@@ -41,7 +41,7 @@
             </tr>
             @empty
             <tr>
-                <td colspan="6" class="px-6 py-12 text-center text-slate-400">Belum ada data sekolah.</td>
+                <td colspan="6" class="px-6 py-12 text-center text-slate-600">Belum ada data sekolah.</td>
             </tr>
             @endforelse
         </tbody>

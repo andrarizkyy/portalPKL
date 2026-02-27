@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('sidebar') @include('siswa._sidebar') @endsection
 @section('page-title', 'Dashboard')
-@section('page-subtitle', 'Halo, ' . auth()->user()->name . '! 👋')
+@section('page-subtitle', 'Halo, ' . auth()->user()->name . '!')
 
 @section('content')
 @if(!$user->is_profile_completed)
@@ -10,7 +10,11 @@
     style="background: linear-gradient(135deg, #92400e, #b45309); box-shadow: 0 8px 30px rgba(180,83,9,0.3);">
     <div class="px-8 py-7 flex items-center gap-6">
         <div class="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 text-3xl"
-            style="background: rgba(255,255,255,0.15);">⚠️</div>
+            style="background: rgba(255,255,255,0.15);"><svg class="w-6 h-6 text-white" fill="none"
+                stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg></div>
         <div class="flex-1">
             <h3 class="text-xl font-bold text-white mb-1">Profil Belum Lengkap</h3>
             <p class="text-amber-200 text-sm">Lengkapi profil Anda untuk mulai melihat dan melamar lowongan PKL yang
@@ -26,7 +30,8 @@
 @else
 {{-- Stats --}}
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-    <div class="stat-card relative overflow-hidden">
+    <div class="stat-card relative overflow-hidden"
+        style="background: linear-gradient(135deg, #eff6ff 0%, #f0f9ff 100%); border-color: #bfdbfe;">
         <div class="absolute top-0 right-0 w-24 h-24 rounded-full -translate-y-6 translate-x-6 opacity-10"
             style="background: linear-gradient(135deg, #3b82f6, #06b6d4);"></div>
         <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-4 shadow-lg"
@@ -37,9 +42,10 @@
             </svg>
         </div>
         <p class="text-3xl font-black text-slate-800 mb-1">{{ $lowonganCount }}</p>
-        <p class="text-sm text-slate-500 font-medium">Lowongan Tersedia</p>
+        <p class="text-sm text-slate-700 font-medium">Lowongan Tersedia</p>
     </div>
-    <div class="stat-card relative overflow-hidden">
+    <div class="stat-card relative overflow-hidden"
+        style="background: linear-gradient(135deg, #faf5ff 0%, #fdf4ff 100%); border-color: #e9d5ff;">
         <div class="absolute top-0 right-0 w-24 h-24 rounded-full -translate-y-6 translate-x-6 opacity-10"
             style="background: linear-gradient(135deg, #8b5cf6, #ec4899);"></div>
         <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-4"
@@ -50,9 +56,10 @@
             </svg>
         </div>
         <p class="text-3xl font-black text-slate-800 mb-1">{{ $lamaranCount }}</p>
-        <p class="text-sm text-slate-500 font-medium">Total Lamaran</p>
+        <p class="text-sm text-slate-700 font-medium">Total Lamaran</p>
     </div>
-    <div class="stat-card relative overflow-hidden">
+    <div class="stat-card relative overflow-hidden"
+        style="background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%); border-color: #a7f3d0;">
         <div class="absolute top-0 right-0 w-24 h-24 rounded-full -translate-y-6 translate-x-6 opacity-10"
             style="background: linear-gradient(135deg, #10b981, #0d9488);"></div>
         <div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-4"
@@ -63,17 +70,21 @@
             </svg>
         </div>
         <p class="text-3xl font-black text-slate-800 mb-1">{{ $approvedCount }}</p>
-        <p class="text-sm text-slate-500 font-medium">Lamaran Diterima</p>
+        <p class="text-sm text-slate-700 font-medium">Lamaran Diterima</p>
     </div>
 </div>
 
 {{-- Quick action --}}
-<div class="card p-6 flex items-center gap-6">
+<div class="card p-6 flex items-center gap-6"
+    style="background: linear-gradient(135deg, #eef2ff 0%, #f0f4ff 100%); border-color: #c7d2fe;">
     <div class="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl shrink-0"
-        style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">🚀</div>
+        style="background: linear-gradient(135deg, #6366f1, #8b5cf6);"><svg class="w-6 h-6 text-white" fill="none"
+            stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+        </svg></div>
     <div class="flex-1">
         <h3 class="font-bold text-slate-800 text-lg mb-1">Siap Melamar?</h3>
-        <p class="text-slate-500 text-sm">Jelajahi ratusan lowongan PKL dari perusahaan terverifikasi dan temukan yang
+        <p class="text-slate-700 text-sm">Jelajahi ratusan lowongan PKL dari perusahaan terverifikasi dan temukan yang
             sesuai dengan bidang Anda.</p>
     </div>
     <a href="{{ route('siswa.lowongan.index') }}" class="btn-primary shrink-0">

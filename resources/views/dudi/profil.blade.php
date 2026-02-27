@@ -3,9 +3,14 @@
 @section('page-title', 'Profil Perusahaan')
 
 @section('content')
-<div class="card max-w-2xl">
+<div class="card max-w-2xl"
+    style="background: linear-gradient(135deg, #faf5ff 0%, #f8fafc 100%); border-color: #e9d5ff;">
     <form method="POST" action="{{ route('dudi.profil.update') }}" class="p-6 space-y-5">
         @csrf
+        <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1.5">Nama Akun *</label>
+            <input type="text" name="name" value="{{ old('name', auth()->user()->name) }}" class="input-field" required>
+        </div>
         <div>
             <label class="block text-sm font-semibold text-slate-700 mb-1.5">Industry *</label>
             <select name="industry_id" class="input-field" required>

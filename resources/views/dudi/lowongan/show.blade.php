@@ -4,7 +4,8 @@
 
 @section('content')
 <div class="max-w-4xl">
-    <div class="card p-6 mb-6">
+    <div class="card p-6 mb-6"
+        style="background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 100%); border-color: #c7d2fe;">
         @if($lowongan->gambar)
         <img src="{{ asset('storage/' . $lowongan->gambar) }}" class="w-full h-56 object-cover rounded-xl mb-6" alt="">
         @endif
@@ -20,7 +21,7 @@
         </div>
 
         <div class="prose prose-sm max-w-none text-slate-600 mb-6">
-            {!! nl2br(e($lowongan->description)) !!}
+            {!! nl2br(e($lowongan->deskripsi)) !!}
         </div>
 
         <h3 class="text-lg font-bold text-slate-800 mb-4">Posisi & Pelamar</h3>

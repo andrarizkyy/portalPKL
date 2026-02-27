@@ -86,10 +86,14 @@ class AdminController extends Controller
     {
         $request->validate([
             'sekolah_id' => 'required|exists:sekolahs,id',
-            'nama' => 'required|string|max:150',
+            'nama' => 'required|array|min:1',
+            'nama.*' => 'required|string|max:150',
         ]);
-        Jurusan::create($request->only('sekolah_id', 'nama'));
-        return redirect()->route('admin.jurusan.index')->with('success', 'Jurusan berhasil ditambahkan.');
+        foreach ($request->nama as $nama) {
+            Jurusan::create(['sekolah_id' => $request->sekolah_id, 'nama' => $nama]);
+        }
+        $count = count($request->nama);
+        return redirect()->route('admin.jurusan.index')->with('success', "$count jurusan berhasil ditambahkan.");
     }
 
     public function jurusanEdit(Jurusan $jurusan)
