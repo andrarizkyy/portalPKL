@@ -19,6 +19,14 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
+    public function showRegister()
+    {
+        if (Auth::check()) {
+            return $this->redirectByRole(Auth::user());
+        }
+        return view('auth.register');
+    }
+
     public function login(Request $request)
     {
         $credentials = $request->validate([

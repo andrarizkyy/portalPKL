@@ -14,6 +14,7 @@ Route::get('/', function () {
 
 // ──── AUTH (Google Only for Siswa/Dudi) ────
 Route::get('/login', [AuthController::class , 'showLogin'])->name('login');
+Route::get('/register', [AuthController::class , 'showRegister'])->name('register');
 Route::post('/login', [AuthController::class , 'login']);
 Route::post('/logout', [AuthController::class , 'logout'])->name('logout');
 

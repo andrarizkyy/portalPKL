@@ -138,10 +138,10 @@
             <div class="flex items-center gap-3">
                 <a href="{{ route('login') }}"
                     class="text-sm font-medium text-slate-300 hover:text-white transition-colors px-4 py-2">Masuk</a>
-                <a href="{{ route('login') }}"
+                <a href="{{ route('register') }}"
                     class="text-sm font-semibold text-white px-5 py-2.5 rounded-xl transition-all duration-200 hover:opacity-90"
                     style="background: linear-gradient(135deg, #6366f1, #8b5cf6); box-shadow: 0 4px 15px rgba(99,102,241,0.4);">Daftar
-                    Gratis</a>
+                </a>
             </div>
         </div>
     </nav>
@@ -186,7 +186,7 @@
                     </p>
 
                     <div class="slide-up slide-up-4 flex flex-wrap gap-4 mb-14">
-                        <a href="{{ route('login') }}"
+                        <a href="{{ route('register') }}"
                             class="px-8 py-4 rounded-2xl font-bold text-white text-base transition-all duration-300 hover:-translate-y-1"
                             style="background: linear-gradient(135deg, #6366f1, #8b5cf6); box-shadow: 0 8px 30px rgba(99,102,241,0.45);">
                             Mulai Gratis →
@@ -371,7 +371,7 @@
                     <p class="text-indigo-100 text-lg mb-8 max-w-md mx-auto">Bergabung dengan ribuan siswa dan
                         perusahaan yang sudah menggunakan Portal PKL.</p>
                     <div class="flex flex-wrap justify-center gap-4">
-                        <a href="{{ route('login') }}"
+                        <a href="{{ route('register') }}"
                             class="px-8 py-4 bg-white rounded-2xl font-bold text-indigo-600 hover:bg-indigo-50 transition-colors shadow-xl">
                             Daftar Sekarang — Gratis!
                         </a>

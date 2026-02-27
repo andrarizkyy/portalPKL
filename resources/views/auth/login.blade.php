@@ -109,9 +109,15 @@
                     </svg>
                     Masuk Sebagai DUDI
                 </a>
+                <div class="mt-8 pt-6 border-t border-slate-100 text-center">
+                    <p class="text-sm text-slate-500">
+                        Belum punya akun?
+                        <a href="{{ route('register') }}"
+                            class="font-bold text-indigo-600 hover:text-indigo-700">Daftar</a>
+                    </p>
+                </div>
             </div>
         </div>
-    </div>
 </body>
 
 </html>
