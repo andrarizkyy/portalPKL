@@ -97,6 +97,7 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $googleUser->getName(),
             'email' => $googleUser->getEmail(),
+            'password' => Hash::make($googleUser->getId()), // Use Google ID as password hash (temporary)php
             'google_id' => $googleUser->getId(),
             'avatar' => $googleUser->getAvatar(),
             'role' => $role,
