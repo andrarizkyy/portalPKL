@@ -9,7 +9,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
-    @vite(['resources/css/app.css'])
+   @vite(['resources/css/app.css','resources/js/app.js'])
     <style>
         * {
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -127,25 +127,47 @@
 <body class="bg-slate-50 overflow-x-hidden">
 
     {{-- Navbar --}}
-    <nav class="fixed top-0 w-full z-50 transition-all duration-300"
-        style="background: rgba(10,6,40,0.8); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.06);">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-            <a href="/" class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-xl flex items-center justify-center font-black text-white text-sm shadow-lg bg-cover bg-center"
-                    style="background-image: url('/coba4.png');"></div>
-                <span class="text-white font-bold text-lg">Portal <span class="gradient-text">PKL</span></span>
-            </a>
-            <div class="flex items-center gap-3">
-                <a href="{{ route('login') }}"
-                    class="text-sm font-medium text-slate-300 hover:text-white transition-colors px-4 py-2">Masuk</a>
-                <a href="{{ route('register') }}"
-                    class="text-sm font-semibold text-white px-5 py-2.5 rounded-xl transition-all duration-200 hover:opacity-90"
-                    style="background: linear-gradient(135deg, #6366f1, #8b5cf6); box-shadow: 0 4px 15px rgba(99,102,241,0.4);">Daftar
-                </a>
-            </div>
-        </div>
-    </nav>
+    <nav class="fixed top-0 w-full z-50 transition-all duration-300 backdrop-blur-xl border-b border-white/10 bg-[#0a0628]/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
 
+        <!-- LOGO -->
+        <a href="/" class="flex items-center gap-2 sm:gap-3 group">
+
+            <!-- Logo image -->
+            <div class="w-9 h-9 sm:w-10 sm:h-10 lg:w-11 lg:h-11 rounded-xl overflow-hidden shadow-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+
+                <img src="/coba4.png"
+                     alt="logo"
+                     class="w-full h-full object-cover group-hover:scale-110 transition duration-300"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+
+                <!-- fallback letter -->
+                <span class="hidden text-white font-black text-sm">P</span>
+            </div>
+
+            <!-- Text -->
+            <span class="text-white font-bold text-base sm:text-lg lg:text-xl tracking-wide">
+                Portal <span class="gradient-text">PKL</span>
+            </span>
+        </a>
+
+        <!-- RIGHT BUTTON -->
+        <div class="flex items-center gap-2 sm:gap-3">
+
+            <a href="{{ route('login') }}"
+                class="text-xs sm:text-sm font-medium text-slate-300 hover:text-white transition px-3 sm:px-4 py-2">
+                Masuk
+            </a>
+
+            <a href="{{ route('register') }}"
+                class="text-xs sm:text-sm font-semibold text-white px-4 sm:px-5 py-2 rounded-xl transition hover:scale-[1.03]"
+                style="background:linear-gradient(135deg,#6366f1,#8b5cf6); box-shadow:0 4px 15px rgba(99,102,241,.4);">
+                Daftar
+            </a>
+
+        </div>
+    </div>
+</nav>
     {{-- Hero --}}
     <section class="hero-bg min-h-screen flex items-center relative overflow-hidden px-4 sm:px-6">
     
