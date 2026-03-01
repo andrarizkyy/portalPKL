@@ -25,11 +25,11 @@
         {{-- Logo --}}
         <div class="text-center mb-8">
             <a href="/" class="inline-flex items-center gap-3">
-                <div class="w-11 h-11 rounded-xl flex items-center justify-center font-black text-white text-lg shadow-lg"
-                    style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">P</div>
-                <span class="text-2xl font-bold text-white">Portal PKL</span>
+                <div class="w-11 h-11 rounded-xl flex items-center justify-center font-black text-white text-lg shadow-lg bg-cover bg-center"
+                    style="background-image: url('/coba4.png');"></div>
+                <span class="text-2xl font-bold text-white">Portal <span class="gradient-text">PKL</span></span>
             </a>
-            <p class="text-slate-300 mt-2 text-sm">Masuk ke akun Anda</p>
+            <p class="text-slate-300 mt-2 text-sm">Buat akun baru Anda</p>
         </div>
 
         {{-- Card --}}

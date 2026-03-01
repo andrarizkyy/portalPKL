@@ -131,8 +131,8 @@
         style="background: rgba(10,6,40,0.8); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.06);">
         <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
             <a href="/" class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-xl flex items-center justify-center font-black text-white text-sm shadow-lg"
-                    style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">P</div>
+                <div class="w-9 h-9 rounded-xl flex items-center justify-center font-black text-white text-sm shadow-lg bg-cover bg-center"
+                    style="background-image: url('/coba4.png');"></div>
                 <span class="text-white font-bold text-lg">Portal <span class="gradient-text">PKL</span></span>
             </a>
             <div class="flex items-center gap-3">
@@ -147,75 +147,77 @@
     </nav>
 
     {{-- Hero --}}
-    <section class="hero-bg min-h-screen flex items-center relative overflow-hidden">
-        {{-- Background decorations --}}
-        <div class="absolute inset-0 pointer-events-none">
-            <div class="absolute top-32 left-16 w-80 h-80 rounded-full float"
-                style="background: radial-gradient(circle, rgba(99,102,241,0.2) 0%, transparent 70%); filter: blur(40px);">
-            </div>
-            <div class="absolute bottom-32 right-16 w-96 h-96 rounded-full float-delay"
-                style="background: radial-gradient(circle, rgba(139,92,246,0.18) 0%, transparent 70%); filter: blur(50px);">
-            </div>
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full"
-                style="background: radial-gradient(circle, rgba(99,102,241,0.07) 0%, transparent 65%); filter: blur(30px);">
-            </div>
-            {{-- Grid pattern --}}
-            <div class="absolute inset-0 opacity-[0.03]"
-                style="background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px); background-size: 50px 50px;">
-            </div>
+    <section class="hero-bg min-h-screen flex items-center relative overflow-hidden px-4 sm:px-6">
+    
+    <!-- Background -->
+    <div class="absolute inset-0 pointer-events-none">
+        <div class="absolute top-20 left-4 sm:left-16 w-40 sm:w-80 h-40 sm:h-80 rounded-full float"
+            style="background: radial-gradient(circle, rgba(99,102,241,0.2) 0%, transparent 70%); filter: blur(40px);">
         </div>
 
-        <div class="max-w-7xl mx-auto px-6 pt-28 pb-20 relative z-10 w-full">
-            <div class="grid lg:grid-cols-2 gap-16 items-center">
-                <div>
-                    <div class="slide-up slide-up-1 inline-flex items-center gap-2.5 px-4 py-2 rounded-full mb-8 text-sm font-semibold"
-                        style="background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3); color: #a5b4fc;">
-                        <span class="w-2 h-2 rounded-full animate-pulse" style="background: #34d399;"></span>
-                        Portal PKL SMK Negeri 1 Slawi
-                    </div>
+        <div class="absolute bottom-20 right-4 sm:right-16 w-52 sm:w-96 h-52 sm:h-96 rounded-full float-delay"
+            style="background: radial-gradient(circle, rgba(139,92,246,0.18) 0%, transparent 70%); filter: blur(50px);">
+        </div>
 
-                    <h1 class="slide-up slide-up-2 text-5xl lg:text-6xl font-black text-white leading-[1.1] mb-6">
-                        Wujudkan<br>
-                        <span class="gradient-text">Karir Impian</span><br>
-                        <span class="text-slate-200">Mulai dari PKL</span>
-                    </h1>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[700px] h-[300px] sm:h-[700px] rounded-full"
+            style="background: radial-gradient(circle, rgba(99,102,241,0.07) 0%, transparent 65%); filter: blur(30px);">
+        </div>
+    </div>
 
-                    <p class="slide-up slide-up-3 text-lg text-slate-400 mb-10 max-w-lg leading-relaxed">
-                        Hubungkan siswa berbakat dengan perusahaan terbaik. Proses lamaran PKL yang mudah, cepat, dan
-                        terstruktur dalam satu platform.
-                    </p>
+    <div class="max-w-7xl mx-auto pt-24 sm:pt-28 pb-16 sm:pb-20 relative z-10 w-full">
+        <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
-                    <div class="slide-up slide-up-4 flex flex-wrap gap-4 mb-14">
-                        <a href="{{ route('register') }}"
-                            class="px-8 py-4 rounded-2xl font-bold text-white text-base transition-all duration-300 hover:-translate-y-1"
-                            style="background: linear-gradient(135deg, #6366f1, #8b5cf6); box-shadow: 0 8px 30px rgba(99,102,241,0.45);">
-                            Mulai Gratis →
-                        </a>
-                        <a href="#fitur"
-                            class="px-8 py-4 rounded-2xl font-bold text-white text-base transition-all duration-300 hover:bg-white/10"
-                            style="background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);">
-                            Pelajari Fitur
-                        </a>
-                    </div>
+            <!-- LEFT -->
+            <div class="text-center lg:text-left">
 
-                    <div class="slide-up slide-up-4 flex items-center gap-10">
-                        <div>
-                            <p class="text-3xl font-black text-white">500+</p>
-                            <p class="text-xs text-slate-500 mt-0.5">Lowongan PKL</p>
-                        </div>
-                        <div class="w-px h-10 bg-white/10"></div>
-                        <div>
-                            <p class="text-3xl font-black text-white">100%</p>
-                            <p class="text-xs text-slate-500 mt-0.5">Gratis Selamanya</p>
-                        </div>
-                        <div class="w-px h-10 bg-white/10"></div>
-                        <div>
-                            <p class="text-3xl font-black text-white">3x</p>
-                            <p class="text-xs text-slate-500 mt-0.5">Lebih Cepat</p>
-                        </div>
-                    </div>
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6 text-xs sm:text-sm font-semibold"
+                    style="background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3); color: #a5b4fc;">
+                    <span class="w-2 h-2 rounded-full animate-pulse bg-emerald-400"></span>
+                    Portal PKL SMK Negeri 1 Slawi
                 </div>
 
+                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-white leading-tight mb-5">
+                    Wujudkan<br>
+                    <span class="gradient-text">Karir Impian</span><br>
+                    <span class="text-slate-200">Mulai dari PKL</span>
+                </h1>
+
+                <p class="text-sm sm:text-lg text-slate-400 mb-8 max-w-lg mx-auto lg:mx-0">
+                    Hubungkan siswa berbakat dengan perusahaan terbaik. Proses lamaran PKL yang mudah, cepat, dan terstruktur dalam satu platform.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-12 justify-center lg:justify-start">
+                    <a href="{{ route('register') }}"
+                        class="px-6 sm:px-8 py-3 sm:py-4 rounded-2xl font-bold text-white text-sm sm:text-base transition hover:-translate-y-1"
+                        style="background: linear-gradient(135deg,#6366f1,#8b5cf6); box-shadow:0 8px 30px rgba(99,102,241,.45);">
+                        Mulai Gratis →
+                    </a>
+
+                    <a href="#fitur"
+                        class="px-6 sm:px-8 py-3 sm:py-4 rounded-2xl font-bold text-white text-sm sm:text-base transition hover:bg-white/10"
+                        style="background: rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.12);">
+                        Pelajari Fitur
+                    </a>
+                </div>
+
+                <!-- Stats -->
+                <div class="flex justify-center lg:justify-start gap-6 sm:gap-10">
+                    <div>
+                        <p class="text-2xl sm:text-3xl font-black text-white">500+</p>
+                        <p class="text-[10px] sm:text-xs text-slate-500">Lowongan PKL</p>
+                    </div>
+                    <div class="w-px h-8 sm:h-10 bg-white/10"></div>
+                    <div>
+                        <p class="text-2xl sm:text-3xl font-black text-white">100%</p>
+                        <p class="text-[10px] sm:text-xs text-slate-500">Gratis Selamanya</p>
+                    </div>
+                    <div class="w-px h-8 sm:h-10 bg-white/10"></div>
+                    <div>
+                        <p class="text-2xl sm:text-3xl font-black text-white">3x</p>
+                        <p class="text-[10px] sm:text-xs text-slate-500">Lebih Cepat</p>
+                    </div>
+                </div>
+            </div>
                 {{-- Floating UI Card --}}
                 <div class="hidden lg:flex justify-center relative">
                     <div class="relative">
@@ -277,31 +279,31 @@
     </section>
 
     {{-- Features --}}
-    <section id="fitur" class="py-28 bg-white">
-        <div class="max-w-7xl mx-auto px-6">
+    <section id="fitur" class="py-28 bg-slate-50">        
+         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-20">
-                <span class="text-sm font-bold text-indigo-600 uppercase tracking-widest">Fitur Unggulan</span>
-                <h2 class="text-4xl font-black text-slate-900 mt-3 mb-4">Platform Lengkap untuk PKL</h2>
+                <span class="text-sm font-bold text-indigo-400 uppercase tracking-widest">Fitur Unggulan</span>
+                <h2 class="text-4xl font-black text-slate-800 mt-3 mb-4">Platform Lengkap untuk PKL</h2>
                 <p class="text-slate-500 max-w-xl mx-auto">Semua yang Anda butuhkan untuk proses PKL yang sukses, dari
                     pencarian hingga penerimaan.</p>
             </div>
 
             <div class="grid md:grid-cols-3 gap-8">
                 @foreach([
-                ['<svg style="width:1.5rem;height:1.5rem;color:white" fill="none" stroke="currentColor"
+                ['<svg style="width:3rem;height:3rem; background: center; background-size: contain; background-repeat: no-repeat;" fill="none" stroke="#6f44d4" 
                     viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
-                </svg>', 'Untuk Siswa', 'Temukan lowongan PKL yang sesuai bidang studi, lamar dengan mudah, dan pantau
+                </svg>', 'Siswa', 'Temukan lowongan PKL yang sesuai bidang studi, lamar dengan mudah, dan pantau
                 status lamaran secara real-time.', 'from-blue-500 to-cyan-500', 'blue'],
-                ['<svg style="width:1.5rem;height:1.5rem;color:white" fill="none" stroke="currentColor"
+                ['<svg style="width:3rem;height:3rem; background: center; background-size: contain; background-repeat: no-repeat;" fill="none" stroke="#6f44d4" 
                     viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                </svg>', 'Untuk DUDI', 'Buat lowongan, kelola posisi, dan pilih kandidat terbaik dari database siswa
+                </svg>', 'DUDI', 'Buat lowongan, kelola posisi, dan pilih kandidat terbaik dari database siswa
                 yang
                 terverifikasi.', 'from-purple-500 to-pink-500', 'purple'],
-                ['<svg style="width:1.5rem;height:1.5rem;color:white" fill="none" stroke="currentColor"
+                ['<svg style="width:3rem;height:3rem; background: center; background-size: contain; background-repeat: no-repeat;" fill="none" stroke="#6f44d4" 
                     viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -390,9 +392,9 @@
     <footer class="py-10 bg-slate-900">
         <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
             <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-white text-sm"
-                    style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">P</div>
-                <span class="text-white font-bold">Portal PKL</span>
+                 <div class="w-9 h-9 rounded-xl flex items-center justify-center font-black text-white text-sm shadow-lg bg-cover bg-center"
+                    style="background-image: url('/coba4.png');"></div>
+                <span class="text-white font-bold text-lg">Portal <span class="gradient-text">PKL</span></span>
             </div>
             <p class="text-sm text-slate-500">© {{ date('Y') }} Portal PKL. Platform menghubungkan siswa dengan dunia
                 industri.</p>
