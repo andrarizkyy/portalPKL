@@ -1,8 +1,6 @@
 @extends('layouts.app')
 @section('sidebar') @include('siswa._sidebar') @endsection
 @section('page-title', 'Lowongan PKL')
-@section('page-subtitle', 'Temukan posisi magang yang sesuai dengan bidang Anda')
-
 @section('content')
 @if($lowongans->isEmpty())
 <div class="card p-16 text-center"

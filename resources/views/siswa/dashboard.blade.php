@@ -75,19 +75,44 @@
 </div>
 
 {{-- Quick action --}}
-<div class="card p-6 flex items-center gap-6"
-    style="background: linear-gradient(135deg, #eef2ff 0%, #f0f4ff 100%); border-color: #c7d2fe;">
-    <div class="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl shrink-0"
-        style="background: linear-gradient(135deg, #6366f1, #8b5cf6);"><svg class="w-6 h-6 text-white" fill="none"
-            stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-        </svg></div>
-    <div class="flex-1">
-        <h3 class="font-bold text-slate-800 text-lg mb-1">Siap Melamar?</h3>
-        <p class="text-slate-700 text-sm">Jelajahi ratusan lowongan PKL dari perusahaan terverifikasi dan temukan yang
-            sesuai dengan bidang Anda.</p>
+<div class="card p-5 sm:p-6 
+            flex flex-col sm:flex-row 
+            items-start sm:items-center 
+            gap-4 sm:gap-6
+            bg-gradient-to-br from-indigo-50 to-indigo-100 
+            border border-indigo-200 rounded-2xl">
+
+    {{-- Icon --}}
+    <div class="w-12 h-12 sm:w-14 sm:h-14 
+                rounded-2xl 
+                flex items-center justify-center 
+                shrink-0
+                bg-gradient-to-br from-indigo-500 to-purple-500">
+        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24">
+            <path stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+        </svg>
     </div>
-    <a href="{{ route('siswa.lowongan.index') }}" class="btn-primary shrink-0">
+
+    {{-- Text --}}
+    <div class="flex-1">
+        <h3 class="font-bold text-slate-800 text-base sm:text-lg mb-1">
+            Siap Melamar?
+        </h3>
+        <p class="text-slate-600 text-sm leading-relaxed">
+            Jelajahi ratusan lowongan PKL dari perusahaan terverifikasi dan
+            temukan yang sesuai dengan bidang Anda.
+        </p>
+    </div>
+
+    {{-- Button --}}
+    <a href="{{ route('siswa.lowongan.index') }}"
+        class="btn-primary px-4 py-2 sm:px-5 sm:py-3 rounded-2xl font-bold text-sm transition-all hover:bg-indigo-600 shadow-lg">
         Lihat Lowongan →
     </a>
 </div>
