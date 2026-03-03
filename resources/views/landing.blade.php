@@ -349,13 +349,13 @@
 
             <div class="grid md:grid-cols-4 gap-6">
                 @foreach([
-                ['01', 'Daftar Akun', 'Buat akun gratis sebagai siswa atau perusahaan DUDI dalam hitungan detik.',
+                ['01', 'Daftar Akun', 'Daftar akun menggunakan akun Google.',
                 'from-indigo-500 to-blue-600'],
-                ['02', 'Lengkapi Profil', 'Isi data diri lengkap agar perusahaan lebih mudah mengenali Anda.',
+                ['02', 'Lengkapi Profil', 'Isi data diri lengkap agar DUDI lebih mudah mengenali Anda.',
                 'from-purple-500 to-indigo-600'],
-                ['03', 'Cari Lowongan', 'Jelajahi ratusan lowongan PKL dari perusahaan terverifikasi.', 'from-pink-500
+                ['03', 'Cari Lowongan', 'Cari tempat PKL yang sesuai minat dan jurusanmu.', 'from-pink-500
                 to-purple-600'],
-                ['04', 'Mulai PKL', 'Lamar, tunggu konfirmasi, dan mulai pengalaman magang terbaik Anda!',
+                ['04', 'Mulai PKL', 'Kirim lamaran, tunggu kabar baik, dan mulai pengalaman barumu.',
                 'from-emerald-500 to-teal-600'],
                 ] as $i => $step)
                 <div class="relative text-center group">
