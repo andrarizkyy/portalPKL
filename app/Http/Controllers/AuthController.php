@@ -51,13 +51,13 @@ class AuthController extends Controller
         else {
             session(['google_auth_intent' => 'login']);
         }
-        return Socialite::driver('google')->redirect();
+        return Socialite::driver('google')->stateless()->redirect();
     }
 
     public function handleGoogleCallback()
     {
         try {
-            $googleUser = Socialite::driver('google')->user();
+            $googleUser = Socialite::driver('google')->stateless()->user();
         }
         catch (\Exception $e) {
             return redirect('/login')->withErrors(['google' => 'Login Google gagal: ' . $e->getMessage()]);
