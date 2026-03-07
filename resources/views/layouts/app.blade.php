@@ -409,6 +409,7 @@
             </nav>
 
             {{-- User profile --}}
+            @auth
             <div class="px-4 py-4 border-t border-white/[0.06]">
                 <div class="flex items-center gap-3 mb-3 px-2">
                     @if(auth()->user()->profile_photo)
@@ -438,6 +439,7 @@
                     </button>
                 </form>
             </div>
+@endauth
         </aside>
 
         {{-- Main --}}

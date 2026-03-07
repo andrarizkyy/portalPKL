@@ -5,12 +5,11 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\DudiController;
+use App\Http\Controllers\LandingController;
 use App\Models\Jurusan;
 
 // ──── PUBLIC ────
-Route::get('/', function () {
-    return view('landing');
-})->name('landing');
+Route::get('/', [LandingController::class , 'index'])->name('landing');
 
 // ──── AUTH (Google Only for Siswa/Dudi) ────
 Route::get('/login', [AuthController::class , 'showLogin'])->name('login');
@@ -90,6 +89,9 @@ Route::prefix('siswa')->middleware(['auth', 'role:siswa'])->name('siswa.')->grou
 // ══════════════════════════════════════
 //  DUDI ROUTES
 // ══════════════════════════════════════
+
+
+
 Route::prefix('dudi')->middleware(['auth', 'role:dudi'])->name('dudi.')->group(function () {
     Route::get('/', [DudiController::class , 'dashboard'])->name('dashboard');
     Route::get('/profil', [DudiController::class , 'profil'])->name('profil');
@@ -110,3 +112,12 @@ Route::prefix('dudi')->middleware(['auth', 'role:dudi'])->name('dudi.')->group(f
         }
         );
     });
+
+    // ══════════════════════════════════════
+//  PUBLIC PERUSAHAAN ROUTES
+// ══════════════════════════════════════
+Route::get('/perusahaan', [DudiController::class, 'indexPublic'])
+    ->name('perusahaan.index');
+
+Route::get('/perusahaan/{dudi}', [DudiController::class, 'showPublic'])
+    ->name('perusahaan.show');

@@ -208,4 +208,16 @@ class DudiController extends Controller
             abort(403);
         }
     }
+
+public function indexPublic()
+{
+    $dudi = DudiProfile::all();
+    return view('perusahaan.index', compact('dudi'));
+}
+
+public function showPublic($id)
+{
+    $dudi = DudiProfile::findOrFail($id);
+    return view('auth.register', compact('dudi'));
+}
 }

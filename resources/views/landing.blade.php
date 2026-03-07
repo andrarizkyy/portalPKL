@@ -126,40 +126,46 @@
 
 <body class="bg-slate-50 overflow-x-hidden">
 
-    {{-- Navbar --}}
-    <nav class="fixed top-0 w-full z-50 transition-all duration-300"
-        style="background: rgba(10,6,40,0.8); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.06);">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-            <!-- LOGO -->
-        <a href="/" class="flex items-center gap-2 sm:gap-3 group">
+   <nav class="fixed top-0 w-full z-50"
+style="background: rgba(10,6,40,0.8); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.06);">
 
-            <!-- Logo image -->
-            <div class="w-9 h-9 sm:w-10 sm:h-10 lg:w-11 lg:h-11 rounded-xl overflow-hidden shadow-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
 
-                <img src="/coba4.png"
-                     alt="logo"
-                     class="w-full h-full object-cover group-hover:scale-110 transition duration-300"
-                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+<!-- LOGO -->
+<a href="/" class="flex items-center gap-2 group">
 
-                <!-- fallback letter -->
-                <span class="hidden text-white font-black text-sm">P</span>
-            </div>
+<div class="w-10 h-10 sm:w-10 sm:h-10 rounded-xl overflow-hidden shadow-lg
+bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
 
-            <!-- Text -->
-            <span class="text-white font-bold text-base sm:text-lg lg:text-xl tracking-wide">
-                Portal <span class="gradient-text">PKL</span>
-            </span>
-        </a>
-            <div class="flex items-center gap-3">
-                <a href="{{ route('login') }}"
-                    class="text-sm font-medium text-slate-300 hover:text-white transition-colors px-4 py-2">Masuk</a>
-                <a href="{{ route('register') }}"
-                    class="text-sm font-semibold text-white px-5 py-2.5 rounded-xl transition-all duration-200 hover:opacity-90"
-                    style="background: linear-gradient(135deg, #6366f1, #8b5cf6); box-shadow: 0 4px 15px rgba(99,102,241,0.4);">Daftar
-                </a>
-            </div>
-        </div>
-    </nav>
+<img src="/coba4.png"
+alt="logo"
+class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+
+</div>
+
+<span class="text-white font-bold text-sm sm:text-lg tracking-wide">
+Portal <span class="gradient-text">PKL</span>
+</span>
+
+</a>
+
+<div class="flex items-center gap-2 sm:gap-3">
+
+<a href="{{ route('login') }}"
+class="text-xs sm:text-sm font-medium text-slate-300 hover:text-white px-3 py-1.5 sm:px-4 sm:py-2">
+Masuk
+</a>
+
+<a href="{{ route('register') }}"
+class="text-xs sm:text-sm font-semibold text-white px-3 py-1.5 sm:px-5 sm:py-2.5 rounded-xl"
+style="background: linear-gradient(135deg, #6366f1, #8b5cf6); box-shadow: 0 4px 15px rgba(99,102,241,0.4);">
+Daftar
+</a>
+
+</div>
+
+</div>
+</nav>
 
     {{-- Hero --}}
     <section class="hero-bg min-h-screen flex items-center relative overflow-hidden px-4 sm:px-6">
@@ -191,10 +197,10 @@
                     Portal PKL SMK Negeri 1 Slawi
                 </div>
 
-                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-white leading-tight mb-5">
-                    Wujudkan<br>
-                    <span class="gradient-text">Karir Impian</span><br>
-                    <span class="text-slate-200">Mulai dari PKL</span>
+                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-white leading-tight mb-6">
+                    Tingkatkan
+                    <span class="gradient-text">Kompetensi</span><br>
+                    <span class="text-slate-200">Siap Hadapi Tantangan</span>
                 </h1>
 
                 <p class="text-sm sm:text-lg text-slate-400 mb-8 max-w-lg mx-auto lg:mx-0">
@@ -243,22 +249,18 @@
                                 <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold"
                                     style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">PT</div>
                                 <div>
-                                    <p class="text-white font-semibold text-sm">PT Teknologi Maju</p>
-                                    <p class="text-slate-400 text-xs">Jakarta Selatan</p>
+                                    <p class="text-white font-semibold text-sm">{{ $dudi->nama_perusahaan }}</p>
+                                    <p class="text-slate-400 text-xs">{{ $dudi->alamat }}</p>
                                 </div>
                                 <span class="ml-auto text-xs px-2 py-1 rounded-full font-semibold"
                                     style="background: rgba(52,211,153,0.15); color: #34d399;">Open</span>
                             </div>
-                            <p class="text-white font-bold text-lg mb-1">UI/UX Designer Intern</p>
-                            <p class="text-slate-400 text-sm mb-4">Industri Teknologi · Remote</p>
-                            <div class="flex gap-2 mb-5">
-                                <span class="text-xs px-2.5 py-1 rounded-lg font-medium"
-                                    style="background: rgba(99,102,241,0.2); color: #a5b4fc;">Figma</span>
-                                <span class="text-xs px-2.5 py-1 rounded-lg font-medium"
-                                    style="background: rgba(99,102,241,0.2); color: #a5b4fc;">Prototyping</span>
-                            </div>
+                            <p class="text-white font-bold text-lg mb-1">{{ $dudi->posisi ?? 'Magang PKL' }}</p>
+                            <p class="text-slate-400 text-sm mb-4">{{ $dudi->bidang ?? 'Industri' }} . {{ $dudi->tipe ?? 'On Site' }}</p>
+                            <a href="{{ route('register') }}">
                             <button class="w-full py-2.5 rounded-xl text-white font-semibold text-sm"
-                                style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">Lamar Sekarang</button>
+                                style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">Lihat Perusahaan</button>
+                                </a>
                         </div>
                         {{-- Floating notification --}}
                         <div class="absolute -top-4 -right-4 rounded-2xl px-4 py-3 float-delay shadow-2xl"
@@ -270,8 +272,8 @@
                                             d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg></span>
                                 <div>
-                                    <p class="text-white text-xs font-semibold">Lamaran Diterima!</p>
-                                    <p class="text-slate-400 text-[10px]">2 menit yang lalu</p>
+                                    <p class="text-white text-xs font-semibold">Perusahaan Baru</p>
+                                    <p class="text-slate-400 text-[10px]">Baru saja mendaftar</p>
                                 </div>
                             </div>
                         </div>
@@ -282,8 +284,8 @@
                                 <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white"
                                     style="background: linear-gradient(135deg, #10b981, #0d9488);">✓</div>
                                 <div>
-                                    <p class="text-white text-xs font-semibold">Terverifikasi Admin</p>
-                                    <p class="text-slate-400 text-[10px]">Perusahaan terpercaya</p>
+                                    <p class="text-white text-xs font-semibold">Mitra PKL</p>
+                                    <p class="text-slate-400 text-[10px]">SMK Negeri 1 Slawi</p>
                                 </div>
                             </div>
                         </div>
