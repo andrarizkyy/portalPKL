@@ -161,81 +161,14 @@
     {{-- Hero --}}
     <section class="hero-bg min-h-screen flex items-center relative overflow-hidden px-4 sm:px-6">
 
-<<<<<<< HEAD
         <!-- Background decorations -->
         <div class="absolute inset-0 pointer-events-none">
             <div class="absolute top-20 left-4 sm:left-16 w-40 sm:w-80 h-40 sm:h-80 rounded-full float"
                 style="background: radial-gradient(circle, rgba(99,102,241,0.2) 0%, transparent 70%); filter: blur(40px);">
-=======
-        <div class="absolute bottom-20 right-4 sm:right-16 w-52 sm:w-96 h-52 sm:h-96 rounded-full float-delay"
-            style="background: radial-gradient(circle, rgba(139,92,246,0.18) 0%, transparent 70%); filter: blur(50px);">
-        </div>
-
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[700px] h-[300px] sm:h-[700px] rounded-full"
-            style="background: radial-gradient(circle, rgba(99,102,241,0.07) 0%, transparent 65%); filter: blur(30px);">
-        </div>
-    </div>
-
-    <div class="max-w-7xl mx-auto pt-24 sm:pt-28 pb-16 sm:pb-20 relative z-10 w-full">
-        <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-
-            <!-- LEFT -->
-            <div class="text-center lg:text-left">
-
-                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6 text-xs sm:text-sm font-semibold"
-                    style="background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3); color: #a5b4fc;">
-                    <span class="w-2 h-2 rounded-full animate-pulse bg-emerald-400"></span>
-                    Portal PKL SMK
-                </div>
-
-                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-white leading-tight mb-6">
-                    Tingkatkan
-                    <span class="gradient-text">Kompetensi</span><br>
-                    <span class="text-slate-200">Siap Hadapi Tantangan</span>
-                </h1>
-
-                <p class="text-sm sm:text-lg text-slate-400 mb-8 max-w-lg mx-auto lg:mx-0">
-                    Hubungkan siswa berbakat dengan perusahaan terbaik. Proses lamaran PKL yang mudah, cepat, dan terstruktur dalam satu platform.
-                </p>
-
-                <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-12 justify-center lg:justify-start">
-                    <a href="{{ route('register') }}"
-                        class="px-6 sm:px-8 py-3 sm:py-4 rounded-2xl font-bold text-white text-sm sm:text-base transition hover:-translate-y-1"
-                        style="background: linear-gradient(135deg,#6366f1,#8b5cf6); box-shadow:0 8px 30px rgba(99,102,241,.45);">
-                        Mulai Gratis →
-                    </a>
-
-                    <a href="#fitur"
-                        class="px-6 sm:px-8 py-3 sm:py-4 rounded-2xl font-bold text-white text-sm sm:text-base transition hover:bg-white/10"
-                        style="background: rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.12);">
-                        Pelajari Fitur
-                    </a>
-                </div>
-
-                <!-- Stats -->
-                <div class="flex justify-center lg:justify-start gap-6 sm:gap-10">
-                    <div>
-                        <p class="text-2xl sm:text-3xl font-black text-white">500+</p>
-                        <p class="text-[10px] sm:text-xs text-slate-500">Lowongan PKL</p>
-                    </div>
-                    <div class="w-px h-8 sm:h-10 bg-white/10"></div>
-                    <div>
-                        <p class="text-2xl sm:text-3xl font-black text-white">100%</p>
-                        <p class="text-[10px] sm:text-xs text-slate-500">Gratis Selamanya</p>
-                    </div>
-                    <div class="w-px h-8 sm:h-10 bg-white/10"></div>
-                    <div>
-                        <p class="text-2xl sm:text-3xl font-black text-white">3x</p>
-                        <p class="text-[10px] sm:text-xs text-slate-500">Lebih Cepat</p>
-                    </div>
-                </div>
->>>>>>> 38ab5d6 (admin)
             </div>
-
             <div class="absolute bottom-20 right-4 sm:right-16 w-52 sm:w-96 h-52 sm:h-96 rounded-full float-delay"
                 style="background: radial-gradient(circle, rgba(139,92,246,0.18) 0%, transparent 70%); filter: blur(50px);">
             </div>
-
             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[700px] h-[300px] sm:h-[700px] rounded-full"
                 style="background: radial-gradient(circle, rgba(99,102,241,0.07) 0%, transparent 65%); filter: blur(30px);">
             </div>
@@ -250,7 +183,7 @@
                     <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6 text-xs sm:text-sm font-semibold"
                         style="background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3); color: #a5b4fc;">
                         <span class="w-2 h-2 rounded-full animate-pulse bg-emerald-400"></span>
-                        Platform PKL Terpercaya
+                        Portal PKL SMK
                     </div>
 
                     <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-white leading-tight mb-6">
