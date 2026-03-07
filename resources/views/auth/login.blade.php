@@ -35,8 +35,7 @@
         {{-- Logo --}}
         <div class="text-center mb-8">
             <a href="/" class="inline-flex items-center gap-3">
-                <div class="w-11 h-11 rounded-xl flex items-center justify-center font-black text-white text-lg shadow-lg bg-cover bg-center"
-                    style="background-image: url('/coba4.png');"></div>
+                <img src="{{ asset('images/logo-icon.png') }}" alt="Portal PKL" class="h-11 w-auto brightness-0 invert">
                 <span class="text-2xl font-bold text-white">
                     Portal <span class="gradient-text">PKL</span>
                 </span>
@@ -49,18 +48,18 @@
 
             {{-- Session Error --}}
             @if(session('error'))
-                <div class="mb-5 px-4 py-3 rounded-2xl text-sm text-amber-700 bg-amber-50 border border-amber-100">
-                    <p>{{ session('error') }}</p>
-                </div>
+            <div class="mb-5 px-4 py-3 rounded-2xl text-sm text-amber-700 bg-amber-50 border border-amber-100">
+                <p>{{ session('error') }}</p>
+            </div>
             @endif
 
             {{-- Validation Error --}}
             @if($errors->any())
-                <div class="mb-5 px-4 py-3 rounded-2xl text-sm text-red-700 bg-red-50 border border-red-100">
-                    @foreach($errors->all() as $error)
-                        <p>{{ $error }}</p>
-                    @endforeach
-                </div>
+            <div class="mb-5 px-4 py-3 rounded-2xl text-sm text-red-700 bg-red-50 border border-red-100">
+                @foreach($errors->all() as $error)
+                <p>{{ $error }}</p>
+                @endforeach
+            </div>
             @endif
 
             {{-- Login Form --}}
@@ -102,7 +101,7 @@
             <div class="space-y-3">
                 <a href="{{ route('google.redirect') }}"
                     class="w-full flex items-center justify-center gap-3 py-3 rounded-xl border-2 border-slate-100 font-semibold text-slate-600 text-sm hover:bg-slate-50 hover:border-slate-200 transition-all">
-                    
+
                     <svg class="w-5 h-5" viewBox="0 0 24 24">
                         <path fill="#4285F4"
                             d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" />

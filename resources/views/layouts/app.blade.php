@@ -385,8 +385,8 @@
             {{-- Logo --}}
             <div class="px-5 py-5 border-b border-white/[0.06] flex items-center justify-between">
                 <a href="/" class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-xl flex items-center justify-center font-black text-white text-base shadow-lg bg-cover bg-center"
-                        style="background-image: url('/coba4.png');"></div>
+                    <img src="{{ asset('images/logo-icon.png') }}" alt="Portal PKL"
+                        class="h-9 w-auto brightness-0 invert">
                     <div>
                         <p class="text-white font-bold text-base leading-none">Portal PKL</p>
                         <p class="text-[11px] mt-0.5 capitalize" style="color: rgba(255,255,255,0.35);">{{

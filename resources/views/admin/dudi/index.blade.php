@@ -40,6 +40,10 @@
     </a>
 </div>
 
+{{-- Search Bar --}}
+@include('components.search-bar', ['target' => 'dudiTable', 'placeholder' => 'Cari perusahaan, pemilik akun, atau
+industri...'])
+
 <div class="card overflow-hidden"
     style="background: linear-gradient(135deg, #faf5ff 0%, #f8fafc 100%); border-color: #e9d5ff;">
     @if($dudis->isEmpty())
@@ -65,9 +69,9 @@
                 <th class="px-6 py-4"></th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="dudiTable">
             @foreach($dudis as $d)
-            <tr class="table-row">
+            <tr class="table-row searchable-item">
                 <td class="px-6 py-4">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-white shrink-0 text-sm"
@@ -121,6 +125,48 @@
             @endforeach
         </tbody>
     </table>
+
+    {{-- No results --}}
+    <div id="noResults_dudiTable" class="p-12 text-center" style="display: none;">
+        <svg class="w-10 h-10 mx-auto mb-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        <p class="text-slate-500 font-medium">Tidak ada DUDI yang cocok.</p>
+    </div>
     @endif
 </div>
+@endsection
+
+@section('scripts')
+<script>
+    function searchFilter_dudiTable(query) {
+        const container = document.getElementById('dudiTable');
+        if (!container) return;
+        const items = container.querySelectorAll('.searchable-item');
+        const noResults = document.getElementById('noResults_dudiTable');
+        const clearBtn = document.getElementById('clearBtn_dudiTable');
+        const countEl = document.getElementById('searchCount_dudiTable');
+        const q = query.toLowerCase().trim();
+        let visible = 0;
+
+        clearBtn.style.display = q ? 'block' : 'none';
+
+        items.forEach(item => {
+            const text = item.textContent.toLowerCase();
+            const match = !q || text.includes(q);
+            item.style.display = match ? '' : 'none';
+            if (match) visible++;
+        });
+
+        if (q) {
+            countEl.style.display = 'block';
+            countEl.textContent = visible + ' dari ' + items.length + ' DUDI ditemukan';
+        } else {
+            countEl.style.display = 'none';
+        }
+
+        noResults.style.display = (q && visible === 0) ? 'block' : 'none';
+    }
+</script>
 @endsection

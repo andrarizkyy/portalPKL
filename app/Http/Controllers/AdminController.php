@@ -181,12 +181,35 @@ class AdminController extends Controller
     }
 
     // ──── SISWA DATA (yang sudah diterima PKL) ────
-    public function siswaIndex()
+    public function siswaIndex(Request $request)
     {
-        $siswaDiterima = PendaftaranPkl::with(['user', 'posisi.lowongan.dudiProfile', 'sekolah', 'jurusan'])
-            ->where('status', 'approved')
-            ->latest()
-            ->get();
-        return view('admin.siswa.index', compact('siswaDiterima'));
+        $sekolahs = Sekolah::orderBy('nama')->get();
+        $jurusans = collect();
+
+        $query = PendaftaranPkl::with(['user', 'posisi.lowongan.dudiProfile', 'sekolah', 'jurusan'])
+            ->where('status', 'approved');
+
+        if ($request->filled('sekolah_id')) {
+            $query->where('sekolah_id', $request->sekolah_id);
+            $jurusans = Jurusan::where('sekolah_id', $request->sekolah_id)->orderBy('nama')->get();
+        }
+
+        if ($request->filled('jurusan_id')) {
+            $query->where('jurusan_id', $request->jurusan_id);
+        }
+
+        $siswaDiterima = $query->latest()->get();
+
+        // Group by sekolah then jurusan for view
+        $grouped = $siswaDiterima->groupBy(function ($item) {
+            return $item->sekolah->nama ?? 'Tidak Diketahui';
+        })->map(function ($sekolahGroup) {
+            return $sekolahGroup->groupBy(function ($item) {
+                    return $item->jurusan->nama ?? 'Tidak Diketahui';
+                }
+                );
+            });
+
+        return view('admin.siswa.index', compact('siswaDiterima', 'grouped', 'sekolahs', 'jurusans'));
     }
 }

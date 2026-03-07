@@ -8,6 +8,7 @@ use App\Models\Jurusan;
 use App\Models\Lowongan;
 use App\Models\Posisi;
 use App\Models\PendaftaranPkl;
+use App\Notifications\LamaranStatusUpdated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -197,6 +198,13 @@ class DudiController extends Controller
         $request->validate(['status' => 'required|in:approved,rejected']);
         $lamaran->update(['status' => $request->status]);
 
+        // Kirim notifikasi ke Siswa
+        $lamaran->load('user', 'posisi.lowongan.dudiProfile');
+        $siswaUser = $lamaran->user;
+        if ($siswaUser) {
+            $siswaUser->notify(new LamaranStatusUpdated($lamaran));
+        }
+
         $msg = $request->status === 'approved' ? 'Lamaran disetujui.' : 'Lamaran ditolak.';
         return back()->with('success', $msg);
     }
@@ -209,15 +217,15 @@ class DudiController extends Controller
         }
     }
 
-public function indexPublic()
-{
-    $dudi = DudiProfile::all();
-    return view('perusahaan.index', compact('dudi'));
-}
+    public function indexPublic()
+    {
+        $dudi = DudiProfile::all();
+        return view('perusahaan.index', compact('dudi'));
+    }
 
-public function showPublic($id)
-{
-    $dudi = DudiProfile::findOrFail($id);
-    return view('auth.register', compact('dudi'));
-}
+    public function showPublic($id)
+    {
+        $dudi = DudiProfile::findOrFail($id);
+        return view('auth.register', compact('dudi'));
+    }
 }

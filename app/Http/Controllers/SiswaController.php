@@ -7,6 +7,7 @@ use App\Models\Jurusan;
 use App\Models\SiswaProfile;
 use App\Models\Lowongan;
 use App\Models\PendaftaranPkl;
+use App\Notifications\LamaranDikirim;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -174,7 +175,15 @@ class SiswaController extends Controller
             $data['cover_letter'] = $request->file('cover_letter')->store('cover-letter', 'public');
         }
 
-        PendaftaranPkl::create($data);
+        $pendaftaran = PendaftaranPkl::create($data);
+
+        // Kirim notifikasi ke DUDI
+        $pendaftaran->load('posisi.lowongan.dudiProfile.user');
+        $dudiUser = $pendaftaran->posisi->lowongan->dudiProfile->user ?? null;
+        if ($dudiUser) {
+            $pendaftaran->load('user', 'sekolah', 'jurusan');
+            $dudiUser->notify(new LamaranDikirim($pendaftaran));
+        }
 
         return redirect()->route('siswa.lamaran.index')->with('success', 'Lamaran berhasil dikirim.');
     }

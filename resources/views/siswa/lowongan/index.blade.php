@@ -14,9 +14,14 @@
     <p class="text-slate-600">Belum ada lowongan PKL yang tersedia saat ini. Cek lagi nanti!</p>
 </div>
 @else
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+{{-- Search Bar --}}
+@include('components.search-bar', ['target' => 'lowonganCards', 'placeholder' => 'Cari lowongan, perusahaan, atau
+industri...'])
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="lowonganCards">
     @foreach($lowongans as $l)
-    <div class="card group overflow-hidden hover:-translate-y-1 transition-all duration-300"
+    <div class="card group overflow-hidden hover:-translate-y-1 transition-all duration-300 searchable-item"
         style="box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03); background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%); border-color: #bfdbfe;">
         {{-- Cover image / gradient --}}
         @if($l->gambar)
@@ -76,5 +81,48 @@
     </div>
     @endforeach
 </div>
+
+{{-- No results message --}}
+<div id="noResults_lowonganCards" class="card p-12 text-center"
+    style="display: none; background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%); border-color: #bfdbfe;">
+    <svg class="w-12 h-12 mx-auto mb-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+    </svg>
+    <p class="text-slate-500 font-medium">Tidak ada lowongan yang cocok dengan pencarian.</p>
+</div>
 @endif
+
+@endsection
+
+@section('scripts')
+<script>
+    function searchFilter_lowonganCards(query) {
+        const container = document.getElementById('lowonganCards');
+        const items = container.querySelectorAll('.searchable-item');
+        const noResults = document.getElementById('noResults_lowonganCards');
+        const clearBtn = document.getElementById('clearBtn_lowonganCards');
+        const countEl = document.getElementById('searchCount_lowonganCards');
+        const q = query.toLowerCase().trim();
+        let visible = 0;
+
+        clearBtn.style.display = q ? 'block' : 'none';
+
+        items.forEach(item => {
+            const text = item.textContent.toLowerCase();
+            const match = !q || text.includes(q);
+            item.style.display = match ? '' : 'none';
+            if (match) visible++;
+        });
+
+        if (q) {
+            countEl.style.display = 'block';
+            countEl.textContent = visible + ' dari ' + items.length + ' lowongan ditemukan';
+        } else {
+            countEl.style.display = 'none';
+        }
+
+        noResults.style.display = (q && visible === 0) ? 'block' : 'none';
+    }
+</script>
 @endsection

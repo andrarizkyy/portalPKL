@@ -39,9 +39,13 @@
     <a href="{{ route('dudi.lowongan.create') }}" class="btn-primary">+ Buat Lowongan Pertama</a>
 </div>
 @else
-<div class="space-y-4">
+
+{{-- Search Bar --}}
+@include('components.search-bar', ['target' => 'dudiLowongan', 'placeholder' => 'Cari lowongan, posisi...'])
+
+<div class="space-y-4" id="dudiLowongan">
     @foreach($lowongans as $l)
-    <div class="card p-6 hover:shadow-md transition-all duration-200"
+    <div class="card p-6 hover:shadow-md transition-all duration-200 searchable-item"
         style="background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 100%); border-color: #c7d2fe;">
         <div class="flex items-start gap-4">
             {{-- Icon --}}
@@ -93,5 +97,47 @@
     </div>
     @endforeach
 </div>
+
+{{-- No results --}}
+<div id="noResults_dudiLowongan" class="card p-12 text-center"
+    style="display: none; background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 100%); border-color: #c7d2fe;">
+    <svg class="w-10 h-10 mx-auto mb-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+    </svg>
+    <p class="text-slate-500 font-medium">Tidak ada lowongan yang cocok.</p>
+</div>
 @endif
+@endsection
+
+@section('scripts')
+<script>
+    function searchFilter_dudiLowongan(query) {
+        const container = document.getElementById('dudiLowongan');
+        const items = container.querySelectorAll('.searchable-item');
+        const noResults = document.getElementById('noResults_dudiLowongan');
+        const clearBtn = document.getElementById('clearBtn_dudiLowongan');
+        const countEl = document.getElementById('searchCount_dudiLowongan');
+        const q = query.toLowerCase().trim();
+        let visible = 0;
+
+        clearBtn.style.display = q ? 'block' : 'none';
+
+        items.forEach(item => {
+            const text = item.textContent.toLowerCase();
+            const match = !q || text.includes(q);
+            item.style.display = match ? '' : 'none';
+            if (match) visible++;
+        });
+
+        if (q) {
+            countEl.style.display = 'block';
+            countEl.textContent = visible + ' dari ' + items.length + ' lowongan ditemukan';
+        } else {
+            countEl.style.display = 'none';
+        }
+
+        noResults.style.display = (q && visible === 0) ? 'block' : 'none';
+    }
+</script>
 @endsection

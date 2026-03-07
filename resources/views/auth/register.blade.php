@@ -17,22 +17,22 @@
         body {
             background: linear-gradient(140deg, #0a0628 0%, #130d3d 40%, #1e0a4a 75%, #0f0a25 100%);
         }
-            .gradient-text {
-                background: linear-gradient(135deg, #6366f1, #8b5cf6);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-            }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
     </style>
 </head>
 
 <body class="min-h-screen flex items-center justify-center p-4">
-    
+
     <div class="w-full max-w-md">
         {{-- Logo --}}
         <div class="text-center mb-8">
             <a href="/" class="inline-flex items-center gap-3">
-                <div class="w-11 h-11 rounded-xl flex items-center justify-center font-black text-white text-lg shadow-lg bg-cover bg-center"
-                    style="background-image: url('/coba4.png');"></div>
+                <img src="{{ asset('images/logo-icon.png') }}" alt="Portal PKL" class="h-11 w-auto brightness-0 invert">
                 <span class="text-2xl font-bold text-white">Portal <span class="gradient-text">PKL</span></span>
             </a>
             <p class="text-slate-300 mt-2 text-sm">Buat akun baru Anda</p>

@@ -16,10 +16,14 @@
     <p class="text-slate-500 text-sm mt-1">Tambahkan sekolah terlebih dahulu sebelum menambah jurusan.</p>
 </div>
 @else
-<div class="space-y-4">
+
+{{-- Search Bar --}}
+@include('components.search-bar', ['target' => 'jurusanList', 'placeholder' => 'Cari sekolah atau jurusan...'])
+
+<div class="space-y-4" id="jurusanList">
     @foreach($sekolahs as $sekolah)
     @php $jurusanList = $jurusans->where('sekolah_id', $sekolah->id); @endphp
-    <div class="card overflow-hidden"
+    <div class="card overflow-hidden searchable-item"
         style="background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%); border-color: #bfdbfe;">
         {{-- School header - clickable accordion --}}
         <button onclick="toggleAccordion('school-{{ $sekolah->id }}')"
@@ -82,6 +86,16 @@
     </div>
     @endforeach
 </div>
+
+{{-- No results --}}
+<div id="noResults_jurusanList" class="card p-12 text-center"
+    style="display: none; background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%); border-color: #bfdbfe;">
+    <svg class="w-10 h-10 mx-auto mb-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+    </svg>
+    <p class="text-slate-500 font-medium">Tidak ada jurusan yang cocok.</p>
+</div>
 @endif
 @endsection
 
@@ -106,5 +120,38 @@
         @endif
         @endforeach
     });
+
+    function searchFilter_jurusanList(query) {
+        const container = document.getElementById('jurusanList');
+        const items = container.querySelectorAll('.searchable-item');
+        const noResults = document.getElementById('noResults_jurusanList');
+        const clearBtn = document.getElementById('clearBtn_jurusanList');
+        const countEl = document.getElementById('searchCount_jurusanList');
+        const q = query.toLowerCase().trim();
+        let visible = 0;
+
+        clearBtn.style.display = q ? 'block' : 'none';
+
+        items.forEach(item => {
+            const text = item.textContent.toLowerCase();
+            const match = !q || text.includes(q);
+            item.style.display = match ? '' : 'none';
+            if (match) {
+                visible++;
+                // Auto-open accordion when searching
+                const accordion = item.querySelector('.accordion-content');
+                if (q && accordion) accordion.style.display = 'block';
+            }
+        });
+
+        if (q) {
+            countEl.style.display = 'block';
+            countEl.textContent = visible + ' dari ' + items.length + ' sekolah ditemukan';
+        } else {
+            countEl.style.display = 'none';
+        }
+
+        noResults.style.display = (q && visible === 0) ? 'block' : 'none';
+    }
 </script>
 @endsection
