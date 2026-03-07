@@ -27,7 +27,30 @@
     </div>
 </div>
 
-@elseif($profile && $profile->status !== 'verified')
+@elseif($profile && $profile->status === 'rejected')
+<div class="rounded-3xl overflow-hidden mb-8"
+    style="background: linear-gradient(135deg, #991b1b, #b91c1c); box-shadow: 0 8px 30px rgba(185,28,28,0.35);">
+    <div class="px-8 py-7 flex items-center gap-6">
+        <div class="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 text-3xl"
+            style="background: rgba(255,255,255,0.15);"><svg class="w-6 h-6 text-white" fill="none"
+                stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg></div>
+        <div class="flex-1">
+            <h3 class="text-xl font-bold text-white mb-1">Verifikasi Ditolak</h3>
+            <p class="text-white text-sm">Profil perusahaan Anda ditolak oleh admin. Silakan perbarui profil Anda dan
+                kirim ulang untuk diverifikasi kembali.</p>
+        </div>
+        <a href="{{ route('dudi.profil') }}"
+            class="shrink-0 px-6 py-3 rounded-2xl font-bold text-red-800 text-sm transition-all hover:bg-red-50 shadow-lg"
+            style="background: #fff;">
+            Perbarui Profil →
+        </a>
+    </div>
+</div>
+
+@elseif($profile && $profile->status === 'pending')
 <div class="rounded-3xl overflow-hidden mb-8"
     style="background: linear-gradient(135deg, #1e40af, #1d4ed8); box-shadow: 0 8px 30px rgba(29,78,216,0.35);">
     <div class="px-8 py-7 flex items-center gap-6">
