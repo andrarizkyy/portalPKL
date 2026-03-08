@@ -384,9 +384,15 @@
 
             {{-- Logo --}}
             <div class="px-5 py-5 border-b border-white/[0.06] flex items-center justify-between">
-                <a href="/" class="flex items-center gap-3">
-                    <img src="{{ asset('images/logo-icon.png') }}" alt="Portal PKL"
-                        class="h-9 w-auto brightness-0 invert">
+                <a href="" class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg sm:rounded-xl overflow-hidden shadow-lg
+                    bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+
+                    <img src="/coba4.png"
+                    alt="logo"
+                    class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+
+                    </div>
                     <div>
                         <p class="text-white font-bold text-base leading-none">Portal PKL</p>
                         <p class="text-[11px] mt-0.5 capitalize" style="color: rgba(255,255,255,0.35);">{{

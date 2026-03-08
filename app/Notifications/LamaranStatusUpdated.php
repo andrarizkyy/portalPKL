@@ -6,8 +6,9 @@ use App\Models\PendaftaranPkl;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Contracts\Queue\ShouldQueue; // Pastikan ini di-import
 
-class LamaranStatusUpdated extends Notification
+class LamaranStatusUpdated extends Notification implements ShouldQueue
 {
     use Queueable;
 

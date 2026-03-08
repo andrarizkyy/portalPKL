@@ -9,7 +9,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
-    @vite(['resources/css/app.css','resources/js/app.js'])
+   @vite(['resources/css/app.css','resources/js/app.js'])
     <style>
         * {
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -126,137 +126,139 @@
 
 <body class="bg-slate-50 overflow-x-hidden">
 
-    {{-- Navbar --}}
-    <nav class="fixed top-0 w-full z-50"
-        style="background: rgba(10,6,40,0.8); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.06);">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
+   <nav class="fixed top-0 w-full z-50"
+style="background: rgba(10,6,40,0.8); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.06);">
 
-            <!-- LOGO -->
-            <a href="/" class="flex items-center gap-2 group">
-                <div class="w-10 h-10 rounded-xl overflow-hidden shadow-lg
-                    bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
-                    <img src="/coba4.png" alt="logo"
-                        class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
-                </div>
-                <span class="text-white font-bold text-sm sm:text-lg tracking-wide">
-                    Portal <span class="gradient-text">PKL</span>
-                </span>
-            </a>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
 
-            <div class="flex items-center gap-2 sm:gap-3">
-                <a href="{{ route('login') }}"
-                    class="text-xs sm:text-sm font-medium text-slate-300 hover:text-white px-3 py-1.5 sm:px-4 sm:py-2">
-                    Masuk
-                </a>
-                <a href="{{ route('register') }}"
-                    class="text-xs sm:text-sm font-semibold text-white px-3 py-1.5 sm:px-5 sm:py-2.5 rounded-xl"
-                    style="background: linear-gradient(135deg, #6366f1, #8b5cf6); box-shadow: 0 4px 15px rgba(99,102,241,0.4);">
-                    Daftar
-                </a>
-            </div>
+<!-- LOGO -->
+<a href="/" class="flex items-center gap-2 group">
 
-        </div>
-    </nav>
+<div class="w-7 h-7 sm:w-30 sm:h-30 rounded-lg sm:rounded-xl overflow-hidden shadow-lg
+bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+
+<img src="/coba4.png"
+alt="logo"
+class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+
+</div>
+
+<span class="text-white font-bold text-sm sm:text-lg tracking-wide">
+Portal <span class="gradient-text">PKL</span>
+</span>
+
+</a>
+
+<div class="flex items-center gap-2 sm:gap-3">
+
+<a href="{{ route('login') }}"
+class="text-xs sm:text-sm font-medium text-slate-300 hover:text-white px-3 py-1.5 sm:px-4 sm:py-2">
+Masuk
+</a>
+
+<a href="{{ route('register') }}"
+class="text-xs sm:text-sm font-semibold text-white px-3 py-1.5 sm:px-5 sm:py-2.5 rounded-xl"
+style="background: linear-gradient(135deg, #6366f1, #8b5cf6); box-shadow: 0 4px 15px rgba(99,102,241,0.4);">
+Daftar
+</a>
+
+</div>
+
+</div>
+</nav>
 
     {{-- Hero --}}
     <section class="hero-bg min-h-screen flex items-center relative overflow-hidden px-4 sm:px-6">
-
-        <!-- Background decorations -->
-        <div class="absolute inset-0 pointer-events-none">
-            <div class="absolute top-20 left-4 sm:left-16 w-40 sm:w-80 h-40 sm:h-80 rounded-full float"
-                style="background: radial-gradient(circle, rgba(99,102,241,0.2) 0%, transparent 70%); filter: blur(40px);">
-            </div>
-            <div class="absolute bottom-20 right-4 sm:right-16 w-52 sm:w-96 h-52 sm:h-96 rounded-full float-delay"
-                style="background: radial-gradient(circle, rgba(139,92,246,0.18) 0%, transparent 70%); filter: blur(50px);">
-            </div>
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[700px] h-[300px] sm:h-[700px] rounded-full"
-                style="background: radial-gradient(circle, rgba(99,102,241,0.07) 0%, transparent 65%); filter: blur(30px);">
-            </div>
+    
+    <!-- Background -->
+    <div class="absolute inset-0 pointer-events-none">
+        <div class="absolute top-20 left-4 sm:left-16 w-40 sm:w-80 h-40 sm:h-80 rounded-full float"
+            style="background: radial-gradient(circle, rgba(99,102,241,0.2) 0%, transparent 70%); filter: blur(40px);">
         </div>
 
-        <div class="max-w-7xl mx-auto pt-24 sm:pt-28 pb-16 sm:pb-20 relative z-10 w-full">
-            <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div class="absolute bottom-20 right-4 sm:right-16 w-52 sm:w-96 h-52 sm:h-96 rounded-full float-delay"
+            style="background: radial-gradient(circle, rgba(139,92,246,0.18) 0%, transparent 70%); filter: blur(50px);">
+        </div>
 
-                <!-- LEFT -->
-                <div class="text-center lg:text-left">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[700px] h-[300px] sm:h-[700px] rounded-full"
+            style="background: radial-gradient(circle, rgba(99,102,241,0.07) 0%, transparent 65%); filter: blur(30px);">
+        </div>
+    </div>
 
-                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6 text-xs sm:text-sm font-semibold"
-                        style="background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3); color: #a5b4fc;">
-                        <span class="w-2 h-2 rounded-full animate-pulse bg-emerald-400"></span>
-                        Portal PKL SMK
-                    </div>
+    <div class="max-w-7xl mx-auto w-full relative z-10">
+        <div class="flex flex-col lg:flex-row items-center lg:justify-between gap-12">
 
-                    <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-white leading-tight mb-6">
-                        Tingkatkan
-                        <span class="gradient-text">Kompetensi</span><br>
-                        <span class="text-slate-200">Siap Hadapi Tantangan</span>
-                    </h1>
+            <!-- LEFT -->
+            <div class="text-center lg:text-left flex-1">
+                <br>
+                <br>
+                <br>
+                <br>
+                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-white leading-tight mb-6">
+                    Tingkatkan <span class="gradient-text">Kompetensi</span><br>
+                    <span class="text-slate-200">Siap Hadapi Tantangan</span>
+                </h1>
 
-                    <p class="text-sm sm:text-lg text-slate-400 mb-8 max-w-lg mx-auto lg:mx-0">
-                        Hubungkan siswa berbakat dengan perusahaan terbaik. Proses lamaran PKL yang mudah, cepat, dan
-                        terstruktur dalam satu platform.
-                    </p>
+                <p class="text-sm sm:text-lg text-slate-400 mb-8 max-w-lg mx-auto lg:mx-0">
+                    Hubungkan siswa berbakat dengan perusahaan terbaik. Proses lamaran PKL yang mudah, cepat, dan terstruktur dalam satu platform.
+                </p>
 
-                    <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-12 justify-center lg:justify-start">
-                        <a href="{{ route('register') }}"
-                            class="px-6 sm:px-8 py-3 sm:py-4 rounded-2xl font-bold text-white text-sm sm:text-base transition hover:-translate-y-1"
-                            style="background: linear-gradient(135deg,#6366f1,#8b5cf6); box-shadow:0 8px 30px rgba(99,102,241,.45);">
-                            Mulai Gratis →
-                        </a>
+                <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-12 justify-center lg:justify-start">
+                    <a href="{{ route('register') }}"
+                        class="px-6 sm:px-8 py-3 sm:py-4 rounded-2xl font-bold text-white text-sm sm:text-base transition hover:-translate-y-1"
+                        style="background: linear-gradient(135deg,#6366f1,#8b5cf6); box-shadow:0 8px 30px rgba(99,102,241,.45);">
+                        Mulai Gratis →
+                    </a>
 
-                        <a href="#fitur"
-                            class="px-6 sm:px-8 py-3 sm:py-4 rounded-2xl font-bold text-white text-sm sm:text-base transition hover:bg-white/10"
-                            style="background: rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.12);">
-                            Pelajari Fitur
-                        </a>
-                    </div>
-
-                    <!-- Stats -->
-                    <div class="flex justify-center lg:justify-start gap-6 sm:gap-10">
-                        <div>
-                            <p class="text-2xl sm:text-3xl font-black text-white">500+</p>
-                            <p class="text-[10px] sm:text-xs text-slate-500">Lowongan PKL</p>
-                        </div>
-                        <div class="w-px h-8 sm:h-10 bg-white/10"></div>
-                        <div>
-                            <p class="text-2xl sm:text-3xl font-black text-white">100%</p>
-                            <p class="text-[10px] sm:text-xs text-slate-500">Gratis Selamanya</p>
-                        </div>
-                        <div class="w-px h-8 sm:h-10 bg-white/10"></div>
-                        <div>
-                            <p class="text-2xl sm:text-3xl font-black text-white">3x</p>
-                            <p class="text-[10px] sm:text-xs text-slate-500">Lebih Cepat</p>
-                        </div>
-                    </div>
+                    <a href="#fitur"
+                        class="px-6 sm:px-8 py-3 sm:py-4 rounded-2xl font-bold text-white text-sm sm:text-base transition hover:bg-white/10"
+                        style="background: rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.12);">
+                        Pelajari Fitur
+                    </a>
                 </div>
 
+                <!-- Stats -->
+                <div class="flex justify-center lg:justify-start gap-6 sm:gap-10">
+                    <div>
+                        <p class="text-2xl sm:text-3xl font-black text-white">500+</p>
+                        <p class="text-[10px] sm:text-xs text-slate-500">Lowongan PKL</p>
+                    </div>
+                    <div class="w-px h-8 sm:h-10 bg-white/10"></div>
+                    <div>
+                        <p class="text-2xl sm:text-3xl font-black text-white">100%</p>
+                        <p class="text-[10px] sm:text-xs text-slate-500">Gratis Selamanya</p>
+                    </div>
+                    <div class="w-px h-8 sm:h-10 bg-white/10"></div>
+                    <div>
+                        <p class="text-2xl sm:text-3xl font-black text-white">3x</p>
+                        <p class="text-[10px] sm:text-xs text-slate-500">Lebih Cepat</p>
+                    </div>
+                </div>
+            </div>
                 {{-- Floating UI Card --}}
-                <div class="hidden lg:flex justify-center relative">
+                <div class="hidden lg:flex justify-end items-center relative flex-none  ">
                     <div class="relative">
                         {{-- Main card --}}
-                        <div class="rounded-3xl p-6 w-80 float"
+                        <div class="rounded-3xl p-8 w-80 float"
                             style="background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1);">
                             <div class="flex items-center gap-3 mb-5">
                                 <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold"
                                     style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">
-                                    {{ $dudi ? strtoupper(substr($dudi->nama_perusahaan, 0, 2)) : 'PT' }}
-                                </div>
+                                {{ $dudi ? strtoupper(substr($dudi->nama_perusahaan, 0, 2)) : 'PT' }}
+                            </div>
                                 <div>
-                                    <p class="text-white font-semibold text-sm">{{ $dudi->nama_perusahaan ?? 'Perusahaan
-                                        Mitra' }}</p>
-                                    <p class="text-slate-400 text-xs">{{ $dudi->alamat ?? 'Kota, Indonesia' }}</p>
+                                    <p class="text-white font-semibold text-sm">{{ $dudi->nama_perusahaan }}</p>
+                                    <p class="text-slate-400 text-xs">{{ $dudi->alamat }}</p>
                                 </div>
                                 <span class="ml-auto text-xs px-2 py-1 rounded-full font-semibold"
                                     style="background: rgba(52,211,153,0.15); color: #34d399;">Open</span>
                             </div>
-                            <p class="text-white font-bold text-lg mb-1">Magang PKL</p>
-                            <p class="text-slate-400 text-sm mb-4">{{ $dudi->industry->nama ?? 'Industri' }} · On Site
-                            </p>
-                            <a href="{{ route('perusahaan.index') }}">
-                                <button class="w-full py-2.5 rounded-xl text-white font-semibold text-sm"
-                                    style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">Lihat
-                                    Perusahaan</button>
-                            </a>
+                            <p class="text-white font-bold text-lg mb-1">{{ $dudi->posisi ?? 'Magang PKL' }}</p>
+                            <p class="text-slate-400 text-sm mb-4">{{ $dudi->bidang ?? 'Industri' }} . {{ $dudi->tipe ?? 'On Site' }}</p>
+                            <a href="{{ route('register') }}">
+                            <button class="w-full py-2.5 rounded-xl text-white font-semibold text-sm"
+                                style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">Lihat Perusahaan</button>
+                                </a>
                         </div>
                         {{-- Floating notification --}}
                         <div class="absolute -top-4 -right-4 rounded-2xl px-4 py-3 float-delay shadow-2xl"
@@ -277,17 +279,11 @@
                         <div class="absolute -bottom-4 -left-4 rounded-2xl px-4 py-3 float shadow-2xl"
                             style="background: rgba(255,255,255,0.08); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.12); animation-delay: 1s;">
                             <div class="flex items-center gap-2">
-                                <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white"
-                                    style="background: linear-gradient(135deg, #10b981, #0d9488);">
-                                    <svg style="width:0.875rem;height:0.875rem" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                                            d="M5 13l4 4L19 7" />
-                                    </svg>
-                                </div>
+                                <div class="w-7 h-7 rounded-full flex items-center justify-center text-white"
+                                    style="background: linear-gradient(135deg, #10b981, #0d9488);">✓</div>
                                 <div>
                                     <p class="text-white text-xs font-semibold">Mitra PKL</p>
-                                    <p class="text-slate-400 text-[10px]">Terpercaya & Terverifikasi</p>
+                                    <p class="text-slate-400 text-[10px]">SMK Negeri 1 Slawi</p>
                                 </div>
                             </div>
                         </div>
@@ -298,35 +294,32 @@
     </section>
 
     {{-- Features --}}
-    <section id="fitur" class="py-28 bg-slate-50">
-        <div class="max-w-7xl mx-auto px-6">
+    <section id="fitur" class="py-28 bg-slate-50">        
+         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-20">
                 <span class="text-sm font-bold text-indigo-400 uppercase tracking-widest">Fitur Unggulan</span>
-                <h2 class="text-4xl font-black text-slate-800 mt-3 mb-4">Platform Lengkap untuk PKL</h2>
+                <h2 class="text-4xl font-black text-slate-800 mt-3 mb-4">Platform Lengkap Untuk PKL</h2>
                 <p class="text-slate-500 max-w-xl mx-auto">Semua yang Anda butuhkan untuk proses PKL yang sukses, dari
                     pencarian hingga penerimaan.</p>
             </div>
 
             <div class="grid md:grid-cols-3 gap-8">
                 @foreach([
-                ['<svg
-                    style="width:3rem;height:3rem; background: center; background-size: contain; background-repeat: no-repeat;"
-                    fill="none" stroke="#6f44d4" viewBox="0 0 24 24">
+                ['<svg style="width:3rem;height:3rem; background: center; background-size: contain; background-repeat: no-repeat;" fill="none" stroke="#6f44d4" 
+                    viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
                 </svg>', 'Siswa', 'Temukan lowongan PKL yang sesuai bidang studi, lamar dengan mudah, dan pantau
                 status lamaran secara real-time.', 'from-blue-500 to-cyan-500', 'blue'],
-                ['<svg
-                    style="width:3rem;height:3rem; background: center; background-size: contain; background-repeat: no-repeat;"
-                    fill="none" stroke="#6f44d4" viewBox="0 0 24 24">
+                ['<svg style="width:3rem;height:3rem; background: center; background-size: contain; background-repeat: no-repeat;" fill="none" stroke="#6f44d4" 
+                    viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                 </svg>', 'DUDI', 'Buat lowongan, kelola posisi, dan pilih kandidat terbaik dari database siswa
                 yang
                 terverifikasi.', 'from-purple-500 to-pink-500', 'purple'],
-                ['<svg
-                    style="width:3rem;height:3rem; background: center; background-size: contain; background-repeat: no-repeat;"
-                    fill="none" stroke="#6f44d4" viewBox="0 0 24 24">
+                ['<svg style="width:3rem;height:3rem; background: center; background-size: contain; background-repeat: no-repeat;" fill="none" stroke="#6f44d4" 
+                    viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                 </svg>', 'Admin Verified', 'Setiap perusahaan melewati proses verifikasi ketat oleh admin untuk keamanan
@@ -334,7 +327,7 @@
                 ] as $f)
                 <div class="card-hover group rounded-3xl p-8 border border-slate-100">
                     <div
-                        class="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-lg bg-gradient-to-br {{ $f[3] }} group-hover:scale-110 transition-transform duration-300">
+                        class="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-lg bg-gradient-to-br {{ $f[2] }} group-hover:scale-110 transition-transform duration-300">
                         {!! $f[0] !!}
                     </div>
                     <h3 class="text-xl font-bold text-slate-800 mb-3">{{ $f[1] }}</h3>
@@ -414,17 +407,14 @@
     <footer class="py-10 bg-slate-900">
         <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
             <div class="flex items-center gap-3">
-                <div
-                    class="w-9 h-9 rounded-lg overflow-hidden bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
-                    <img src="/coba4.png" alt="Portal PKL" class="w-full h-full object-cover">
-                </div>
+                 <div class="w-9 h-9 rounded-xl flex items-center justify-center font-black text-white text-sm shadow-lg bg-cover bg-center"
+                    style="background-image: url('/coba4.png');"></div>
                 <span class="text-white font-bold text-lg">Portal <span class="gradient-text">PKL</span></span>
             </div>
             <p class="text-sm text-slate-500">© {{ date('Y') }} Portal PKL. Platform menghubungkan siswa dengan dunia
                 industri.</p>
         </div>
     </footer>
-
 </body>
 
 </html>

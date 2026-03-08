@@ -3,6 +3,7 @@
 @section('page-title', 'Lamaran Saya')
 
 @section('content')
+
 <div class="card overflow-hidden"
     style="background: linear-gradient(135deg, #faf5ff 0%, #f8fafc 100%); border-color: #e9d5ff;">
     @if($lamarans->isEmpty())
@@ -17,94 +18,62 @@
         <a href="{{ route('siswa.lowongan.index') }}" class="btn-primary">Cari Lowongan →</a>
     </div>
     @else
-    <div class="p-5 pb-0">
-        @include('components.search-bar', ['target' => 'lamaranTable', 'placeholder' => 'Cari lowongan, perusahaan, atau
+    <div class="p-8 pt-4">
+        @include('components.search-bar', ['target' => 'lamaranGrid', 'placeholder' => 'Cari lowongan, perusahaan, atau
         status...'])
     </div>
-    <div class="bg-white rounded-xl border border-slate-200 overflow-hidden mx-5 mb-5">
+<div class="p-8 pt-2 mb-10">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="lamaranGrid">
+        @foreach($lamarans as $l)
+        @php
+            $statusMap = [
+                'pending'   => ['bg-yellow-50 text-yellow-700 border-yellow-200', 'Pending'],
+                'approved'  => ['bg-green-50 text-green-700 border-green-200', 'Diterima'],
+                'rejected'  => ['bg-red-50 text-red-700 border-red-200', 'Ditolak'],
+                'cancelled' => ['bg-gray-50 text-gray-600 border-gray-200', 'Dibatalkan'],
+            ];
+            $s = $statusMap[$l->status] ?? ['bg-gray-50 text-gray-600 border-gray-200', ucfirst($l->status)];
+        @endphp
 
-        <table class="w-full text-sm">
+        <div class="searchable-item bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col overflow-hidden group">
+            
+            <div class="p-5 flex-grow">
+                <div class="mb-4">
+                    <span class="inline-block px-3 py-1 text-[10px] font-bold uppercase tracking-wider rounded-full border {{ $s[0] }}">
+                        {{ $s[1] }}
+                    </span>
+                </div>
 
-            {{-- Header hanya tampil di desktop --}}
-            <thead class="hidden md:table-header-group bg-slate-50">
-                <tr>
-                    <th class="text-left px-6 py-4 text-xs font-bold text-slate-600 uppercase">
-                        Lowongan & Posisi
-                    </th>
-                    <th class="text-left px-6 py-4 text-xs font-bold text-slate-600 uppercase">
-                        Perusahaan
-                    </th>
-                    <th class="text-left px-6 py-4 text-xs font-bold text-slate-600 uppercase">
-                        Tanggal Lamar
-                    </th>
-                    <th class="text-left px-6 py-4 text-xs font-bold text-slate-600 uppercase">
-                        Status
-                    </th>
-                </tr>
-            </thead>
+                <h4 class="font-bold text-slate-800 text-lg group-hover:text-indigo-600 transition-colors line-clamp-1">
+                    {{ $l->posisi->lowongan->judul ?? '-' }}
+                </h4>
+                <p class="text-sm font-medium text-slate-500 mb-4">
+                    {{ $l->posisi->nama ?? '-' }}
+                </p>
 
-            <tbody class="divide-y divide-slate-200" id="lamaranTable">
-                @foreach($lamarans as $l)
-                @php
-                $statusMap = [
-                'pending' => ['bg-yellow-100 text-yellow-700', 'Pending'],
-                'approved' => ['bg-green-100 text-green-700', 'Diterima'],
-                'rejected' => ['bg-red-100 text-red-700', 'Ditolak'],
-                'cancelled' => ['bg-gray-100 text-gray-600', 'Dibatalkan'],
-                ];
-                $s = $statusMap[$l->status] ?? ['bg-gray-100 text-gray-600', ucfirst($l->status)];
-                @endphp
-
-                <tr class="block md:table-row p-4 md:p-0 hover:bg-slate-50 transition searchable-item">
-
-                    {{-- Lowongan --}}
-                    <td class="block md:table-cell md:px-6 md:py-4 py-2">
-                        <span class="md:hidden text-xs font-semibold text-slate-500">
-                            Lowongan
-                        </span>
-                        <p class="font-semibold text-slate-800">
-                            {{ $l->posisi->lowongan->judul ?? '-' }}
-                        </p>
-                        <p class="text-xs text-slate-500">
-                            {{ $l->posisi->nama ?? '-' }}
-                        </p>
-                    </td>
-
+                <div class="space-y-3 pt-4 border-t border-slate-50">
                     {{-- Perusahaan --}}
-                    <td class="block md:table-cell md:px-6 md:py-4 py-2">
-                        <span class="md:hidden text-xs font-semibold text-slate-500">
-                            Perusahaan
-                        </span>
-                        <p class="text-slate-600">
-                            {{ $l->posisi->lowongan->dudiProfile->nama_perusahaan ?? '-' }}
-                        </p>
-                    </td>
+                    <div class="flex items-center text-slate-600">
+                        <div class="p-2 bg-slate-100 rounded-lg mr-3">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-10V4m0 10V4m-4 11h.01" /></svg>
+                        </div>
+                        <span class="text-sm font-semibold truncate">{{ $l->posisi->lowongan->dudiProfile->nama_perusahaan ?? '-' }}</span>
+                    </div>
 
                     {{-- Tanggal --}}
-                    <td class="block md:table-cell md:px-6 md:py-4 py-2">
-                        <span class="md:hidden text-xs font-semibold text-slate-500">
-                            Tanggal
-                        </span>
-                        <p class="text-slate-600">
-                            {{ $l->created_at->format('d M Y') }}
-                        </p>
-                    </td>
-
-                    {{-- Status --}}
-                    <td class="block md:table-cell md:px-6 md:py-4 py-2">
-                        <span class="md:hidden text-xs font-semibold text-slate-500">
-                            Status
-                        </span>
-                        <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full {{ $s[0] }}">
-                            {{ $s[1] }}
-                        </span>
-                    </td>
-
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+                    <div class="flex items-center text-slate-500">
+                        <div class="p-2 bg-slate-100 rounded-lg mr-3">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                        </div>
+                        <span class="text-xs">Melamar: {{ $l->created_at->format('d M Y') }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endforeach
     </div>
+</div>
+
 
     {{-- No results --}}
     <div id="noResults_lamaranTable" class="p-12 text-center" style="display: none;">
