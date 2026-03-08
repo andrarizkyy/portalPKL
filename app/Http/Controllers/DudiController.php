@@ -189,12 +189,14 @@ class DudiController extends Controller
 
     public function lamaranShow(PendaftaranPkl $lamaran)
     {
+        $this->authorizeLamaran($lamaran);
         $lamaran->load(['user', 'posisi.lowongan', 'sekolah', 'jurusan']);
         return view('dudi.lamaran.show', compact('lamaran'));
     }
 
     public function lamaranUpdateStatus(Request $request, PendaftaranPkl $lamaran)
     {
+        $this->authorizeLamaran($lamaran);
         $request->validate(['status' => 'required|in:approved,rejected']);
         $lamaran->update(['status' => $request->status]);
 
@@ -213,6 +215,14 @@ class DudiController extends Controller
     {
         $profile = Auth::user()->dudiProfile;
         if (!$profile || $lowongan->dudi_profile_id !== $profile->id) {
+            abort(403);
+        }
+    }
+
+    private function authorizeLamaran(PendaftaranPkl $lamaran)
+    {
+        $profile = Auth::user()->dudiProfile;
+        if (!$profile || $lamaran->posisi->lowongan->dudi_profile_id !== $profile->id) {
             abort(403);
         }
     }
