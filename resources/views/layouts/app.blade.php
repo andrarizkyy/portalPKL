@@ -387,9 +387,9 @@
                 <a href="" class="flex items-center gap-3">
                     <div class="w-8 h-8 rounded-lg sm:rounded-xl overflow-hidden shadow-lg
                     bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
-
-                        <img src="/coba4.png" alt="logo"
-                            class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+                      <img src="/coba4.png"
+                    alt="logo"
+                    class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
 
                     </div>
                     <div>

@@ -9,6 +9,7 @@ use App\Models\Lowongan;
 use App\Models\Posisi;
 use App\Models\PendaftaranPkl;
 use App\Notifications\LamaranStatusUpdated;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -238,4 +239,18 @@ class DudiController extends Controller
         $dudi = DudiProfile::findOrFail($id);
         return view('auth.register', compact('dudi'));
     }
+
+public function downloadCv($id)
+{
+    // Cari data pendaftaran
+    $data = PendaftaranPkl::findOrFail($id);
+
+    // Cek apakah file benar-benar ada di storage
+    if (!Storage::disk('public')->exists($data->cv)) {
+        return back()->with('error', 'File CV tidak ditemukan di server.');
+    }
+
+    // Force Download (Mengunduh file, bukan cuma buka di tab baru)
+      return Storage::disk('public')->download($data->cv);
+}
 }

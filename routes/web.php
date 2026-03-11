@@ -93,6 +93,7 @@ Route::prefix('siswa')->middleware(['auth', 'role:siswa'])->name('siswa.')->grou
 
 
 Route::prefix('dudi')->middleware(['auth', 'role:dudi'])->name('dudi.')->group(function () {
+    Route::get('/dudi/lamaran/download/{id}', [DudiController::class, 'downloadCv'])->name('dudi.lamaran.download');
     Route::get('/', [DudiController::class , 'dashboard'])->name('dashboard');
     Route::get('/profil', [DudiController::class , 'profil'])->name('profil');
     Route::post('/profil', [DudiController::class , 'profilUpdate'])->name('profil.update');
@@ -109,6 +110,10 @@ Route::prefix('dudi')->middleware(['auth', 'role:dudi'])->name('dudi.')->group(f
             Route::get('/lamaran', [DudiController::class , 'lamaranIndex'])->name('lamaran.index');
             Route::get('/lamaran/{lamaran}', [DudiController::class , 'lamaranShow'])->name('lamaran.show');
             Route::put('/lamaran/{lamaran}/status', [DudiController::class , 'lamaranUpdateStatus'])->name('lamaran.updateStatus');
+            Route::middleware(['auth'])->group(function () {
+    // ... route dudi lainnya ...
+    
+});
         }
         );
     });
