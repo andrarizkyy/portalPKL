@@ -7,20 +7,22 @@
 @if(!$user->is_profile_completed)
 <div class="rounded-3xl overflow-hidden mb-8"
     style="background: linear-gradient(135deg, #92400e, #b45309); box-shadow: 0 8px 30px rgba(180,83,9,0.3);">
-    <div class="px-8 py-7 flex items-center gap-6">
-        <div class="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 text-3xl"
+    <div class="px-6 sm:px-8 py-6 sm:py-7 flex flex-col sm:items-center sm:flex-row gap-4 sm:gap-6">
+        <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center shrink-0 text-2xl sm:text-3xl"
             style="background: rgba(255,255,255,0.15);"><svg class="w-6 h-6 text-white" fill="none"
                 stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg></div>
         <div class="flex-1">
-            <h3 class="text-xl font-bold text-white mb-1">Lengkapi Profil Perusahaan</h3>
-            <p class="text-amber-200 text-sm">Lengkapi profil perusahaan Anda untuk mulai membuat lowongan dan menerima
+            <h3 class="text-lg sm:text-xl font-bold text-white mb-1 text-center sm:text-left">Lengkapi Profil Perusahaan
+            </h3>
+            <p class="text-amber-200 text-sm text-center sm:text-left">Lengkapi profil perusahaan Anda untuk mulai
+                membuat lowongan dan menerima
                 kandidat PKL.</p>
         </div>
         <a href="{{ route('dudi.profil') }}"
-            class="shrink-0 px-6 py-3 rounded-2xl font-bold text-amber-800 text-sm transition-all hover:bg-amber-50 shadow-lg"
+            class="w-full sm:w-auto text-center px-6 py-3 rounded-2xl font-bold text-amber-800 text-sm transition-all hover:bg-amber-50 shadow-lg"
             style="background: #fff;">
             Lengkapi Profil →
         </a>
@@ -30,20 +32,21 @@
 @elseif($profile && $profile->status === 'rejected')
 <div class="rounded-3xl overflow-hidden mb-8"
     style="background: linear-gradient(135deg, #991b1b, #b91c1c); box-shadow: 0 8px 30px rgba(185,28,28,0.35);">
-    <div class="px-8 py-7 flex items-center gap-6">
-        <div class="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 text-3xl"
+    <div class="px-6 sm:px-8 py-6 sm:py-7 flex flex-col sm:items-center sm:flex-row gap-4 sm:gap-6">
+        <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center shrink-0 text-2xl sm:text-3xl"
             style="background: rgba(255,255,255,0.15);"><svg class="w-6 h-6 text-white" fill="none"
                 stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg></div>
         <div class="flex-1">
-            <h3 class="text-xl font-bold text-white mb-1">Verifikasi Ditolak</h3>
-            <p class="text-white text-sm">Profil perusahaan Anda ditolak oleh admin. Silakan perbarui profil Anda dan
+            <h3 class="text-lg sm:text-xl font-bold text-white mb-1 text-center sm:text-left">Verifikasi Ditolak</h3>
+            <p class="text-white text-sm text-center sm:text-left">Profil perusahaan Anda ditolak oleh admin. Silakan
+                perbarui profil Anda dan
                 kirim ulang untuk diverifikasi kembali.</p>
         </div>
         <a href="{{ route('dudi.profil') }}"
-            class="shrink-0 px-6 py-3 rounded-2xl font-bold text-red-800 text-sm transition-all hover:bg-red-50 shadow-lg"
+            class="w-full sm:w-auto text-center px-6 py-3 rounded-2xl font-bold text-red-800 text-sm transition-all hover:bg-red-50 shadow-lg"
             style="background: #fff;">
             Perbarui Profil →
         </a>
@@ -53,19 +56,21 @@
 @elseif($profile && $profile->status === 'pending')
 <div class="rounded-3xl overflow-hidden mb-8"
     style="background: linear-gradient(135deg, #1e40af, #1d4ed8); box-shadow: 0 8px 30px rgba(29,78,216,0.35);">
-    <div class="px-8 py-7 flex items-center gap-6">
-        <div class="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 text-3xl"
+    <div class="px-6 sm:px-8 py-6 sm:py-7 flex flex-col sm:items-center sm:flex-row gap-4 sm:gap-6">
+        <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center shrink-0 text-2xl sm:text-3xl"
             style="background: rgba(255,255,255,0.15);"><svg class="w-6 h-6 text-white" fill="none"
                 stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg></div>
         <div class="flex-1">
-            <h3 class="text-xl font-bold text-white mb-1">Menunggu Verifikasi Admin</h3>
-            <p class="text-blue-200 text-sm">Profil perusahaan Anda sedang dalam proses peninjauan. Anda akan
+            <h3 class="text-lg sm:text-xl font-bold text-white mb-1 text-center sm:text-left">Menunggu Verifikasi Admin
+            </h3>
+            <p class="text-blue-200 text-sm text-center sm:text-left">Profil perusahaan Anda sedang dalam proses
+                peninjauan. Anda akan
                 mendapatkan akses penuh setelah diverifikasi.</p>
         </div>
-        <div class="shrink-0 px-4 py-2 rounded-xl text-xs font-bold text-blue-300"
+        <div class="w-full sm:w-auto text-center px-4 py-2 rounded-xl text-xs font-bold text-blue-300"
             style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);">
             Dalam Proses...
         </div>
@@ -73,7 +78,7 @@
 </div>
 
 @else
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
     <div class="stat-card relative overflow-hidden"
         style="background: linear-gradient(135deg, #eef2ff 0%, #f0f4ff 100%); border-color: #c7d2fe;">
         <div class="absolute top-0 right-0 w-24 h-24 rounded-full -translate-y-6 translate-x-6 opacity-10"
@@ -119,8 +124,8 @@
 </div>
 
 {{-- Quick actions --}}
-<div class="grid grid-cols-2 gap-4">
-    <div class="card p-6 flex items-center gap-4"
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div class="card p-5 sm:p-6 flex flex-col sm:flex-row items-center sm:items-start lg:items-center gap-4 text-center sm:text-left"
         style="background: linear-gradient(135deg, #eef2ff 0%, #f0f4ff 100%); border-color: #c7d2fe;">
         <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-xl shrink-0"
             style="background: linear-gradient(135deg, #6366f1, #8b5cf6);"><svg class="w-5 h-5 text-white" fill="none"
@@ -132,9 +137,10 @@
             <h3 class="font-bold text-slate-800 mb-1">Buat Lowongan</h3>
             <p class="text-slate-700 text-xs">Tambah posisi magang baru</p>
         </div>
-        <a href="{{ route('dudi.lowongan.create') }}" class="btn-primary btn-sm shrink-0">+ Buat</a>
+        <a href="{{ route('dudi.lowongan.create') }}"
+            class="w-full sm:w-auto btn-primary btn-sm shrink-0 justify-center">+ Buat</a>
     </div>
-    <div class="card p-6 flex items-center gap-4"
+    <div class="card p-5 sm:p-6 flex flex-col sm:flex-row items-center sm:items-start lg:items-center gap-4 text-center sm:text-left"
         style="background: linear-gradient(135deg, #fffbeb 0%, #fef9ee 100%); border-color: #fde68a;">
         <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-xl shrink-0"
             style="background: linear-gradient(135deg, #f59e0b, #f97316);"><svg class="w-5 h-5 text-white" fill="none"
@@ -146,7 +152,8 @@
             <h3 class="font-bold text-slate-800 mb-1">Kelola Lamaran</h3>
             <p class="text-slate-700 text-xs">Tinjau kandidat masuk</p>
         </div>
-        <a href="{{ route('dudi.lamaran.index') }}" class="btn-outline btn-sm shrink-0">Lihat</a>
+        <a href="{{ route('dudi.lamaran.index') }}"
+            class="w-full sm:w-auto btn-outline btn-sm shrink-0 justify-center">Lihat</a>
     </div>
 </div>
 @endif

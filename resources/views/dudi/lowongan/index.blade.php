@@ -45,9 +45,9 @@
 
 <div class="space-y-4" id="dudiLowongan">
     @foreach($lowongans as $l)
-    <div class="card p-6 hover:shadow-md transition-all duration-200 searchable-item"
+    <div class="card p-5 sm:p-6 hover:shadow-md transition-all duration-200 searchable-item"
         style="background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 100%); border-color: #c7d2fe;">
-        <div class="flex items-start gap-4">
+        <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4">
             {{-- Icon --}}
             <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-xl shrink-0"
                 style="background: linear-gradient(135deg, #6366f1, #8b5cf6);"><svg class="w-5 h-5 text-white"
@@ -57,23 +57,25 @@
                 </svg></div>
 
             {{-- Info --}}
-            <div class="flex-1 min-w-0">
-                <div class="flex items-center gap-3 mb-1 flex-wrap">
-                    <h3 class="text-base font-bold text-slate-800">{{ $l->judul }}</h3>
-                    @if($l->is_published)
-                    <span class="badge badge-approved">● Dipublikasikan</span>
-                    @else
-                    <span class="badge badge-cancelled">○ Draft</span>
-                    @endif
+            <div class="flex-1 min-w-0 text-center sm:text-left">
+                <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-2">
+                    <h3 class="text-base font-bold text-slate-800 truncate">{{ $l->judul }}</h3>
+                    <div class="flex justify-center sm:justify-start">
+                        @if($l->is_published)
+                        <span class="badge badge-approved">● Dipublikasikan</span>
+                        @else
+                        <span class="badge badge-cancelled">○ Draft</span>
+                        @endif
+                    </div>
                 </div>
-                <p class="text-sm text-slate-500 mb-2"><svg
+                <p class="text-sm text-slate-500 mb-3"><svg
                         style="width:0.875rem;height:0.875rem;display:inline;vertical-align:middle;margin-right:2px;color:#94a3b8"
                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg> {{ $l->tanggal_mulai->format('d M Y') }} — {{
                     $l->tanggal_selesai->format('d M Y') }}</p>
-                <div class="flex flex-wrap gap-2">
+                <div class="flex flex-wrap justify-center sm:justify-start gap-2">
                     @foreach($l->posisis as $p)
                     <span class="text-xs px-2.5 py-1 rounded-lg font-medium"
                         style="background: rgba(99,102,241,0.08); color: #6366f1;">
@@ -84,7 +86,7 @@
             </div>
 
             {{-- Actions --}}
-            <div class="flex items-center gap-2 shrink-0">
+            <div class="flex items-center gap-2 shrink-0 sm:self-center">
                 <a href="{{ route('dudi.lowongan.show', $l) }}" class="btn-outline btn-sm">Detail</a>
                 <a href="{{ route('dudi.lowongan.edit', $l) }}" class="btn-outline btn-sm">Edit</a>
                 <form method="POST" action="{{ route('dudi.lowongan.destroy', $l) }}"

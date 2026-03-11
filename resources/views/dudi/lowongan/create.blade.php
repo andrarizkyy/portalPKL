@@ -19,7 +19,7 @@
             <label class="block text-sm font-semibold text-slate-700 mb-1.5">Deskripsi *</label>
             <textarea name="deskripsi" rows="5" class="input-field" required>{{ old('deskripsi') }}</textarea>
         </div>
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
                 <label class="block text-sm font-semibold text-slate-700 mb-1.5">Tanggal Mulai *</label>
                 <input type="date" name="tanggal_mulai" value="{{ old('tanggal_mulai') }}" class="input-field" required>

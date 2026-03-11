@@ -26,34 +26,14 @@ class LamaranStatusUpdated extends Notification implements ShouldQueue
 
     public function toMail(object $notifiable): MailMessage
     {
-        $posisi = $this->lamaran->posisi;
-        $lowongan = $posisi->lowongan;
-        $perusahaan = $lowongan->dudiProfile->nama_perusahaan ?? 'Perusahaan';
-        $status = $this->lamaran->status;
+        $perusahaan = $this->lamaran->posisi->lowongan->dudiProfile->nama_perusahaan ?? 'Perusahaan';
 
-        $mail = (new MailMessage)
-            ->subject('Update Status Lamaran PKL — ' . $perusahaan);
-
-        if ($status === 'approved') {
-            $mail->greeting('Selamat, ' . $notifiable->name . '! 🎉')
-                ->line('Lamaran PKL Anda telah **DITERIMA**!')
-                ->line('**Perusahaan:** ' . $perusahaan)
-                ->line('**Lowongan:** ' . $lowongan->judul)
-                ->line('**Posisi:** ' . $posisi->nama)
-                ->line('Silakan persiapkan diri Anda untuk memulai PKL.')
-                ->action('Lihat Detail Lamaran', url('/siswa/lamaran'));
-        }
-        else {
-            $mail->greeting('Halo, ' . $notifiable->name)
-                ->line('Mohon maaf, lamaran PKL Anda **ditolak**.')
-                ->line('**Perusahaan:** ' . $perusahaan)
-                ->line('**Lowongan:** ' . $lowongan->judul)
-                ->line('**Posisi:** ' . $posisi->nama)
-                ->line('Jangan berkecil hati! Masih banyak lowongan PKL lainnya yang bisa Anda coba.')
-                ->action('Cari Lowongan Lain', url('/siswa/lowongan'));
-        }
-
-        return $mail;
+        return (new MailMessage)
+            ->subject('Update Status Lamaran PKL — ' . $perusahaan)
+            ->view('emails.application_status_updated', [
+            'lamaran' => $this->lamaran,
+            'notifiable' => $notifiable
+        ]);
     }
 
     public function toArray(object $notifiable): array

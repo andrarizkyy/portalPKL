@@ -388,9 +388,8 @@
                     <div class="w-8 h-8 rounded-lg sm:rounded-xl overflow-hidden shadow-lg
                     bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
 
-                    <img src="/coba4.png"
-                    alt="logo"
-                    class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+                        <img src="/coba4.png" alt="logo"
+                            class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
 
                     </div>
                     <div>
@@ -445,15 +444,15 @@
                     </button>
                 </form>
             </div>
-@endauth
+            @endauth
         </aside>
 
         {{-- Main --}}
         <main id="mainContent" class="app-main">
             {{-- Topbar --}}
-            <header class="sticky top-0 z-20 px-6 py-4 flex items-center justify-between"
+            <header class="sticky top-0 z-20 px-4 sm:px-6 py-4 flex items-center justify-between"
                 style="background: rgba(248,250,252,0.92); backdrop-filter: blur(12px); border-bottom: 1.5px solid #cbd5e1; box-shadow: 0 1px 3px rgba(0,0,0,0.06);">
-                <div class="flex items-center gap-3">
+                <div class="flex items-center gap-2 sm:gap-3 min-w-0">
                     {{-- Toggle sidebar --}}
                     <button class="toggle-btn" onclick="toggleSidebar()" id="toggleBtn" title="Toggle sidebar">
                         <svg id="toggleIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -461,21 +460,22 @@
                                 d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
                     </button>
-                    <div>
-                        <h1 class="text-lg font-bold text-slate-800 leading-none">@yield('page-title', 'Dashboard')
+                    <div class="min-w-0">
+                        <h1 class="text-base sm:text-lg font-bold text-slate-800 leading-tight truncate">
+                            @yield('page-title', 'Dashboard')
                         </h1>
                         @hasSection('page-subtitle')
-                        <p class="text-sm text-slate-500 mt-0.5">@yield('page-subtitle')</p>
+                        <p class="text-xs sm:text-sm text-slate-500 mt-0.5 truncate">@yield('page-subtitle')</p>
                         @endif
                     </div>
                 </div>
-                <div class="flex items-center gap-3">
+                <div class="flex items-center gap-2 sm:gap-3 shrink-0">
                     @yield('header-actions')
                 </div>
             </header>
 
             {{-- Alerts --}}
-            <div class="px-6 pt-5">
+            <div class="px-4 sm:px-6 pt-5">
                 @if(session('success'))
                 <div class="fade-in flex items-center gap-3 px-4 py-3.5 rounded-2xl mb-4 text-sm font-medium"
                     style="background: #ecfdf5; border: 1px solid #a7f3d0; color: #065f46;">
@@ -507,7 +507,7 @@
             </div>
 
             {{-- Content --}}
-            <div class="px-6 pb-6 pt-4 fade-in flex-1">
+            <div class="px-4 sm:px-6 pb-6 pt-4 fade-in flex-1">
                 @yield('content')
             </div>
         </main>

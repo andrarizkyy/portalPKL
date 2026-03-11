@@ -25,22 +25,12 @@ class LamaranDikirim extends Notification
 
     public function toMail(object $notifiable): MailMessage
     {
-        $siswa = $this->lamaran->user;
-        $posisi = $this->lamaran->posisi;
-        $lowongan = $posisi->lowongan;
-
         return (new MailMessage)
-            ->subject('Lamaran PKL Baru — ' . $siswa->name)
-            ->greeting('Halo, ' . $notifiable->name . '!')
-            ->line('Ada lamaran PKL baru yang masuk untuk lowongan Anda.')
-            ->line('**Siswa:** ' . $siswa->name)
-            ->line('**Email:** ' . $siswa->email)
-            ->line('**Lowongan:** ' . $lowongan->judul)
-            ->line('**Posisi:** ' . $posisi->nama)
-            ->line('**Sekolah:** ' . ($this->lamaran->sekolah->nama ?? '-'))
-            ->line('**Jurusan:** ' . ($this->lamaran->jurusan->nama ?? '-'))
-            ->action('Lihat Lamaran', url('/dudi/lamaran'))
-            ->line('Segera tinjau lamaran ini.');
+            ->subject('Lamaran PKL Baru — ' . $this->lamaran->user->name)
+            ->view('emails.application_submitted', [
+            'lamaran' => $this->lamaran,
+            'notifiable' => $notifiable
+        ]);
     }
 
     public function toArray(object $notifiable): array
