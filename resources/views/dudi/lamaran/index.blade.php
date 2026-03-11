@@ -21,8 +21,8 @@
         @include('components.search-bar', ['target' => 'dudiLamaran', 'placeholder' => 'Cari pelamar, posisi, sekolah,
         atau status...'])
     </div>
-    <div style="overflow-x: auto;">
-        <table style="width: 100%; border-collapse: collapse; min-width: 700px;">
+    <div style="overflow-x: auto; padding: 0 20px 20px 20px;">
+        <table id="tableLamaran" style="width: 100%; border-collapse: collapse; min-width: 700px;">
             <thead>
                 <tr style="background: linear-gradient(135deg, #f1f5f9, #f8fafc); border-bottom: 1px solid #e2e8f0;">
                     <th
@@ -116,33 +116,47 @@
 
 @section('scripts')
 <script>
-    function searchFilter_dudiLamaran(query) {
-        const container = document.getElementById('dudiLamaran');
-        if (!container) return;
-        const items = container.querySelectorAll('.searchable-item');
-        const noResults = document.getElementById('noResults_dudiLamaran');
-        const clearBtn = document.getElementById('clearBtn_dudiLamaran');
-        const countEl = document.getElementById('searchCount_dudiLamaran');
-        const q = query.toLowerCase().trim();
-        let visible = 0;
-
-        clearBtn.style.display = q ? 'block' : 'none';
-
-        items.forEach(item => {
-            const text = item.textContent.toLowerCase();
-            const match = !q || text.includes(q);
-            item.style.display = match ? '' : 'none';
-            if (match) visible++;
+    $(document).ready(function () {
+        const table = $('#tableLamaran').DataTable({
+            responsive: true,
+            dom: 'rtip', // Processing, Table, Info, Pagination
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/id.json',
+            },
+            columnDefs: [
+                { orderable: false, targets: 5 } // Disable sorting on action column
+            ]
         });
 
-        if (q) {
-            countEl.style.display = 'block';
-            countEl.textContent = visible + ' dari ' + items.length + ' lamaran ditemukan';
-        } else {
-            countEl.style.display = 'none';
-        }
+        // Handle "No results" display
+        table.on('draw', function () {
+            const noResults = document.getElementById('noResults_dudiLamaran');
+            if (table.rows({ filter: 'applied' }).count() === 0) {
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
+            }
+        });
 
-        noResults.style.display = (q && visible === 0) ? 'block' : 'none';
-    }
+        // Link custom search bar to DataTables
+        window.searchFilter_dudiLamaran = function (query) {
+            const clearBtn = document.getElementById('clearBtn_dudiLamaran');
+            const countEl = document.getElementById('searchCount_dudiLamaran');
+            const q = query.toLowerCase().trim();
+
+            clearBtn.style.display = q ? 'block' : 'none';
+
+            table.search(q).draw();
+
+            if (q) {
+                countEl.style.display = 'block';
+                const visible = table.rows({ filter: 'applied' }).count();
+                const total = table.rows().count();
+                countEl.textContent = visible + ' dari ' + total + ' lamaran ditemukan';
+            } else {
+                countEl.style.display = 'none';
+            }
+        };
+    });
 </script>
 @endsection

@@ -13,7 +13,7 @@
         </div>
         <div>
             <label class="block text-sm font-semibold text-slate-700 mb-1.5">Gambar Cover</label>
-            <input type="file" name="image" class="input-field" accept="image/*">
+            <input type="file" name="gambar" class="input-field" accept="image/*">
         </div>
         <div>
             <label class="block text-sm font-semibold text-slate-700 mb-1.5">Deskripsi *</label>
