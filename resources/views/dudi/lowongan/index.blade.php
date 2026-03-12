@@ -40,74 +40,93 @@
 </div>
 @else
 
-{{-- Search Bar --}}
-@include('components.search-bar', ['target' => 'dudiLowongan', 'placeholder' => 'Cari lowongan, posisi...'])
-
-<div class="space-y-4" id="dudiLowongan">
-    @foreach($lowongans as $l)
-    <div class="card p-5 sm:p-6 hover:shadow-md transition-all duration-200 searchable-item"
-        style="background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 100%); border-color: #c7d2fe;">
-        <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4">
-            {{-- Icon --}}
-            <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-xl shrink-0"
-                style="background: linear-gradient(135deg, #6366f1, #8b5cf6);"><svg class="w-5 h-5 text-white"
-                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg></div>
-
-            {{-- Info --}}
-            <div class="flex-1 min-w-0 text-center sm:text-left">
-                <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-2">
-                    <h3 class="text-base font-bold text-slate-800 truncate">{{ $l->judul }}</h3>
-                    <div class="flex justify-center sm:justify-start">
-                        @if($l->is_published)
-                        <span class="badge badge-approved">● Dipublikasikan</span>
-                        @else
-                        <span class="badge badge-cancelled">○ Draft</span>
-                        @endif
-                    </div>
-                </div>
-                <p class="text-sm text-slate-500 mb-3"><svg
-                        style="width:0.875rem;height:0.875rem;display:inline;vertical-align:middle;margin-right:2px;color:#94a3b8"
-                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg> {{ $l->tanggal_mulai->format('d M Y') }} — {{
-                    $l->tanggal_selesai->format('d M Y') }}</p>
-                <div class="flex flex-wrap justify-center sm:justify-start gap-2">
-                    @foreach($l->posisis as $p)
-                    <span class="text-xs px-2.5 py-1 rounded-lg font-medium"
-                        style="background: rgba(99,102,241,0.08); color: #6366f1;">
-                        {{ $p->nama }} ({{ $p->kuota }})
-                    </span>
-                    @endforeach
-                </div>
-            </div>
-
-            {{-- Actions --}}
-            <div class="flex items-center gap-2 shrink-0 sm:self-center">
-                <a href="{{ route('dudi.lowongan.show', $l) }}" class="btn-outline btn-sm">Detail</a>
-                <a href="{{ route('dudi.lowongan.edit', $l) }}" class="btn-outline btn-sm">Edit</a>
-                <form method="POST" action="{{ route('dudi.lowongan.destroy', $l) }}"
-                    onsubmit="return confirm('Yakin hapus lowongan ini?')">
-                    @csrf @method('DELETE')
-                    <button class="btn-danger btn-sm">Hapus</button>
-                </form>
-            </div>
-        </div>
+<div class="card overflow-hidden"
+    style="background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 100%); border-color: #c7d2fe;">
+    <div style="padding: 20px 20px 0 20px;">
+        @include('components.search-bar', ['target' => 'dudiLowongan', 'placeholder' => 'Cari lowongan, posisi...'])
     </div>
-    @endforeach
-</div>
 
-{{-- No results --}}
-<div id="noResults_dudiLowongan" class="card p-12 text-center"
-    style="display: none; background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 100%); border-color: #c7d2fe;">
-    <svg class="w-10 h-10 mx-auto mb-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-    </svg>
-    <p class="text-slate-500 font-medium">Tidak ada lowongan yang cocok.</p>
+    <div style="overflow-x: auto; padding: 0 20px 20px 20px;">
+        <table id="tableLowongan" style="width: 100%; border-collapse: collapse; min-width: 800px;">
+            <thead>
+                <tr style="background: linear-gradient(135deg, #f1f5f9, #f8fafc); border-bottom: 1px solid #e2e8f0;">
+                    <th style="text-align: left; padding: 12px 20px;">Lowongan</th>
+                    <th style="text-align: left; padding: 12px 20px;">Tanggal</th>
+                    <th style="text-align: left; padding: 12px 20px;">Posisi</th>
+                    <th style="padding: 12px 20px; width: 150px;">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($lowongans as $l)
+                <tr style="border-bottom: 1px solid #f1f5f9; transition: background 0.15s;"
+                    onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
+                    <td style="padding: 12px 20px;">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white shrink-0"
+                                style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="font-bold text-slate-800">{{ $l->judul }}</p>
+                                @if($l->is_published)
+                                <span class="badge badge-approved" style="font-size: 0.65rem;">● Dipublikasikan</span>
+                                @else
+                                <span class="badge badge-cancelled" style="font-size: 0.65rem;">○ Draft</span>
+                                @endif
+                            </div>
+                        </div>
+                    </td>
+                    <td style="padding: 12px 20px;">
+                        <span class="text-sm text-slate-600">
+                            {{ $l->tanggal_mulai->format('d M Y') }} - {{ $l->tanggal_selesai->format('d M Y') }}
+                        </span>
+                    </td>
+                    <td style="padding: 12px 20px;">
+                        <div class="flex flex-wrap gap-1">
+                            @foreach($l->posisis as $p)
+                            <span class="text-xs px-2 py-0.5 rounded-md font-medium"
+                                style="background: rgba(99,102,241,0.08); color: #6366f1;">
+                                {{ $p->nama }} ({{ $p->kuota }})
+                            </span>
+                            @endforeach
+                        </div>
+                    </td>
+                    <td style="padding: 12px 20px;">
+                        <div class="flex items-center gap-2">
+                            <a href="{{ route('dudi.lowongan.show', $l) }}" class="btn-outline btn-sm" title="Detail">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                            </a>
+                            <a href="{{ route('dudi.lowongan.edit', $l) }}" class="btn-outline btn-sm" title="Edit">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                </svg>
+                            </a>
+                            <form method="POST" action="{{ route('dudi.lowongan.destroy', $l) }}"
+                                onsubmit="return confirm('Yakin hapus lowongan ini?')">
+                                @csrf @method('DELETE')
+                                <button class="btn-danger btn-sm" title="Hapus">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-4v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 </div>
 @endif
 @endsection

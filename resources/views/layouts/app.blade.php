@@ -13,6 +13,9 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.5.1/css/rowReorder.dataTables.css">    
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.8/css/responsive.dataTables.css">    
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{-- DataTables CSS --}}
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
     <style>
         * {
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -373,6 +376,67 @@
                 padding: 16px;
             }
         }
+
+        /* ── DataTables Custom Styling ── */
+        .dataTables_wrapper .dataTables_length select {
+            border: 1.5px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 4px 8px;
+            outline: none;
+        }
+
+        .dataTables_wrapper .dataTables_filter input {
+            border: 1.5px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 6px 12px;
+            outline: none;
+            margin-left: 10px;
+            background: #f8fafc;
+        }
+
+        .dataTables_wrapper .dataTables_filter input:focus {
+            border-color: #6366f1;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        table.dataTable {
+            border-collapse: collapse !important;
+            border-spacing: 0 !important;
+            width: 100% !important;
+            margin: 15px 0 !important;
+        }
+
+        table.dataTable thead th {
+            background: #f8fafc !important;
+            border-bottom: 1.5px solid #e2e8f0 !important;
+            color: #475569 !important;
+            font-size: 0.75rem !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.05em !important;
+            padding: 12px 20px !important;
+        }
+
+        table.dataTable tbody td {
+            padding: 12px 20px !important;
+            border-bottom: 1px solid #f1f5f9 !important;
+            font-size: 0.875rem !important;
+            color: #334155 !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 8px !important;
+            font-weight: 600 !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: #f1f5f9 !important;
+            border: 1px solid #e2e8f0 !important;
+            color: #475569 !important;
+        }
     </style>
 </head>
 
@@ -572,6 +636,10 @@
             }
         });
     </script>
+    {{-- Scripts --}}
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
     @yield('scripts')
 </body>
 
