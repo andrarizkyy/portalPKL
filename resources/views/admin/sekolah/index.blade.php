@@ -2,13 +2,13 @@
 @section('sidebar') @include('admin._sidebar') @endsection
 @section('page-title', 'Data Sekolah')
 @section('header-actions')
-<a href="{{ route('admin.sekolah.create') }}" class="btn-primary">+ Tambah Sekolah</a>
+<a href="{{ route('admin.sekolah.create') }}" class="btn-primary">Tambah Sekolah</a>
 @endsection
 @section('content')
 
 {{-- Search Bar --}}
 @include('components.search-bar', ['target' => 'sekolahTable', 'placeholder' => 'Cari nama sekolah, alamat, atau
-telepon...'])
+ telepon...'])
 
 <div class="card" style="background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 100%); border-color: #c7d2fe;">
     <table class="w-full">

@@ -18,8 +18,7 @@
     </div>
     @else
     <div style="padding: 20px 20px 0 20px;">
-        @include('components.search-bar', ['target' => 'dudiLamaran', 'placeholder' => 'Cari pelamar, posisi, sekolah,
-        atau status...'])
+        @include('components.search-bar', ['target' => 'dudiLamaran', 'placeholder' => 'Cari pelamar, posisi, sekolah, atau status...'])
     </div>
             <thead>
                 <tr style="background: linear-gradient(135deg, #f1f5f9, #f8fafc); border-bottom: 1px solid #e2e8f0;">
@@ -91,7 +90,7 @@
                         <span class="badge {{ $s[0] }}">{{ $s[1] }}</span>
                     </td>
                     <td style="padding: 12px 20px; text-align: right;">
-                        <a href="{{ route('dudi.lamaran.show', $l) }}" class="btn-outline btn-sm">Detail →</a>
+                        <a href="{{ route('dudi.lamaran.show', $l) }}" class="btn-outline btn-sm">Detail</a>
                     </td>
                 </tr>
                 @endforeach

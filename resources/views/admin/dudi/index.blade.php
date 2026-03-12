@@ -119,7 +119,7 @@ industri...'])
                     @endif
                 </td>
                 <td class="px-6 py-4 text-right">
-                    <a href="{{ route('admin.dudi.show', $d) }}" class="btn-outline btn-sm">Detail →</a>
+                    <a href="{{ route('admin.dudi.show', $d) }}" class="btn-outline btn-sm">Detail</a>
                 </td>
             </tr>
             @endforeach

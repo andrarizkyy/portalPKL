@@ -104,7 +104,7 @@
             </svg> Kelola Jurusan</h3>
         <p style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 16px;">Kelola data jurusan per sekolah.</p>
         <a href="{{ route('admin.jurusan.index') }}" class="btn-outline"
-            style="font-size: 0.8rem; padding: 8px 16px;">Lihat Data →</a>
+            style="font-size: 0.8rem; padding: 8px 16px;">Lihat Data</a>
     </div>
     <div class="card"
         style="padding: 24px; background: linear-gradient(135deg, #faf5ff 0%, #f5f3ff 100%); border-color: #ddd6fe;">
@@ -116,7 +116,7 @@
             </svg> Verifikasi DUDI</h3>
         <p style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 16px;">Verifikasi akun perusahaan baru.</p>
         <a href="{{ route('admin.dudi.index') }}" class="btn-outline"
-            style="font-size: 0.8rem; padding: 8px 16px;">Lihat Data →</a>
+            style="font-size: 0.8rem; padding: 8px 16px;">Lihat Data</a>
     </div>
 </div>
 @endsection

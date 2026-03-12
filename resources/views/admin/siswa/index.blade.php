@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('page-title', 'Data Siswa Diterima PKL')
-@section('page-subtitle', 'Daftar siswa yang telah diterima di tempat PKL — dikelompokkan per sekolah & jurusan')
+@section('page-subtitle', 'Daftar siswa yang telah diterima di tempat PKL')
 @section('sidebar') @include('admin._sidebar') @endsection
 
 @section('content')
@@ -94,7 +94,7 @@
 
 {{-- Search Bar --}}
 @include('components.search-bar', ['target' => 'groupedContent', 'placeholder' => 'Cari siswa, sekolah, jurusan, atau
-perusahaan...'])
+ perusahaan...'])
 
 {{-- Grouped Content --}}
 <div id="groupedContent">

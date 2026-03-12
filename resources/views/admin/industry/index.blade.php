@@ -2,7 +2,7 @@
 @section('sidebar') @include('admin._sidebar') @endsection
 @section('page-title', 'Data Industry')
 @section('header-actions')
-<a href="{{ route('admin.industry.create') }}" class="btn-primary">+ Tambah Industry</a>
+<a href="{{ route('admin.industry.create') }}" class="btn-primary">Tambah Industri</a>
 @endsection
 @section('content')
 

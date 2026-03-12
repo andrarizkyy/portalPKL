@@ -2,7 +2,7 @@
 @section('sidebar') @include('admin._sidebar') @endsection
 @section('page-title', 'Data Jurusan')
 @section('header-actions')
-<a href="{{ route('admin.jurusan.create') }}" class="btn-primary">+ Tambah Jurusan</a>
+<a href="{{ route('admin.jurusan.create') }}" class="btn-primary">Tambah Jurusan</a>
 @endsection
 @section('content')
 @if($sekolahs->isEmpty())

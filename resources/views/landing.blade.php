@@ -207,7 +207,7 @@ Daftar
                     <a href="{{ route('register') }}"
                         class="px-6 sm:px-8 py-3 sm:py-4 rounded-2xl font-bold text-white text-sm sm:text-base transition hover:-translate-y-1"
                         style="background: linear-gradient(135deg,#6366f1,#8b5cf6); box-shadow:0 8px 30px rgba(99,102,241,.45);">
-                        Mulai Gratis →
+                        Mulai Gratis
                     </a>
 
                     <a href="#fitur"
@@ -390,7 +390,7 @@ Daftar
                     <div class="flex flex-wrap justify-center gap-4">
                         <a href="{{ route('register') }}"
                             class="px-8 py-4 bg-white rounded-2xl font-bold text-indigo-600 hover:bg-indigo-50 transition-colors shadow-xl">
-                            Daftar Sekarang — Gratis!
+                            Daftar Sekarang
                         </a>
                         <a href="{{ route('login') }}"
                             class="px-8 py-4 rounded-2xl font-bold text-white transition-all hover:bg-white/10"

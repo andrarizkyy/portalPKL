@@ -74,7 +74,7 @@
         <a href="{{ route('admin.dudi.index') }}" class="btn-outline">Kembali</a>
     </div>
     @else
-    <a href="{{ route('admin.dudi.index') }}" class="btn-outline">← Kembali</a>
+    <a href="{{ route('admin.dudi.index') }}" class="btn-outline">Kembali</a>
     @endif
 </div>
 @endsection

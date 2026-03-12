@@ -45,7 +45,7 @@
     </div>
     <div class="flex gap-3">
         <a href="{{ route('dudi.lowongan.edit', $lowongan) }}" class="btn-primary">Edit</a>
-        <a href="{{ route('dudi.lowongan.index') }}" class="btn-outline">← Kembali</a>
+        <a href="{{ route('dudi.lowongan.index') }}" class="btn-outline">Kembali</a>
     </div>
 </div>
 @endsection
