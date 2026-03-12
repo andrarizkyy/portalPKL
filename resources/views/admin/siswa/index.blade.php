@@ -92,10 +92,6 @@
     </div>
 </div>
 
-{{-- Search Bar --}}
-@include('components.search-bar', ['target' => 'groupedContent', 'placeholder' => 'Cari siswa, sekolah, jurusan, atau
- perusahaan...'])
-
 {{-- Grouped Content --}}
 <div id="groupedContent">
     @forelse($grouped as $sekolahNama => $jurusanGroups)

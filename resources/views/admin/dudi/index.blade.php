@@ -41,7 +41,7 @@
 </div>
 
 {{-- Search Bar --}}
-@include('components.search-bar', ['target' => 'dudiTable', 'placeholder' => 'Cari perusahaan, pemilik akun, atau
+@include('components.search-bar', ['target' => 'dudiTable', 'placeholder' => 'Cari perusahaan, pemilik akun, atau 
 industri...'])
 
 <div class="card overflow-hidden"

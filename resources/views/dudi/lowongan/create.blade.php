@@ -54,7 +54,7 @@
                 </div>
             </div>
             <button type="button" onclick="addPosisi()"
-                class="mt-3 text-sm text-indigo-600 font-semibold hover:text-indigo-800">+ Tambah Posisi</button>
+                class="mt-3 text-sm text-indigo-600 font-semibold hover:text-indigo-800">Tambah Posisi</button>
         </div>
 
         <div class="flex items-center gap-3">

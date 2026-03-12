@@ -18,11 +18,10 @@
         <a href="{{ route('siswa.lowongan.index') }}" class="btn-primary">Cari Lowongan →</a>
     </div>
     @else
-    <div class="p-8 pt-4">
-        @include('components.search-bar', ['target' => 'lamaranGrid', 'placeholder' => 'Cari lowongan, perusahaan, atau
-        status...'])
+    <div class="px-8 pt-4 pb-2">
+        @include('components.search-bar', ['target' => 'lamaranGrid', 'placeholder' => 'Cari lamaran, perusahaan, atau status...'])
     </div>
-<div class="p-8 pt-2 mb-10">
+<div class="px-8 pt-2 pb-6">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="lamaranGrid">
         @foreach($lamarans as $l)
         @php
@@ -89,32 +88,48 @@
 
 @section('scripts')
 <script>
-    function searchFilter_lamaranTable(query) {
-        const container = document.getElementById('lamaranTable');
-        const items = container.querySelectorAll('.searchable-item');
-        const noResults = document.getElementById('noResults_lamaranTable');
-        const clearBtn = document.getElementById('clearBtn_lamaranTable');
-        const countEl = document.getElementById('searchCount_lamaranTable');
-        const q = query.toLowerCase().trim();
-        let visible = 0;
+function searchFilter_lamaranGrid(query) {
 
-        clearBtn.style.display = q ? 'block' : 'none';
+    const container = document.getElementById('lamaranGrid');
+    if (!container) return;
 
-        items.forEach(item => {
-            const text = item.textContent.toLowerCase();
-            const match = !q || text.includes(q);
-            item.style.display = match ? '' : 'none';
-            if (match) visible++;
-        });
+    const items = container.querySelectorAll('.searchable-item');
+    const noResults = document.getElementById('noResults_lamaranTable');
+    const clearBtn = document.getElementById('clearBtn_lamaranGrid');
+    const countEl = document.getElementById('searchCount_lamaranGrid');
 
+    const q = query.toLowerCase().trim();
+    let visible = 0;
+
+    if (clearBtn) clearBtn.style.display = q ? 'block' : 'none';
+
+    items.forEach(item => {
+
+        const text = item.textContent
+            .toLowerCase()
+            .replace(/\s+/g,' ');
+
+        const match = !q || text.includes(q);
+
+        item.style.display = match ? '' : 'none';
+
+        if (match) visible++;
+
+    });
+
+    if (countEl) {
         if (q) {
             countEl.style.display = 'block';
             countEl.textContent = visible + ' dari ' + items.length + ' lamaran ditemukan';
         } else {
             countEl.style.display = 'none';
         }
+    }
 
+    if (noResults) {
         noResults.style.display = (q && visible === 0) ? 'block' : 'none';
     }
+
+}
 </script>
 @endsection

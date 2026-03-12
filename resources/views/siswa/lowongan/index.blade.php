@@ -17,7 +17,7 @@
 
 {{-- Search Bar --}}
 @include('components.search-bar', ['target' => 'lowonganCards', 'placeholder' => 'Cari lowongan, perusahaan, atau
-industri...'])
+ industri...'])
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="lowonganCards">
     @foreach($lowongans as $l)
@@ -75,7 +75,7 @@ industri...'])
 
             <a href="{{ route('siswa.lowongan.show', $l) }}"
                 class="btn-primary w-full justify-center text-center block">
-                Lihat Detail →
+                Lihat Detail
             </a>
         </div>
     </div>

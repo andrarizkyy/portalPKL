@@ -138,7 +138,7 @@
             <p class="text-slate-700 text-xs">Tambah posisi magang baru</p>
         </div>
         <a href="{{ route('dudi.lowongan.create') }}"
-            class="w-full sm:w-auto btn-primary btn-sm shrink-0 justify-center">+ Buat</a>
+            class="w-full sm:w-auto btn-primary btn-sm shrink-0 justify-center">Buat</a>
     </div>
     <div class="card p-5 sm:p-6 flex flex-col sm:flex-row items-center sm:items-start lg:items-center gap-4 text-center sm:text-left"
         style="background: linear-gradient(135deg, #fffbeb 0%, #fef9ee 100%); border-color: #fde68a;">

@@ -113,7 +113,7 @@
     {{-- Button --}}
     <a href="{{ route('siswa.lowongan.index') }}"
         class="btn-primary px-4 py-2 sm:px-5 sm:py-3 rounded-2xl font-bold text-sm transition-all hover:bg-indigo-600 shadow-lg">
-        Lihat Lowongan →
+        Lihat Lowongan
     </a>
 </div>
 @endif

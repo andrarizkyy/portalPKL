@@ -5,10 +5,9 @@
 
 @section('header-actions')
 @if($profile && $profile->status === 'verified')
-<a href="{{ route('dudi.lowongan.create') }}" class="btn-primary">
-    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-    </svg>
+<a href="{{ route('dudi.lowongan.create') }}" 
+   class="btn-primary"
+   style="display:flex; align-items:center; justify-content:center;">
     Buat Lowongan
 </a>
 @endif
@@ -36,15 +35,12 @@
         </svg></div>
     <h3 class="text-xl font-bold text-slate-700 mb-2">Belum Ada Lowongan</h3>
     <p class="text-slate-600 mb-6">Mulai buat lowongan PKL pertama Anda dan temukan kandidat terbaik.</p>
-    <a href="{{ route('dudi.lowongan.create') }}" class="btn-primary">+ Buat Lowongan Pertama</a>
+    <a href="{{ route('dudi.lowongan.create') }}" class="btn-primary">Buat Lowongan Pertama</a>
 </div>
 @else
 
 <div class="card overflow-hidden"
     style="background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 100%); border-color: #c7d2fe;">
-    <div style="padding: 20px 20px 0 20px;">
-        @include('components.search-bar', ['target' => 'dudiLowongan', 'placeholder' => 'Cari lowongan, posisi...'])
-    </div>
 
     <div style="overflow-x: auto; padding: 0 20px 20px 20px;">
         <table id="tableLowongan" style="width: 100%; border-collapse: collapse; min-width: 800px;">
