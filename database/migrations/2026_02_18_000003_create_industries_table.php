@@ -6,13 +6,14 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
     public function up(): void
-    {
-        Schema::create('industries', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->string('nama');
-            $table->timestamps();
-        });
-    }
+{
+    Schema::create('industries', function (Blueprint $table) {
+        $table->id();
+        $table->string('nama');
+        $table->string('gambar')->nullable();
+        $table->timestamps();
+    });
+}
 
     public function down(): void
     {

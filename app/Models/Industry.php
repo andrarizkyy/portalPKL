@@ -9,7 +9,10 @@ class Industry extends Model
 {
     use HasUuids;
 
-    protected $fillable = ['nama'];
+    protected $fillable = [
+        'nama',
+        'gambar'
+    ];
 
     public function dudiProfiles()
     {

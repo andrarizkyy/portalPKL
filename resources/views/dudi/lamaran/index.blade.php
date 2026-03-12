@@ -22,7 +22,7 @@
         atau status...'])
     </div>
     <div style="overflow-x: auto;">
-        <table style="width: 100%; border-collapse: collapse; min-width: 700px;">
+        <table style="width: 100%; border-collapse: collapse; min-width: 700px;" class="example1">
             <thead>
                 <tr style="background: linear-gradient(135deg, #f1f5f9, #f8fafc); border-bottom: 1px solid #e2e8f0;">
                     <th

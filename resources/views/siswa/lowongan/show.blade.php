@@ -5,7 +5,7 @@
 
 @section('content')
 <div class="max-w-4xl">
-    <div class="card p-6 mb-6"
+    <div class="card p-5 mb-6"
         style="background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%); border-color: #bfdbfe;">
         @if($lowongan->gambar)
         <img src="{{ asset('storage/' . $lowongan->gambar) }}" class="w-full h-64 object-cover rounded-xl mb-6" alt="">
@@ -25,7 +25,7 @@
             <h3 class="text-lg font-bold text-slate-800 mb-4">Posisi yang Tersedia</h3>
             <div class="space-y-3">
                 @foreach($lowongan->posisis as $posisi)
-                <div class="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-100">
+                <div class="flex items-center justify-between p-2 bg-slate-50 rounded-xl border border-slate-100">
                     <div>
                         <p class="font-semibold text-slate-800">{{ $posisi->nama }}</p>
                         <p class="text-sm text-slate-500">Kuota: {{ $posisi->sisaTempat() }}/{{ $posisi->kuota }}
@@ -34,8 +34,7 @@
                     @if(in_array($posisi->id, $appliedPosisiIds))
                     <span class="badge badge-pending">Sudah Dilamar</span>
                     @elseif($posisi->sisaTempat() > 0)
-                    <a href="{{ route('siswa.lamar', [$lowongan, $posisi]) }}" class="btn-primary text-sm">Lamar
-                        Posisi</a>
+                    <a href="{{ route('siswa.lamar', [$lowongan, $posisi]) }}" class="btn-primary text-sm">Lamar</a>
                     @else
                     <span class="badge bg-slate-200 text-slate-500">Kuota Penuh</span>
                     @endif
@@ -44,6 +43,6 @@
             </div>
         </div>
     </div>
-    <a href="{{ route('siswa.lowongan.index') }}" class="btn-outline">← Kembali</a>
+    <a href="{{ route('siswa.lowongan.index') }}" class="btn-outline">Kembali</a>
 </div>
 @endsection

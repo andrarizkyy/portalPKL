@@ -9,6 +9,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.7/css/dataTables.dataTables.css">    
+    <link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.5.1/css/rowReorder.dataTables.css">    
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.8/css/responsive.dataTables.css">    
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         * {
@@ -573,3 +576,17 @@
 </body>
 
 </html>
+<script>
+    new DataTable('example1', {
+    responsive: true,
+    rowReorder: {
+        selector: 'td:nth-child(2)'
+    }
+});
+</script>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdn.datatables.net/2.3.7/js/dataTables.js"></script>
+<script src="https://cdn.datatables.net/rowreorder/1.5.1/js/dataTables.rowReorder.js"></script>
+<script src="https://cdn.datatables.net/rowreorder/1.5.1/js/rowReorder.dataTables.js"></script>
+<script src="https://cdn.datatables.net/responsive/3.0.8/js/dataTables.responsive.js"></script>
+<script src="https://cdn.datatables.net/responsive/3.0.8/js/responsive.dataTables.js"></script>
