@@ -4,6 +4,7 @@
 @section('page-title', 'Lamaran Masuk')
 @section('page-subtitle', 'Tinjau dan kelola semua kandidat yang melamar')
 
+
 @section('content')
 
 <div class="card overflow-hidden"
@@ -22,121 +23,69 @@ style="background: linear-gradient(135deg,#faf5ff 0%,#f8fafc 100%); border-color
 
 @else
 
-<div style="padding:20px 20px 0 20px;">
-@include('components.search-bar', [
-'target'=>'dudiLamaran',
-'placeholder'=>'Cari nama pelamar, posisi, sekolah...'
-])
-</div>
+<div class="px-3 sm:px-6 pt-5">
+    <div class="overflow-x-auto">
+    <table id="dudiLamaran" class="table table-striped table-hover nowrap">
+    <thead class="table-light">
+        <tr>
+            <th class="text-start fw-bold text-uppercase small">Pelamar</th>
+            <th class="text-start fw-bold text-uppercase small">Posisi</th>
+            <th class="text-start fw-bold text-uppercase small">Sekolah / Jurusan</th>
+            <th class="text-start fw-bold text-uppercase small">Tanggal</th>
+            <th class="text-start fw-bold text-uppercase small">Status</th>
+            <th class="text-end" style="width: 80px;"></th>
+        </tr>
+    </thead>
 
-<div style="overflow-x:auto;padding:0 20px 20px 20px;">
-
-<table style="width:100%;border-collapse:collapse;min-width:850px;">
-
-<thead>
-<tr style="background:linear-gradient(135deg,#f1f5f9,#f8fafc);
-border-bottom:1px solid #e2e8f0;">
-
-<th style="text-align:left;padding:12px 20px;">Pelamar</th>
-<th style="text-align:left;padding:12px 20px;">Posisi</th>
-<th style="text-align:left;padding:12px 20px;">Sekolah / Jurusan</th>
-<th style="text-align:left;padding:12px 20px;">Tanggal</th>
-<th style="text-align:left;padding:12px 20px;">Status</th>
-<th style="padding:12px 20px;width:90px;"></th>
-
-</tr>
-</thead>
-
-<tbody id="dudiLamaran">
-
-@foreach($lamarans as $l)
-
-<tr class="searchable-item"
-style="border-bottom:1px solid #f1f5f9;transition:background .15s;"
-onmouseover="this.style.background='#f8fafc'"
-onmouseout="this.style.background='transparent'">
-
-<td style="padding:12px 20px;">
-<div style="display:flex;align-items:center;gap:10px;">
-
-@if($l->user && $l->user->profile_photo)
-
-<img src="{{ $l->user->profile_photo }}"
-style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
-
-@else
-
-<div style="width:36px;height:36px;border-radius:50%;
-display:flex;align-items:center;justify-content:center;
-font-size:0.75rem;font-weight:700;color:white;
-background:linear-gradient(135deg,#6366f1,#8b5cf6);">
-
-{{ $l->user ? strtoupper(substr($l->user->name,0,1)) : '?' }}
-
-</div>
-
-@endif
-
-<div class="nama-pelamar">
-<p style="font-weight:600;color:#1e293b;">
-{{ $l->user->name ?? '-' }}
-</p>
-
-<p style="font-size:0.75rem;color:#64748b;">
-{{ $l->user->email ?? '-' }}
-</p>
-</div>
-
-</div>
-</td>
+<tbody>
+        @foreach($lamarans as $l)
+        <tr class="searchable-item">
+            <td class="py-3 px-4">
+                <div class="d-flex align-items-center gap-3">
+                    @if($l->user && $l->user->profile_photo)
+                    <img src="{{ $l->user->profile_photo }}" class="rounded-circle" style="width: 36px; height: 36px; object-fit: cover;" alt="Foto Profil">
+                    @else
+                    <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold text-white" style="width: 36px; height: 36px; background: linear-gradient(135deg, #6366f1, #8b5cf6); font-size: 0.75rem;">
+                        {{ $l->user ? strtoupper(substr($l->user->name, 0, 1)) : '?' }}
+                    </div>
+                    @endif
+                    <div class="flex-grow-1 min-w-0">
+                        <p class="mb-0 fw-semibold text-truncate">{{ $l->user->name ?? '-' }}</p>
+                        <p class="mb-0 text-muted small text-truncate">{{ $l->user->email ?? '-' }}</p>
+                    </div>
+                </div>
+            </td>
 
 
-<td style="padding:12px 20px;">
-<span class="posisi-nama"
-style="font-weight:500;color:#334155;">
-{{ $l->posisi->nama ?? '-' }}
-</span>
-</td>
-
-
-<td style="padding:12px 20px;">
-<p class="sekolah-nama" style="font-weight:500;color:#475569;">
-{{ $l->sekolah->nama ?? '-' }}
-</p>
-
-<p class="jurusan-nama" style="font-size:0.75rem;color:#64748b;">
-{{ $l->jurusan->nama ?? '-' }}
-</p>
-</td>
-
-
-<td style="padding:12px 20px;color:#64748b;">
-{{ $l->created_at->format('d M Y') }}
-</td>
-
-
-<td style="padding:12px 20px;">
-<span class="status-lamaran badge badge-{{ $l->status }}">
-{{ ucfirst($l->status) }}
-</span>
-</td>
-
-
-<td style="padding:12px 20px;text-align:right;">
-<a href="{{ route('dudi.lamaran.show',$l) }}"
-class="btn-outline btn-sm">
-Detail
-</a>
-</td>
-
-</tr>
-
-@endforeach
-
-</tbody>
+<td class="py-3 px-4 fw-medium">{{ $l->posisi->nama ?? '-' }}</td>
+            <td class="py-3 px-4">
+                <p class="mb-0 fw-medium">{{ $l->sekolah->nama ?? '-' }}</p>
+                <p class="mb-0 text-muted small">{{ $l->jurusan->nama ?? '-' }}</p>
+            </td>
+            <td class="py-3 px-4 text-muted">{{ $l->created_at->format('d M Y') }}</td>
+            <td class="py-3 px-4">
+                @php
+                $statusMap = [
+                    'pending' => ['bg-warning', 'Pending'],
+                    'approved' => ['bg-success', 'Diterima'],
+                    'rejected' => ['bg-danger', 'Ditolak'],
+                    'cancelled' => ['bg-secondary', 'Dibatalkan'],
+                ];
+                $s = $statusMap[$l->status] ?? ['bg-secondary', ucfirst($l->status)];
+                @endphp
+                <span class="badge {{ $s[0] }}">{{ $s[1] }}</span>
+            </td>
+            <td class="py-3 px-4 text-end">
+                <a href="{{ route('dudi.lamaran.show', $l) }}" class="btn btn-outline-primary btn-sm">Detail</a>
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
 </table>
 
+
 </div>
+</div>          
 
 
 <div id="noResults_dudiLamaran"

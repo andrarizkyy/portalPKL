@@ -9,13 +9,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.3.7/css/dataTables.dataTables.css">    
     <link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.5.1/css/rowReorder.dataTables.css">    
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.8/css/responsive.dataTables.css">    
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.8/css/responsive.dataTables.css">
+            
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    {{-- DataTables CSS --}}
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
     <style>
         * {
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -311,11 +310,19 @@
         .app-main {
             margin-left: 256px;
             min-height: 100vh;
+            width: calc(100% - 256px);
+            min-width: 0;
             display: flex;
             flex-direction: column;
             flex: 1;
-            transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition:  0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        @media (max-width: 767px) {
+    .app-main {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+}
 
         .app-main.expanded {
             margin-left: 0;
@@ -378,27 +385,25 @@
         }
 
         /* ── DataTables Custom Styling ── */
-        .dataTables_wrapper .dataTables_length select {
-            border: 1.5px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 4px 8px;
-            outline: none;
-        }
-
+        .dataTables_wrapper .dataTables_length select,
         .dataTables_wrapper .dataTables_filter input {
-            border: 1.5px solid #e2e8f0;
-            border-radius: 10px;
-            padding: 6px 12px;
-            outline: none;
-            margin-left: 10px;
-            background: #f8fafc;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 6px 12px;
+        outline: none;
+        background: #f8fafc;
+        transition: all 0.2s;
         }
 
+         .dataTables_length, .dataTables_filter {
+        flex: 0 0 auto;
+        margin-bottom: 10px;
+    }
         .dataTables_wrapper .dataTables_filter input:focus {
-            border-color: #6366f1;
-            background: #fff;
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-        }
+    border-color: #6366f1;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
 
         table.dataTable {
             border-collapse: collapse !important;
@@ -423,12 +428,23 @@
             font-size: 0.875rem !important;
             color: #334155 !important;
         }
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+        display: inline-block;
+        min-width: 38px;       
+        height: 38px;           
+        line-height: 24px;     
+        padding: 6px 10px !important;
+        margin: 0 4px !important;
+        border-radius: 8px !important;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        }
 
         .dataTables_wrapper .dataTables_paginate .paginate_button.current {
             background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
             color: white !important;
             border: none !important;
-            border-radius: 8px !important;
             font-weight: 600 !important;
         }
 
@@ -437,6 +453,88 @@
             border: 1px solid #e2e8f0 !important;
             color: #475569 !important;
         }
+        .dataTables_wrapper .dataTables_info {
+        color: #64748b !important;
+        font-size: 0.875rem !important;
+        float: left !important;
+        padding-top: 25px !important;
+       
+    }
+
+    .dataTables_wrapper .dataTables_paginate {
+        float: right !important; 
+        padding-top: 20px !important;
+         font-size: 0.875rem !important;
+        padding-bottom: 30px !important;
+    }
+    .dataTables_wrapper {
+        display: block !important;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+   
+    .dataTables_filter input {
+        width: 250px; 
+        margin-left: 10px;
+    }
+    .dataTables_info {
+        flex: 1;
+        text-align: left;
+    }
+
+    .dataTables_paginate {
+        flex: 1;
+        text-align: right !important; 
+    }
+
+@media (max-width: 768px) {
+    .dataTables_wrapper .dataTables_length,
+    .dataTables_wrapper .dataTables_filter {
+        width: 100%;
+        float: none;
+        display: block; 
+        margin-bottom: 15px;
+        padding: 0 5px;
+    }
+/* Teks datatable show dan search */
+    .dataTables_wrapper .dataTables_length label,
+    .dataTables_wrapper .dataTables_filter label {
+        display: flex;
+        flex-direction: row; 
+        align-items: center;
+        justify-content: center; 
+        width: 100%;
+        gap: 10px;
+    }
+
+    .dataTables_wrapper .dataTables_filter input,
+    .dataTables_wrapper .dataTables_length select {
+        width: 65% !important; 
+        max-width: 200px;
+        height: 38px; 
+        margin-left: 0 !important;
+    }
+
+   
+    .dataTables_wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    .dataTables_wrapper .dataTables_info,
+    .dataTables_wrapper .dataTables_paginate {
+        float: none !important;
+        text-align: center !important;
+        width: 100%;
+        margin: 10px 0;
+    }
+    
+    .dataTables_wrapper .dataTables_paginate {
+        display: flex;
+        justify-content: center;
+    }
+}
     </style>
 </head>
 
@@ -517,7 +615,7 @@
         {{-- Main --}}
         <main id="mainContent" class="app-main">
             {{-- Topbar --}}
-            <header class="sticky top-0 z-20 px-4 sm:px-6 py-4 flex items-center justify-between"
+            <header class="sticky top-0 z-20 px-4 sm:px-6 py-3 flex items-center justify-between"
                 style="background: rgba(248,250,252,0.92); backdrop-filter: blur(12px); border-bottom: 1.5px solid #cbd5e1; box-shadow: 0 1px 3px rgba(0,0,0,0.06);">
                 <div class="flex items-center gap-2 sm:gap-3 min-w-0">
                     {{-- Toggle sidebar --}}
@@ -641,20 +739,13 @@
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
     @yield('scripts')
-</body>
 
-</html>
-<script>
-    new DataTable('example1', {
-    responsive: true,
-    rowReorder: {
-        selector: 'td:nth-child(2)'
-    }
+    <script>
+$(document).ready(function () {
+    $('#dudiLamaran').DataTable({
+        responsive: true
+    });
 });
 </script>
-<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<script src="https://cdn.datatables.net/2.3.7/js/dataTables.js"></script>
-<script src="https://cdn.datatables.net/rowreorder/1.5.1/js/dataTables.rowReorder.js"></script>
-<script src="https://cdn.datatables.net/rowreorder/1.5.1/js/rowReorder.dataTables.js"></script>
-<script src="https://cdn.datatables.net/responsive/3.0.8/js/dataTables.responsive.js"></script>
-<script src="https://cdn.datatables.net/responsive/3.0.8/js/responsive.dataTables.js"></script>
+</body>
+</html>
