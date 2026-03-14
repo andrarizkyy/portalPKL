@@ -44,9 +44,12 @@ class LamaranStatusUpdated extends Notification implements ShouldQueue
 
         return [
             'type' => 'lamaran_status',
-            'message' => $status === 'approved'
-            ? 'Lamaran Anda di ' . $perusahaan . ' diterima!'
-            : 'Lamaran Anda di ' . $perusahaan . ' ditolak.',
+            'message' => match ($status) {
+                'approved' => 'Lamaran Anda di ' . $perusahaan . ' diterima!',
+                'rejected' => 'Lamaran Anda di ' . $perusahaan . ' ditolak.',
+                'cancelled' => 'Lamaran Anda di ' . $perusahaan . ' otomatis dibatalkan karena Anda sudah diterima di lowongan lain.',
+                default => 'Status lamaran Anda di ' . $perusahaan . ' telah diperbarui.',
+            },
             'lamaran_id' => $this->lamaran->id,
             'perusahaan' => $perusahaan,
             'posisi_nama' => $posisi->nama,

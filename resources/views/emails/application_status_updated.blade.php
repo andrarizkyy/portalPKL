@@ -128,7 +128,8 @@
         <div class="content">
             <h2>Halo, {{ $notifiable->name }}!</h2>
             <p>Kami memiliki kabar gembira untuk Anda. Lamaran PKL Anda telah kami tinjau dan hasilnya adalah
-                <strong>DITERIMA</strong>.</p>
+                <strong>DITERIMA</strong>.
+            </p>
 
             <div class="info-card approved-border">
                 <div class="info-row">
@@ -150,6 +151,33 @@
 
             <div style="text-align: center;">
                 <a href="{{ url('/siswa/lamaran') }}" class="button button-approved">Lihat Detail Lamaran</a>
+            </div>
+        </div>
+        @elseif($lamaran->status === 'cancelled')
+        <div class="header" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+            <h1>Lamaran Otomatis Dibatalkan</h1>
+        </div>
+        <div class="content">
+            <h2>Halo, {{ $notifiable->name }}</h2>
+            <p>Lamaran PKL Anda ke perusahaan berikut telah <strong>otomatis dibatalkan</strong> karena Anda sudah
+                diterima di lowongan lain. Selamat!</p>
+
+            <div class="info-card" style="border-left: 4px solid #f59e0b;">
+                <div class="info-row">
+                    <span class="info-label">Perusahaan:</span>
+                    <span class="info-value">{{ $lamaran->posisi->lowongan->dudiProfile->nama_perusahaan }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Lowongan:</span>
+                    <span class="info-value">{{ $lamaran->posisi->lowongan->judul }}</span>
+                </div>
+            </div>
+
+            <p>Lamaran ini dibatalkan secara otomatis oleh sistem. Anda tidak perlu melakukan tindakan apa pun.</p>
+
+            <div style="text-align: center;">
+                <a href="{{ url('/siswa/lamaran') }}" class="button" style="background-color: #f59e0b;">Lihat Semua
+                    Lamaran</a>
             </div>
         </div>
         @else

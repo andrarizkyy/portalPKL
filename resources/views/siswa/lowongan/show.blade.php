@@ -5,7 +5,23 @@
 
 @section('content')
 <div class="max-w-4xl">
+    @if($hasApproved)
     <div class="card p-5 mb-6"
+        style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border-color: #86efac;">
+        <div class="flex items-center gap-3">
+            <svg class="w-6 h-6 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div>
+                <p class="font-bold text-green-800">Anda sudah diterima di lowongan lain!</p>
+                <p class="text-sm text-green-700">Anda tidak dapat melamar lowongan baru karena sudah diterima.</p>
+            </div>
+        </div>
+    </div>
+    @endif
+
+    <div class="card p-6 mb-6"
         style="background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%); border-color: #bfdbfe;">
         @if($lowongan->gambar)
         <img src="{{ asset('storage/' . $lowongan->gambar) }}" class="w-full h-64 object-cover rounded-xl mb-6" alt="">
@@ -33,6 +49,8 @@
                     </div>
                     @if(in_array($posisi->id, $appliedPosisiIds))
                     <span class="badge badge-pending">Sudah Dilamar</span>
+                    @elseif($hasApproved)
+                    <span class="badge bg-green-100 text-green-700">Sudah Diterima di Lowongan Lain</span>
                     @elseif($posisi->sisaTempat() > 0)
                     <a href="{{ route('siswa.lamar', [$lowongan, $posisi]) }}" class="btn-primary text-sm">Lamar</a>
                     @else

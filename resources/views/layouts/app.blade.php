@@ -10,10 +10,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.7/css/dataTables.dataTables.css">    
-    <link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.5.1/css/rowReorder.dataTables.css">    
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.7/css/dataTables.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.5.1/css/rowReorder.dataTables.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.8/css/responsive.dataTables.css">
-            
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         * {
@@ -315,14 +315,15 @@
             display: flex;
             flex-direction: column;
             flex: 1;
-            transition:  0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
         @media (max-width: 767px) {
-    .app-main {
-        margin-left: 0 !important;
-        width: 100% !important;
-    }
-}
+            .app-main {
+                margin-left: 0 !important;
+                width: 100% !important;
+            }
+        }
 
         .app-main.expanded {
             margin-left: 0;
@@ -387,23 +388,25 @@
         /* ── DataTables Custom Styling ── */
         .dataTables_wrapper .dataTables_length select,
         .dataTables_wrapper .dataTables_filter input {
-        border: 1.5px solid #e2e8f0;
-        border-radius: 8px;
-        padding: 6px 12px;
-        outline: none;
-        background: #f8fafc;
-        transition: all 0.2s;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 6px 12px;
+            outline: none;
+            background: #f8fafc;
+            transition: all 0.2s;
         }
 
-         .dataTables_length, .dataTables_filter {
-        flex: 0 0 auto;
-        margin-bottom: 10px;
-    }
+        .dataTables_length,
+        .dataTables_filter {
+            flex: 0 0 auto;
+            margin-bottom: 10px;
+        }
+
         .dataTables_wrapper .dataTables_filter input:focus {
-    border-color: #6366f1;
-    background: #fff;
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-}
+            border-color: #6366f1;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
 
         table.dataTable {
             border-collapse: collapse !important;
@@ -428,17 +431,18 @@
             font-size: 0.875rem !important;
             color: #334155 !important;
         }
+
         .dataTables_wrapper .dataTables_paginate .paginate_button {
-        display: inline-block;
-        min-width: 38px;       
-        height: 38px;           
-        line-height: 24px;     
-        padding: 6px 10px !important;
-        margin: 0 4px !important;
-        border-radius: 8px !important;
-        text-align: center;
-        cursor: pointer;
-        transition: all 0.2s ease;
+            display: inline-block;
+            min-width: 38px;
+            height: 38px;
+            line-height: 24px;
+            padding: 6px 10px !important;
+            margin: 0 4px !important;
+            border-radius: 8px !important;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
 
         .dataTables_wrapper .dataTables_paginate .paginate_button.current {
@@ -453,88 +457,94 @@
             border: 1px solid #e2e8f0 !important;
             color: #475569 !important;
         }
+
         .dataTables_wrapper .dataTables_info {
-        color: #64748b !important;
-        font-size: 0.875rem !important;
-        float: left !important;
-        padding-top: 25px !important;
-       
-    }
+            color: #64748b !important;
+            font-size: 0.875rem !important;
+            float: left !important;
+            padding-top: 25px !important;
 
-    .dataTables_wrapper .dataTables_paginate {
-        float: right !important; 
-        padding-top: 20px !important;
-         font-size: 0.875rem !important;
-        padding-bottom: 30px !important;
-    }
-    .dataTables_wrapper {
-        display: block !important;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        align-items: center;
-    }
-    
-   
-    .dataTables_filter input {
-        width: 250px; 
-        margin-left: 10px;
-    }
-    .dataTables_info {
-        flex: 1;
-        text-align: left;
-    }
+        }
 
-    .dataTables_paginate {
-        flex: 1;
-        text-align: right !important; 
-    }
+        .dataTables_wrapper .dataTables_paginate {
+            float: right !important;
+            padding-top: 20px !important;
+            font-size: 0.875rem !important;
+            padding-bottom: 30px !important;
+        }
 
-@media (max-width: 768px) {
-    .dataTables_wrapper .dataTables_length,
-    .dataTables_wrapper .dataTables_filter {
-        width: 100%;
-        float: none;
-        display: block; 
-        margin-bottom: 15px;
-        padding: 0 5px;
-    }
-/* Teks datatable show dan search */
-    .dataTables_wrapper .dataTables_length label,
-    .dataTables_wrapper .dataTables_filter label {
-        display: flex;
-        flex-direction: row; 
-        align-items: center;
-        justify-content: center; 
-        width: 100%;
-        gap: 10px;
-    }
+        .dataTables_wrapper {
+            display: block !important;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    .dataTables_wrapper .dataTables_filter input,
-    .dataTables_wrapper .dataTables_length select {
-        width: 65% !important; 
-        max-width: 200px;
-        height: 38px; 
-        margin-left: 0 !important;
-    }
 
-   
-    .dataTables_wrapper {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-    .dataTables_wrapper .dataTables_info,
-    .dataTables_wrapper .dataTables_paginate {
-        float: none !important;
-        text-align: center !important;
-        width: 100%;
-        margin: 10px 0;
-    }
-    
-    .dataTables_wrapper .dataTables_paginate {
-        display: flex;
-        justify-content: center;
-    }
-}
+        .dataTables_filter input {
+            width: 250px;
+            margin-left: 10px;
+        }
+
+        .dataTables_info {
+            flex: 1;
+            text-align: left;
+        }
+
+        .dataTables_paginate {
+            flex: 1;
+            text-align: right !important;
+        }
+
+        @media (max-width: 768px) {
+
+            .dataTables_wrapper .dataTables_length,
+            .dataTables_wrapper .dataTables_filter {
+                width: 100%;
+                float: none;
+                display: block;
+                margin-bottom: 15px;
+                padding: 0 5px;
+            }
+
+            /* Teks datatable show dan search */
+            .dataTables_wrapper .dataTables_length label,
+            .dataTables_wrapper .dataTables_filter label {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                gap: 10px;
+            }
+
+            .dataTables_wrapper .dataTables_filter input,
+            .dataTables_wrapper .dataTables_length select {
+                width: 65% !important;
+                max-width: 200px;
+                height: 38px;
+                margin-left: 0 !important;
+            }
+
+
+            .dataTables_wrapper {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .dataTables_wrapper .dataTables_info,
+            .dataTables_wrapper .dataTables_paginate {
+                float: none !important;
+                text-align: center !important;
+                width: 100%;
+                margin: 10px 0;
+            }
+
+            .dataTables_wrapper .dataTables_paginate {
+                display: flex;
+                justify-content: center;
+            }
+        }
     </style>
 </head>
 
@@ -552,9 +562,8 @@
                 <a href="" class="flex items-center gap-3">
                     <div class="w-8 h-8 rounded-lg sm:rounded-xl overflow-hidden shadow-lg
                     bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
-                      <img src="/coba4.png"
-                    alt="logo"
-                    class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+                        <img src="/coba4.png" alt="logo"
+                            class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
 
                     </div>
                     <div>
@@ -640,7 +649,7 @@
             </header>
 
             {{-- Alerts --}}
-            <div class="px-4 sm:px-6 pt-5">
+            <div class="px-4 sm:px-6 pt-2">
                 @if(session('success'))
                 <div class="fade-in flex items-center gap-3 px-4 py-3.5 rounded-2xl mb-4 text-sm font-medium"
                     style="background: #ecfdf5; border: 1px solid #a7f3d0; color: #065f46;">
@@ -650,6 +659,17 @@
                             clip-rule="evenodd" />
                     </svg>
                     {{ session('success') }}
+                </div>
+                @endif
+                @if(session('error'))
+                <div class="fade-in flex items-center gap-3 px-4 py-3.5 rounded-2xl mb-4 text-sm font-medium"
+                    style="background: #fff1f2; border: 1px solid #fecdd3; color: #991b1b;">
+                    <svg class="w-5 h-5 shrink-0" style="color: #ef4444;" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    {{ session('error') }}
                 </div>
                 @endif
                 @if($errors->any())
@@ -672,7 +692,7 @@
             </div>
 
             {{-- Content --}}
-            <div class="px-4 sm:px-6 pb-6 pt-4 fade-in flex-1">
+            <div class="px-4 sm:px-6 pb-6 pt-1 fade-in flex-1">
                 @yield('content')
             </div>
         </main>
@@ -741,11 +761,12 @@
     @yield('scripts')
 
     <script>
-$(document).ready(function () {
-    $('#dudiLamaran').DataTable({
-        responsive: true
-    });
-});
-</script>
+        $(document).ready(function () {
+            $('#dudiLamaran').DataTable({
+                responsive: true
+            });
+        });
+    </script>
 </body>
+
 </html>

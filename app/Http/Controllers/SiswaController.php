@@ -132,13 +132,21 @@ class SiswaController extends Controller
         $lowongan->load(['dudiProfile.user', 'dudiProfile.industry', 'posisis.pendaftaranPkls', 'jurusans']);
         $user = Auth::user();
         $appliedPosisiIds = PendaftaranPkl::where('user_id', $user->id)->pluck('posisi_id')->toArray();
+        $hasApproved = PendaftaranPkl::where('user_id', $user->id)->where('status', 'approved')->exists();
 
-        return view('siswa.lowongan.show', compact('lowongan', 'appliedPosisiIds'));
+        return view('siswa.lowongan.show', compact('lowongan', 'appliedPosisiIds', 'hasApproved'));
     }
 
     public function lamar(Lowongan $lowongan, \App\Models\Posisi $posisi)
     {
         $user = Auth::user();
+
+        // Cek jika sudah diterima di lowongan lain
+        $hasApproved = PendaftaranPkl::where('user_id', $user->id)->where('status', 'approved')->exists();
+        if ($hasApproved) {
+            return redirect()->route('siswa.lamaran.index')->with('error', 'Anda sudah diterima di lowongan lain. Tidak dapat melamar lagi.');
+        }
+
         return view('siswa.lamar', compact('lowongan', 'posisi', 'user'));
     }
 
@@ -156,7 +164,13 @@ class SiswaController extends Controller
             return back()->withErrors(['cv' => 'Lengkapi profil terlebih dahulu.']);
         }
 
-        // Check if already applied
+        // Cek jika sudah diterima di lowongan lain
+        $approved = PendaftaranPkl::where('user_id', $user->id)->where('status', 'approved')->first();
+        if ($approved) {
+            return back()->withErrors(['cv' => 'Anda sudah diterima di lowongan lain. Tidak dapat melamar lagi.']);
+        }
+
+        // Cek jika sudah melamar posisi yang sama
         $existing = PendaftaranPkl::where('user_id', $user->id)->where('posisi_id', $posisi->id)->first();
         if ($existing) {
             return back()->withErrors(['cv' => 'Anda sudah melamar posisi ini.']);

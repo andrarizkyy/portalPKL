@@ -199,7 +199,41 @@ class DudiController extends Controller
     {
         $this->authorizeLamaran($lamaran);
         $request->validate(['status' => 'required|in:approved,rejected']);
+
+        // Cek jika siswa sudah diterima di lowongan lain (hanya boleh 1 lowongan)
+        if ($request->status === 'approved') {
+            $alreadyApproved = PendaftaranPkl::where('user_id', $lamaran->user_id)
+                ->where('id', '!=', $lamaran->id)
+                ->where('status', 'approved')
+                ->first();
+
+            if ($alreadyApproved) {
+                $alreadyApproved->load('posisi.lowongan.dudiProfile');
+                $perusahaan = $alreadyApproved->posisi->lowongan->dudiProfile->nama_perusahaan ?? 'perusahaan lain';
+                return back()->with('error', 'Siswa ini sudah diterima di "' . $perusahaan . '". Satu siswa hanya boleh diterima di 1 lowongan.');
+            }
+        }
+
         $lamaran->update(['status' => $request->status]);
+
+        // Jika di-approve, batalkan semua lamaran pending lainnya dari siswa yang sama
+        if ($request->status === 'approved') {
+            $otherLamarans = PendaftaranPkl::where('user_id', $lamaran->user_id)
+                ->where('id', '!=', $lamaran->id)
+                ->where('status', 'pending')
+                ->get();
+
+            foreach ($otherLamarans as $other) {
+                $other->update(['status' => 'cancelled']);
+
+                // Kirim notifikasi pembatalan ke siswa untuk setiap lamaran yang dibatalkan
+                $other->load('user', 'posisi.lowongan.dudiProfile');
+                $otherUser = $other->user;
+                if ($otherUser) {
+                    $otherUser->notify(new LamaranStatusUpdated($other));
+                }
+            }
+        }
 
         // Kirim notifikasi ke Siswa
         $lamaran->load('user', 'posisi.lowongan.dudiProfile');
@@ -208,7 +242,7 @@ class DudiController extends Controller
             $siswaUser->notify(new LamaranStatusUpdated($lamaran));
         }
 
-        $msg = $request->status === 'approved' ? 'Lamaran disetujui.' : 'Lamaran ditolak.';
+        $msg = $request->status === 'approved' ? 'Lamaran disetujui. Lamaran lain dari siswa ini otomatis dibatalkan.' : 'Lamaran ditolak.';
         return back()->with('success', $msg);
     }
 
