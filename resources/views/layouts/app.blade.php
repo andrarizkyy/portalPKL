@@ -558,7 +558,7 @@
             style="background: linear-gradient(180deg, #0f172a 0%, #1a1040 50%, #0f172a 100%);">
 
             {{-- Logo --}}
-            <div class="px-5 py-5 border-b border-white/[0.06] flex items-center justify-between">
+            <div class="px-5 py-3 border-b border-white/[0.06] flex items-center justify-between">
                 <a href="" class="flex items-center gap-3">
                     <div class="w-8 h-8 rounded-lg sm:rounded-xl overflow-hidden shadow-lg
                     bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
