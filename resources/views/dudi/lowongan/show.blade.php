@@ -6,9 +6,6 @@
 <div class="max-w-4xl">
     <div class="card p-6 mb-6"
         style="background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 100%); border-color: #c7d2fe;">
-        @if($lowongan->gambar)
-        <img src="{{ asset('storage/' . $lowongan->gambar) }}" class="w-full h-56 object-cover rounded-xl mb-6" alt="">
-        @endif
 
         <div class="flex items-center gap-2 mb-4">
             @if($lowongan->is_published)

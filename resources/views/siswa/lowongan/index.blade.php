@@ -19,63 +19,107 @@
 @include('components.search-bar', ['target' => 'lowonganCards', 'placeholder' => 'Cari lowongan, perusahaan, atau
  industri...'])
 
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="lowonganCards">
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5" id="lowonganCards">
     @foreach($lowongans as $l)
-    <div class="card group overflow-hidden hover:-translate-y-1 transition-all duration-300 searchable-item"
-        style="box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03); background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%); border-color: #bfdbfe;">
-        {{-- Cover image / gradient --}}
-        @if($l->gambar)
-        <div class="relative h-44 overflow-hidden">
-            <img src="{{ asset('storage/' . $l->gambar) }}"
-                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                alt="{{ $l->judul }}">
-            <div class="absolute inset-0"
-                style="background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 60%);"></div>
-        </div>
-        @else
-        <div class="h-44 flex items-center justify-center relative overflow-hidden"
-            style="background: linear-gradient(135deg, #4f46e5, #7c3aed);">
-            <div class="absolute inset-0 opacity-20"
-                style="background-image: radial-gradient(circle at 50% 50%, white 1px, transparent 1px); background-size: 20px 20px;">
-            </div>
-            <div class="text-5xl relative z-10"><svg style="width:2.5rem;height:2.5rem;color:white" fill="none"
-                    stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg></div>
-        </div>
-        @endif
-
+    <div class="searchable-item group rounded-2xl border border-slate-200 bg-white hover:border-indigo-200 hover:shadow-lg transition-all duration-300 overflow-hidden"
+         style="box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 2px 8px rgba(0,0,0,0.03);">
         <div class="p-5">
-            {{-- Badges --}}
+            {{-- Header: Title + Position Count --}}
+            <div class="flex items-start justify-between gap-3 mb-3">
+                <h3 class="text-base font-bold text-slate-800 group-hover:text-indigo-600 transition-colors line-clamp-2 leading-snug">
+                    {{ $l->judul }}
+                </h3>
+                <span class="shrink-0 text-xs font-bold px-2.5 py-1 rounded-lg"
+                      style="background: rgba(99,102,241,0.08); color: #6366f1;">
+                    {{ $l->posisis->count() }} Posisi
+                </span>
+            </div>
+
+            {{-- Badges Row --}}
             <div class="flex flex-wrap items-center gap-2 mb-3">
                 @if($l->dudiProfile->industry->nama ?? false)
-                <span class="text-xs px-2.5 py-1 rounded-lg font-semibold"
-                    style="background: rgba(99,102,241,0.1); color: #6366f1;">
+                <span class="inline-flex items-center text-xs px-2.5 py-1 rounded-lg font-semibold"
+                      style="background: rgba(99,102,241,0.08); color: #6366f1;">
                     {{ $l->dudiProfile->industry->nama }}
                 </span>
                 @endif
-                <span class="text-xs px-2.5 py-1 rounded-lg font-semibold text-slate-500 bg-slate-100">
-                    {{ $l->posisis->count() }} posisi
+                @php
+                    $now = now();
+                    $isNew = $l->created_at && $l->created_at->diffInDays($now) <= 3;
+                    $isUrgent = $l->tanggal_selesai && $l->tanggal_selesai->diffInDays($now) <= 7 && $l->tanggal_selesai->isFuture();
+                @endphp
+                @if($isUrgent)
+                <span class="inline-flex items-center text-xs px-2.5 py-1 rounded-lg font-bold"
+                      style="background: rgba(239,68,68,0.1); color: #ef4444;">
+                    SEGERA
                 </span>
+                @endif
+                @if($isNew)
+                <span class="inline-flex items-center text-xs px-2.5 py-1 rounded-lg font-bold"
+                      style="background: rgba(16,185,129,0.1); color: #10b981;">
+                    <svg style="width:0.6rem;height:0.6rem;margin-right:3px" fill="currentColor" viewBox="0 0 8 8"><circle cx="4" cy="4" r="4"/></svg>
+                    Baru
+                </span>
+                @endif
             </div>
 
-            {{-- Title and company --}}
-            <h3
-                class="text-base font-bold text-slate-800 mb-1 group-hover:text-indigo-600 transition-colors line-clamp-2">
-                {{ $l->judul }}</h3>
-            <p class="text-sm text-slate-500 mb-1 font-medium">{{ $l->dudiProfile->nama_perusahaan ?? '-' }}</p>
-            <p class="text-xs text-slate-600 mb-4">
-                <svg style="width:0.75rem;height:0.75rem;display:inline;vertical-align:middle;margin-right:2px;color:#94a3b8"
-                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            {{-- Position Tags --}}
+            <div class="flex flex-wrap gap-1.5 mb-4">
+                @foreach($l->posisis->take(3) as $posisi)
+                <span class="text-xs px-2 py-0.5 rounded-md font-medium bg-slate-100 text-slate-600">
+                    {{ $posisi->nama }}
+                </span>
+                @endforeach
+                @if($l->posisis->count() > 3)
+                <span class="text-xs px-2 py-0.5 rounded-md font-medium bg-slate-100 text-slate-500">
+                    +{{ $l->posisis->count() - 3 }}
+                </span>
+                @endif
+            </div>
+
+            {{-- Company Info --}}
+            <div class="flex items-center gap-2.5 mb-2">
+                <div class="w-8 h-8 rounded-lg flex items-center justify-center text-white text-xs font-bold shrink-0"
+                     style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">
+                    {{ strtoupper(substr($l->dudiProfile->nama_perusahaan ?? 'D', 0, 2)) }}
+                </div>
+                <div class="min-w-0">
+                    <p class="text-sm font-semibold text-slate-700 truncate">{{ $l->dudiProfile->nama_perusahaan ?? '-' }}</p>
+                </div>
+            </div>
+
+            {{-- Location --}}
+            @if($l->dudiProfile->alamat ?? false)
+            <div class="flex items-center gap-1.5 mb-3">
+                <svg style="width:0.85rem;height:0.85rem;color:#94a3b8;flex-shrink:0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <span class="text-xs text-slate-500 truncate">{{ $l->dudiProfile->alamat }}</span>
+            </div>
+            @endif
+        </div>
+
+        {{-- Footer --}}
+        <div class="px-5 py-3 border-t border-slate-100 flex items-center justify-between"
+             style="background: #fafbfc;">
+            <div class="flex items-center gap-1.5">
+                <svg style="width:0.75rem;height:0.75rem;color:#94a3b8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg> {{ $l->tanggal_mulai->format('d M Y') }} — {{ $l->tanggal_selesai->format('d M Y') }}
-            </p>
-
+                </svg>
+                <span class="text-xs text-slate-500">
+                    {{ $l->tanggal_mulai->format('d M') }} — {{ $l->tanggal_selesai->format('d M Y') }}
+                </span>
+            </div>
             <a href="{{ route('siswa.lowongan.show', $l) }}"
-                class="btn-primary w-full justify-center text-center block">
+               class="text-xs font-bold text-indigo-600 hover:text-indigo-800 transition-colors flex items-center gap-1">
                 Lihat Detail
+                <svg style="width:0.75rem;height:0.75rem" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
+                </svg>
             </a>
         </div>
     </div>

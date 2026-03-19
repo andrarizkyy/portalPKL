@@ -11,7 +11,7 @@ class Lowongan extends Model
 
     protected $table = 'lowongans';
 
-    protected $fillable = ['dudi_profile_id', 'judul', 'gambar', 'deskripsi', 'tanggal_mulai', 'tanggal_selesai', 'is_published'];
+    protected $fillable = ['dudi_profile_id', 'judul', 'deskripsi', 'tanggal_mulai', 'tanggal_selesai', 'is_published'];
 
     protected function casts(): array
     {

@@ -5,19 +5,11 @@
 @section('content')
 <div class="card max-w-3xl"
     style="background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 100%); border-color: #c7d2fe;">
-    <form method="POST" action="{{ route('dudi.lowongan.update', $lowongan) }}" enctype="multipart/form-data"
-        class="p-6 space-y-5">
+    <form method="POST" action="{{ route('dudi.lowongan.update', $lowongan) }}" class="p-6 space-y-5">
         @csrf @method('PUT')
         <div>
             <label class="block text-sm font-semibold text-slate-700 mb-1.5">Judul Lowongan *</label>
             <input type="text" name="judul" value="{{ old('judul', $lowongan->judul) }}" class="input-field" required>
-        </div>
-        <div>
-            <label class="block text-sm font-semibold text-slate-700 mb-1.5">Gambar Cover</label>
-            @if($lowongan->gambar)
-            <img src="{{ asset('storage/' . $lowongan->gambar) }}" class="w-48 h-32 object-cover rounded-lg mb-2">
-            @endif
-            <input type="file" name="image" class="input-field" accept="image/*">
         </div>
         <div>
             <label class="block text-sm font-semibold text-slate-700 mb-1.5">Deskripsi *</label>

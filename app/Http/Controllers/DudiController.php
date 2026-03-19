@@ -81,7 +81,6 @@ class DudiController extends Controller
     {
         $request->validate([
             'judul' => 'required|string|max:150',
-            'gambar' => 'nullable|image|max:2048',
             'deskripsi' => 'required|string',
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date|after:tanggal_mulai',
@@ -96,10 +95,6 @@ class DudiController extends Controller
         $data = $request->only('judul', 'deskripsi', 'tanggal_mulai', 'tanggal_selesai');
         $data['dudi_profile_id'] = $profile->id;
         $data['is_published'] = $request->boolean('is_published');
-
-        if ($request->hasFile('gambar')) {
-            $data['gambar'] = $request->file('gambar')->store('lowongan', 'public');
-        }
 
         $lowongan = Lowongan::create($data);
 
@@ -136,7 +131,6 @@ class DudiController extends Controller
 
         $request->validate([
             'judul' => 'required|string|max:150',
-            'gambar' => 'nullable|image|max:2048',
             'deskripsi' => 'required|string',
             'tanggal_mulai' => 'required|date',
             'tanggal_selesai' => 'required|date|after:tanggal_mulai',
@@ -149,10 +143,6 @@ class DudiController extends Controller
 
         $data = $request->only('judul', 'deskripsi', 'tanggal_mulai', 'tanggal_selesai');
         $data['is_published'] = $request->boolean('is_published');
-
-        if ($request->hasFile('gambar')) {
-            $data['gambar'] = $request->file('gambar')->store('lowongan', 'public');
-        }
 
         $lowongan->update($data);
 
@@ -274,17 +264,17 @@ class DudiController extends Controller
         return view('auth.register', compact('dudi'));
     }
 
-public function downloadCv($id)
-{
-    // Cari data pendaftaran
-    $data = PendaftaranPkl::findOrFail($id);
+    public function downloadCv($id)
+    {
+        // Cari data pendaftaran
+        $data = PendaftaranPkl::findOrFail($id);
 
-    // Cek apakah file benar-benar ada di storage
-    if (!Storage::disk('public')->exists($data->cv)) {
-        return back()->with('error', 'File CV tidak ditemukan di server.');
+        // Cek apakah file benar-benar ada di storage
+        if (!Storage::disk('public')->exists($data->cv)) {
+            return back()->with('error', 'File CV tidak ditemukan di server.');
+        }
+
+        // Force Download (Mengunduh file, bukan cuma buka di tab baru)
+        return Storage::disk('public')->download($data->cv);
     }
-
-    // Force Download (Mengunduh file, bukan cuma buka di tab baru)
-      return Storage::disk('public')->download($data->cv);
-}
 }

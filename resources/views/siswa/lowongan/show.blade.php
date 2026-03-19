@@ -23,9 +23,28 @@
 
     <div class="card p-6 mb-6"
         style="background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%); border-color: #bfdbfe;">
-        @if($lowongan->gambar)
-        <img src="{{ asset('storage/' . $lowongan->gambar) }}" class="w-full h-64 object-cover rounded-xl mb-6" alt="">
-        @endif
+
+        {{-- Company Header --}}
+        <div class="flex items-center gap-3 mb-5">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold text-lg"
+                style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">
+                {{ strtoupper(substr($lowongan->dudiProfile->nama_perusahaan ?? 'D', 0, 2)) }}
+            </div>
+            <div>
+                <p class="font-semibold text-slate-800">{{ $lowongan->dudiProfile->nama_perusahaan ?? '-' }}</p>
+                @if($lowongan->dudiProfile->alamat ?? false)
+                <p class="text-sm text-slate-500 flex items-center gap-1">
+                    <svg style="width:0.8rem;height:0.8rem" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    {{ $lowongan->dudiProfile->alamat }}
+                </p>
+                @endif
+            </div>
+        </div>
 
         <div class="flex flex-wrap gap-2 mb-4">
             <span class="badge bg-indigo-100 text-indigo-800">{{ $lowongan->dudiProfile->industry->nama ?? '' }}</span>
