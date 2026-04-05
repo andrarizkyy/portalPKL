@@ -49,14 +49,9 @@
             </div>
 
             {{-- Location --}}
-           
-             <span class="inline-flex items-center text-xs py-1 rounded-lg font-semibold mt-3"
-                      style="color: #6366f1;">
-                    {{ $l->dudiProfile->industry->nama }}
-                </span>
             @endif
              {{-- Header: Title + Position Count --}}
-            <div class="flex items-start justify-between gap-3 mb-3">
+            <div class="flex items-start justify-between gap-3 mb-3 mt-4">
                 <h3 class="text-xl font-bold text-slate-800 group-hover:text-indigo-600 transition-colors line-clamp-2 leading-snug">
                     {{ $l->judul }}
                 </h3>
@@ -68,7 +63,10 @@
 
             {{-- Badges Row --}}
             <div class="flex flex-wrap items-center gap-2 mb-3">
-                
+                 <span class="inline-flex items-center text-xs px-2.5 py-1 rounded-lg font-bold"
+                      style="background: rgba(99,102,241,0.08); color: #6366f1;">
+                    {{ $l->dudiProfile->industry->nama }}
+                </span>
                 @php
                     $now = now();
                     $isNew = $l->created_at && $l->created_at->diffInDays($now) <= 3;
