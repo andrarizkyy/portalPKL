@@ -92,12 +92,12 @@
             {{-- Position Tags --}}
             <div class="flex flex-wrap gap-1.5 mb-2">
                 @foreach($l->posisis->take(3) as $posisi)
-                <span class="text-xs px-2 py-0.5 rounded-md font-medium bg-slate-100 text-slate-600">
+                <span class="text-xs px-2 py-0.5 rounded-md font-bold bg-slate-100 text-slate-600">
                     {{ $posisi->nama }}
                 </span>
                 @endforeach
                 @if($l->posisis->count() > 3)
-                <span class="text-xs px-2 py-0.5 rounded-md font-medium bg-slate-100 text-slate-500">
+                <span class="text-xs px-2 py-0.5 rounded-md font-bold bg-slate-100 text-slate-500">
                     +{{ $l->posisis->count() - 3 }}
                 </span>
                 @endif
