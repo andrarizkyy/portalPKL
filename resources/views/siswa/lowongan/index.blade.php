@@ -3,7 +3,7 @@
 @section('page-title', 'Lowongan PKL')
 @section('content')
 @if($lowongans->isEmpty())
-<div class="card p-16 text-center"
+<div class="card p-15 text-center"
     style="background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%); border-color: #bfdbfe;">
     <div class="text-6xl mb-4"><svg style="width:3rem;height:3rem;color:#94a3b8" fill="none" stroke="currentColor"
             viewBox="0 0 24 24">
@@ -24,9 +24,40 @@
     <div class="searchable-item group rounded-2xl border border-slate-200 bg-white hover:border-indigo-200 hover:shadow-lg transition-all duration-300 overflow-hidden"
          style="box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 2px 8px rgba(0,0,0,0.03);">
         <div class="p-5">
-            {{-- Header: Title + Position Count --}}
+            {{-- Company Info --}}
+            <div class="flex items-center gap-3 mb-2">
+                <div class="w-12 h-12 rounded-lg flex items-center justify-center text-white text-lg font-bold shrink-0"
+                     style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">
+                    {{ strtoupper(substr($l->dudiProfile->nama_perusahaan ?? 'D', 0, 2)) }}
+                    
+                </div>
+                <div class="min-w-0">
+                    <p class="text-s font-semibold text-slate-800 truncate">{{ $l->dudiProfile->nama_perusahaan ?? '-' }}</p>
+                    @if($l->dudiProfile->industry->nama ?? false)
+                @if($l->dudiProfile->alamat ?? false)
+            <div class="flex items-center mb-1 py-1 gap-1">
+                <svg style="width:0.85rem;height:0.85rem;color:#94a3b8;flex-shrink:0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <span class="text-xs text-slate-500 truncate">{{ $l->dudiProfile->alamat }}</span>
+            </div>
+                @endif
+                </div>
+            </div>
+
+            {{-- Location --}}
+           
+             <span class="inline-flex items-center text-xs py-1 rounded-lg font-semibold mt-3"
+                      style="color: #6366f1;">
+                    {{ $l->dudiProfile->industry->nama }}
+                </span>
+            @endif
+             {{-- Header: Title + Position Count --}}
             <div class="flex items-start justify-between gap-3 mb-3">
-                <h3 class="text-base font-bold text-slate-800 group-hover:text-indigo-600 transition-colors line-clamp-2 leading-snug">
+                <h3 class="text-xl font-bold text-slate-800 group-hover:text-indigo-600 transition-colors line-clamp-2 leading-snug">
                     {{ $l->judul }}
                 </h3>
                 <span class="shrink-0 text-xs font-bold px-2.5 py-1 rounded-lg"
@@ -37,12 +68,7 @@
 
             {{-- Badges Row --}}
             <div class="flex flex-wrap items-center gap-2 mb-3">
-                @if($l->dudiProfile->industry->nama ?? false)
-                <span class="inline-flex items-center text-xs px-2.5 py-1 rounded-lg font-semibold"
-                      style="background: rgba(99,102,241,0.08); color: #6366f1;">
-                    {{ $l->dudiProfile->industry->nama }}
-                </span>
-                @endif
+                
                 @php
                     $now = now();
                     $isNew = $l->created_at && $l->created_at->diffInDays($now) <= 3;
@@ -64,7 +90,7 @@
             </div>
 
             {{-- Position Tags --}}
-            <div class="flex flex-wrap gap-1.5 mb-4">
+            <div class="flex flex-wrap gap-1.5 mb-2">
                 @foreach($l->posisis->take(3) as $posisi)
                 <span class="text-xs px-2 py-0.5 rounded-md font-medium bg-slate-100 text-slate-600">
                     {{ $posisi->nama }}
@@ -76,34 +102,13 @@
                 </span>
                 @endif
             </div>
-
-            {{-- Company Info --}}
-            <div class="flex items-center gap-2.5 mb-2">
-                <div class="w-8 h-8 rounded-lg flex items-center justify-center text-white text-xs font-bold shrink-0"
-                     style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">
-                    {{ strtoupper(substr($l->dudiProfile->nama_perusahaan ?? 'D', 0, 2)) }}
-                </div>
-                <div class="min-w-0">
-                    <p class="text-sm font-semibold text-slate-700 truncate">{{ $l->dudiProfile->nama_perusahaan ?? '-' }}</p>
-                </div>
-            </div>
-
-            {{-- Location --}}
-            @if($l->dudiProfile->alamat ?? false)
-            <div class="flex items-center gap-1.5 mb-3">
-                <svg style="width:0.85rem;height:0.85rem;color:#94a3b8;flex-shrink:0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                <span class="text-xs text-slate-500 truncate">{{ $l->dudiProfile->alamat }}</span>
-            </div>
-            @endif
         </div>
+           
+
+            
 
         {{-- Footer --}}
-        <div class="px-5 py-3 border-t border-slate-100 flex items-center justify-between"
+        <div class="px-3 py-3 border-t border-slate-100 flex items-center justify-between"
              style="background: #fafbfc;">
             <div class="flex items-center gap-1.5">
                 <svg style="width:0.75rem;height:0.75rem;color:#94a3b8" fill="none" stroke="currentColor" viewBox="0 0 24 24">

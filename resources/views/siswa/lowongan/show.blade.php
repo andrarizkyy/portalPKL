@@ -21,11 +21,11 @@
     </div>
     @endif
 
-    <div class="card p-6 mb-6"
+    <div class="card p-5 mb-4"
         style="background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%); border-color: #bfdbfe;">
 
         {{-- Company Header --}}
-        <div class="flex items-center gap-3 mb-5">
+        <div class="flex items-center gap-1 mb-5">
             <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold text-lg"
                 style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">
                 {{ strtoupper(substr($lowongan->dudiProfile->nama_perusahaan ?? 'D', 0, 2)) }}
@@ -46,9 +46,9 @@
             </div>
         </div>
 
-        <div class="flex flex-wrap gap-2 mb-4">
+        <div class="flex flex-wrap mb-4">
             <span class="badge bg-indigo-100 text-indigo-800">{{ $lowongan->dudiProfile->industry->nama ?? '' }}</span>
-            <span class="badge bg-slate-100 text-slate-600">{{ $lowongan->tanggal_mulai->format('d M Y') }} - {{
+            <span class="badge bg-slate-100 text-slate-600 align-items-bottom">{{ $lowongan->tanggal_mulai->format('d M Y') }} - {{
                 $lowongan->tanggal_selesai->format('d M Y') }}</span>
         </div>
 
