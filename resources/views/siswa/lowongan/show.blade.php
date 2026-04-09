@@ -25,7 +25,7 @@
         style="background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%); border-color: #bfdbfe;">
 
         {{-- Company Header --}}
-        <div class="flex items-center gap-1 mb-5">
+        <div class="flex items-center gap-2 mb-5">
             <div class="w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold text-lg"
                 style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">
                 {{ strtoupper(substr($lowongan->dudiProfile->nama_perusahaan ?? 'D', 0, 2)) }}
