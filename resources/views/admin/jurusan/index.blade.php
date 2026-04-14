@@ -56,9 +56,9 @@
                 <div class="flex flex-wrap gap-2">
                     @foreach($jurusanList as $j)
                     <div
-                        class="group inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-white border border-slate-200 shadow-sm hover:shadow transition-all">
+                        class="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-white border border-slate-200 shadow-sm hover:shadow transition-all">
                         <span class="text-sm font-medium text-slate-700">{{ $j->nama }}</span>
-                        <div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div class="flex items-center gap-1">
                             <a href="{{ route('admin.jurusan.edit', $j) }}"
                                 class="text-indigo-500 hover:text-indigo-700" title="Edit">
                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
